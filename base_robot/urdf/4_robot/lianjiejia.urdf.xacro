@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find base_robot)/urdf/4_robot/common_inertia.xacro"/>
+    <xacro:macro name="lianjiejia" params="xyz" >
+        <!--雷达支撑杆-->
+        <link name="zhicheng_link1">
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="0.006" length="0.16"/>
+                </geometry>
+                <material name="green">
+                    <color rgba="0.0 1.0 0.0 0.8"/>
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="0.006" length="0.16"/>
+                </geometry>
+                <material name="green">
+                    <color rgba="0.0 1.0 0.0 0.8"/>
+                </material>
+            </collision>
+            <xacro:cylinder_inertia m="0.05" r="0.006" h="0.16"/>
+        </link>
+        <link name="zhicheng_link2">
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="0.006" length="0.16"/>
+                </geometry>
+                <material name="green">
+                    <color rgba="0.0 1.0 0.0 0.8"/>
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="0.006" length="0.16"/>
+                </geometry>
+                <material name="green">
+                    <color rgba="0.0 1.0 0.0 0.8"/>
+                </material>
+            </collision>
+            <xacro:cylinder_inertia m="0.05" r="0.006" h="0.16"/>
+        </link>
+        <link name="zhicheng_link3">
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="0.006" length="0.16"/>
+                </geometry>
+                <material name="green">
+                    <color rgba="0.0 1.0 0.0 0.8"/>
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="0.006" length="0.16"/>
+                </geometry>
+                <material name="green">
+                    <color rgba="0.0 1.0 0.0 0.8"/>
+                </material>
+            </collision>
+            <xacro:cylinder_inertia m="0.05" r="0.006" h="0.16"/>
+        </link>
+        <link name="zhicheng_link4">
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="0.006" length="0.16"/>
+                </geometry>
+                <material name="green">
+                    <color rgba="0.0 1.0 0.0 0.8"/>
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="0.006" length="0.16"/>
+                </geometry>
+                <material name="green">
+                    <color rgba="0.0 1.0 0.0 0.8"/>
+                </material>
+            </collision>
+            <xacro:cylinder_inertia m="0.05" r="0.006" h="0.16"/>
+        </link>
+        <link name="zhicheng_ban">
+            <visual>
+                <geometry>
+                    <cylinder length="0.02" radius="0.1"/>
+                </geometry>
+                <material name = "blue">
+                    <color rgba="0.5 0.5 1.0 1.0" />
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder length="0.02" radius="0.1"/>
+                </geometry>
+                <material name = "blue">
+                    <color rgba="0.5 0.5 1.0 1.0" />
+                </material>
+            </collision>
+            <xacro:cylinder_inertia m="0.2" r="0.1" h="0.02"/>
+        </link>
+
+
+        <joint name="zhichenglink_joint1" type="fixed">
+            <parent link="zhicheng_ban"/>
+            <child link="zhicheng_link1"/>
+            <origin xyz="0.05 0.05 -0.08"/>
+        </joint>
+        <joint name="zhichenglink_joint2" type="fixed">
+            <parent link="zhicheng_ban"/>
+            <child link="zhicheng_link2"/>
+            <origin xyz="0.05 -0.05 -0.08"/>
+        </joint>
+        <joint name="zhichenglink_joint3" type="fixed">
+            <parent link="zhicheng_ban"/>
+            <child link="zhicheng_link3"/>
+            <origin xyz="-0.05 0.05 -0.08"/>
+        </joint>
+        <joint name="zhichenglink_joint4" type="fixed">
+            <parent link="zhicheng_ban"/>
+            <child link="zhicheng_link4"/>
+            <origin xyz="-0.05 -0.05 -0.08"/>
+        </joint>
+        
+        <joint name="zhichengjia_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="zhicheng_ban"/>
+            <origin xyz="${xyz}"/>
+        </joint>
+    </xacro:macro>
+</robot>

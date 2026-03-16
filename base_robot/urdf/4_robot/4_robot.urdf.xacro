@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="base_robot_4">
+    <!--组装车辆-->
+    <xacro:include filename="$(find base_robot)/urdf/4_robot/base_robot.urdf.xacro"/>
+    <xacro:include filename="$(find base_robot)/urdf/4_robot/plugins/gazebo_control_plugin.xacro"/>
+    <!-- 执行器组件 -->
+    <xacro:include filename="$(find base_robot)/urdf/4_robot/actuator/wheel.urdf.xacro"/>
+    <xacro:include filename="$(find base_robot)/urdf/4_robot/actuator/caster.urdf.xacro"/>
+
+    <!--传感器组件-->
+    <xacro:include filename="$(find base_robot)/urdf/4_robot/sensor/imu.urdf.xacro"/>
+    <xacro:include filename="$(find base_robot)/urdf/4_robot/sensor/laser.urdf.xacro"/>
+    <xacro:include filename="$(find base_robot)/urdf/4_robot/sensor/camera.urdf.xacro"/>
+    <!--传感器-->
+    <xacro:include filename="$(find base_robot)/urdf/4_robot/plugins/sensor_plugin.xacro"/>
+    
+    <!--zhichengjia-->
+    <xacro:include filename="$(find base_robot)/urdf/4_robot/lianjiejia.urdf.xacro"/>
+    <!--arm-->
+    <xacro:include filename="$(find base_robot)/urdf/4_robot/arm.xacro"/>
+
+    <xacro:base_xacro length="0.12" radius="0.25" mass="40.0"/>
+ 
+    <xacro:gazebo_control_plugin/>
+    <xacro:wheel wheel_name="left" xyz="0 0.26 -0.06"/>
+    <xacro:wheel wheel_name="right" xyz="0 -0.26 -0.06"/>
+    <xacro:caster_wheel caster_name="front" xyz="0.20 0.0 -0.076"/>
+    <xacro:caster_wheel caster_name="back" xyz="-0.20 0.0 -0.076"/>
+    
+    <!-- zhichengjia-->
+    <xacro:lianjiejia xyz="0.0 0.0 0.2"/>
+    
+    <joint name="arm_joint" type="fixed">
+        <parent link="zhicheng_ban"/>
+        <child link="arm_base_link"/>
+        <origin xyz="0.0 0.0 0.01"/>
+    </joint>  	
+
+    <!--传感器-->
+    <xacro:imu_xacro xyz="0 0 0.02"/>
+    <xacro:laser_xacro xyz="0 0 0.10"/>
+    <xacro:camera_xacro xyz="0.09 0 0.07"/>
+    <xacro:gazebo_sensor_plugin/>
+
+
+</robot>
