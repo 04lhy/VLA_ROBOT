@@ -1,6 +1,9 @@
 # ROS2仿真项目环境配置文档
 ## 一、基础编译与环境激活
 ```bash
+# 定位到工作空间
+cd /home/lhy/Desktop/VLA_ROBOT/base_robot_ws
+
 # 编译工作空间
 colcon build
 
