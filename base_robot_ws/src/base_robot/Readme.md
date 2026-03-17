@@ -17,7 +17,7 @@ ros2 launch base_robot base_robot.launch.py
 ros2 launch base_robot navigation.launch.py
 
 # 机械臂控制测试（⚠️ 必须在启动机器人代码前执行）
-python3 /home/lhy/Desktop/VLA_ROBOT/base_robot/scripts/simple_commander.py
+python3 /home/lhy/Desktop/VLA_ROBOT/base_robot_ws/src/base_robot/scripts/simple_commander.py
 
 # RViz 模拟控制（机械臂+底盘，无实际效果）
 ros2 launch base_robot move.launch.py
