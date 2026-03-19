@@ -7,7 +7,9 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 def generate_launch_description():
     base_robot_dir = get_package_share_directory('base_robot')
     nav2_bringup_dir = get_package_share_directory('nav2_bringup')
-    rviz_config_dir = os.path.join(nav2_bringup_dir, 'rviz', 'nav2_default_view.rviz')
+    
+    # ========== 核心修改：直接指定你的 RViz 配置文件绝对路径 ==========
+    rviz_config_dir = '/home/lhy/Desktop/VLA_ROBOT/base_robot_ws/src/base_robot/config/nav2_default_view.rviz'
 
     # 声明launch配置参数
     use_sim_time = launch.substitutions.LaunchConfiguration('use_sim_time', default='true')
