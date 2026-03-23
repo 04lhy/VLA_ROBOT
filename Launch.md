@@ -14,10 +14,20 @@ source install/setup.bash
 ## 二、机器人启动命令
 ```bash
 # 启动机器人核心代码
+cd /home/lhy/Desktop/VLA_ROBOT/base_robot_ws
 ros2 launch base_robot base_robot.launch.py
 
 # 导航功能测试
+cd /home/lhy/Desktop/VLA_ROBOT/base_robot_ws
 ros2 launch base_robot navigation.launch.py
+
+# VLA-gazeb桥梁文件
+cd /home/lhy/Desktop/VLA_ROBOT/base_robot_ws/src/base_robot/scripts
+python3 vla_gazebo_bridge.py
+
+# VLA轻量化启动文件
+cd /home/lhy/Desktop/VLA_ROBOT/openvla/vla-scripts
+python3 deploy_4bit.py
 
 # 机械臂控制测试（⚠️ 必须在启动机器人代码前执行）
 python3 /home/lhy/Desktop/VLA_ROBOT/base_robot_ws/src/base_robot/scripts/simple_commander.py
@@ -65,3 +75,23 @@ sudo apt install ros-humble-nav2-bringup -y
 sudo apt install ros-humble-ros2-control
 sudo apt install ros-humble-ros2-controllers
 ```
+
+### 5. mamba环境配置需求
+```bash
+再次强调，做好ros本机与mamba环境的隔离！！！
+python版本：统一3.10
+Torch 版本: 2.2.0+cu121（GPU版）
+```
+
+### 6. VLA环境配置需求
+```bash
+丢给ai安装就好，注意轻量化执行会云端穿3个6GB左右权重文件，请提前留好空间
+timm==0.9.10
+tokenizers==0.19.1
+torch>=2.2.0
+torchvision>=0.16.0
+transformers==4.40.1
+```
+
+
+
