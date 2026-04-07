@@ -72,11 +72,23 @@ def generate_launch_description():
         arguments=["gripper_controller"],
     )
 
+    # --- 7. 语音播报节点 ---
+    tts_node = launch_ros.actions.Node(
+        package='base_robot',
+        executable='tts_node.py',
+        parameters=[
+            {'topic_name': '/robot/tts_text'},
+            {'voice_rate': 180},
+            {'voice_volume': 1.0},
+        ]
+    )
+
     return launch.LaunchDescription([
         action_declare_arg_model_path,
         robot_state_publisher_node,
         launch_gazebo,
         spawn_entity_node,
+        tts_node,
         
         # 使用顺序链：生成机器人 -> 状态发布器 -> 机械臂控制器 -> 夹爪控制器
         RegisterEventHandler(
