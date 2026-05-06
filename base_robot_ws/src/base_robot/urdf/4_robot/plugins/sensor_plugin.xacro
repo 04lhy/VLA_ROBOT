@@ -111,7 +111,7 @@
                 </imu>
             </sensor>  
         </gazebo> 
-<gazebo reference="camera_link">
+<!-- <gazebo reference="camera_link">
     <sensor type="depth" name="camera_sensor">
         <plugin name="depth_camera" filename="libgazebo_ros_camera.so">
             <frame_name>camera_optical_link</frame_name>
@@ -135,7 +135,7 @@
             </distortion>
         </camera>
     </sensor>
-</gazebo>
+</gazebo> -->
 
     </xacro:macro>
 </robot>

@@ -1,3 +1,4 @@
+import os
 import launch
 import launch_ros
 from ament_index_python.packages import get_package_share_directory
@@ -10,7 +11,9 @@ def generate_launch_description():
     robot_name_in_model = 'base_robot'
     urdf_tutorial_path = get_package_share_directory('base_robot')
     default_model_path = urdf_tutorial_path + '/urdf/4_robot/4_robot.urdf.xacro'
-    default_world_path = urdf_tutorial_path + '/world/room_demo.world'
+    # default_world_path = urdf_tutorial_path + '/world/room_demo.world'
+    # 使用简化的房间场景
+    default_world_path = urdf_tutorial_path + '/world/simple_room.world'
 
     action_declare_arg_model_path = launch.actions.DeclareLaunchArgument(
         name ='model',
@@ -90,7 +93,7 @@ def generate_launch_description():
         spawn_entity_node,
         tts_node,
         
-        # 使用顺序链：生成机器人 -> 状态发布器 -> 机械臂控制器 -> 夹爪控制器
+        # === 恢复控制器加载 ===
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=spawn_entity_node,
