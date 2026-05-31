@@ -31,7 +31,7 @@ def generate_launch_description():
         executable='robot_state_publisher',
         parameters=[
             {'robot_description': robot_description},
-            {'use_sim_time': True} 
+            {'use_sim_time': True}
         ]
     )
 
@@ -54,7 +54,7 @@ def generate_launch_description():
         output='screen',
         parameters=[
             my_slam_params_file, # 加载你修改过雷达话题名称的自定义配置文件
-            {'use_sim_time': True} 
+            {'use_sim_time': True}
         ]
     )
 

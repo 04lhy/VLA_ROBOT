@@ -40,7 +40,7 @@
     <!--传感器-->
     <xacro:imu_xacro xyz="0 0 0.02"/>
     <xacro:laser_xacro xyz="0 0 0.10"/>
-    <xacro:camera_xacro xyz="0.09 0 0.07"/>
+    <xacro:camera_xacro xyz="-0.03 0.0 0.06" parent_link="link6" rpy="${-pi} ${-pi/2} 0"/>
     <xacro:microphone_xacro xyz="0.15 0 0.08"/>
     <xacro:gazebo_sensor_plugin/>
 

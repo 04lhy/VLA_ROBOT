@@ -8,15 +8,14 @@ def generate_launch_description():
     base_robot_dir = get_package_share_directory('base_robot')
     nav2_bringup_dir = get_package_share_directory('nav2_bringup')
     
-    # ========== 核心修改：直接指定你的 RViz 配置文件绝对路径 ==========
-    rviz_config_dir = '/home/lhy/Desktop/VLA_ROBOT/base_robot_ws/src/base_robot/config/nav2_default_view.rviz'
+    rviz_config_dir = os.path.join(base_robot_dir, 'config', 'nav2_default_view.rviz')
 
     # 声明launch配置参数
     use_sim_time = launch.substitutions.LaunchConfiguration('use_sim_time', default='true')
     # ========== 核心修改：地图路径调整 ==========
     map_yaml_path = launch.substitutions.LaunchConfiguration(
         'map',
-        default=os.path.join(base_robot_dir, 'maps', 'room.yaml')
+        default=os.path.join(base_robot_dir, 'maps', 'room1.yaml')
     )
     nav2_param_path = launch.substitutions.LaunchConfiguration(
         'params_file',

@@ -13,7 +13,14 @@ install(DIRECTORY launch urdf world meshes config maps
 )
 
 # 安装 Python 可执行脚本到 lib/${PROJECT_NAME}
-install(PROGRAMS scripts/fake_diff_drive.py scripts/arm_control_gui.py scripts/tts_node.py
+install(PROGRAMS
+  scripts/fake_diff_drive.py
+  scripts/arm_control_gui.py
+  scripts/tts_node.py
+  scripts/vla_gazebo_bridge.py
+  scripts/auto_task.py
+  scripts/simple_commander.py
+  scripts/test_kdl_roundtrip.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
