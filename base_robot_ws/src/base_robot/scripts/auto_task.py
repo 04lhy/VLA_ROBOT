@@ -68,11 +68,19 @@ class AutoTask(Node):
         self.get_logger().info("监听进程已启动 (持久订阅，不丢消息)")
 
         # ========================
-        # 第一步：夹爪先完全张开
+        # 等发布者发现订阅者，避免第一条指令丢失
+        # ========================
+        self.get_logger().info("等待发布者连接...")
+        time.sleep(1.0)
+
+        # ========================
+        # 第一步：夹爪先完全张开（多发几次确保收到）
         # ========================
         self.get_logger().info("--- 夹爪全开 ---")
-        self.move_gripper(0.04, 0.04, duration=1.0)
-        time.sleep(1.5)
+        for _ in range(3):
+            self.move_gripper(0.04, 0.04, duration=0.5)
+            time.sleep(0.3)
+        time.sleep(1.0)
 
         # ========================
         # 第二步：机械臂运动到目标位姿1
