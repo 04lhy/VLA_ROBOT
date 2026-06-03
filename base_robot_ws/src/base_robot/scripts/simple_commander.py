@@ -94,20 +94,49 @@ class SimpleArmGUI(Node):
             scale.pack(side='left', expand=True)
             self.arm_sliders.append(scale)
             
-        # 创建夹爪滑块 (0.0 到 0.04 米)，绑定 command 回调
+        # 创建夹爪手指滑块 (每个手指独立控制)
         tk.Frame(self.root, height=2, bg="grey").pack(fill='x', padx=20, pady=5)
-        grip_frame = tk.Frame(self.root)
-        grip_frame.pack(fill='x', padx=20, pady=3)
-        
-        tk.Label(grip_frame, text="夹爪", width=8, anchor='w').pack(side='left')
-        self.grip_slider = tk.Scale(
-            grip_frame, 
-            from_=0.0, to=0.04, resolution=0.001, 
+
+        # --- 手指1: joint7 (范围 0.0 ~ 0.04) ---
+        grip7_frame = tk.Frame(self.root)
+        grip7_frame.pack(fill='x', padx=20, pady=3)
+        tk.Label(grip7_frame, text="手指1", width=8, anchor='w').pack(side='left')
+        self.grip7_slider = tk.Scale(
+            grip7_frame,
+            from_=0.0, to=0.04, resolution=0.001,
             orient=tk.HORIZONTAL, length=250,
-            command=lambda _: self.send_pose()  # 绑定回调
+            command=lambda _: self.send_pose()
         )
-        self.grip_slider.set(0.0)
-        self.grip_slider.pack(side='left', expand=True)
+        self.grip7_slider.set(0.04)
+        self.grip7_slider.pack(side='left', expand=True)
+
+        # --- 手指2: joint8 (范围 0.0 ~ 0.04，内部映射为负值) ---
+        grip8_frame = tk.Frame(self.root)
+        grip8_frame.pack(fill='x', padx=20, pady=3)
+        tk.Label(grip8_frame, text="手指2", width=8, anchor='w').pack(side='left')
+        self.grip8_slider = tk.Scale(
+            grip8_frame,
+            from_=0.0, to=0.04, resolution=0.001,
+            orient=tk.HORIZONTAL, length=250,
+            command=lambda _: self.send_pose()
+        )
+        self.grip8_slider.set(0.04)
+        self.grip8_slider.pack(side='left', expand=True)
+
+        # 夹爪同步按钮
+        sync_frame = tk.Frame(self.root)
+        sync_frame.pack(fill='x', padx=20, pady=3)
+        tk.Label(sync_frame, text="同步", width=8, anchor='w',
+                 font=('Arial', 9)).pack(side='left')
+        # 用 master 滑块同步两个手指
+        self.grip_master_slider = tk.Scale(
+            sync_frame,
+            from_=0.0, to=0.04, resolution=0.001,
+            orient=tk.HORIZONTAL, length=250,
+            command=self.sync_grippers
+        )
+        self.grip_master_slider.set(0.04)
+        self.grip_master_slider.pack(side='left', expand=True)
 
         # 发送按钮
         btn = tk.Button(
@@ -162,11 +191,19 @@ class SimpleArmGUI(Node):
         self.angular_vel_slider.set(0.0)
         self.send_chassis_cmd()
 
+    def sync_grippers(self, _=None):
+        """同步两个手指：拖动主滑块时同时设置手指1和手指2"""
+        val = self.grip_master_slider.get()
+        self.grip7_slider.set(val)
+        self.grip8_slider.set(val)
+        self.send_pose()
+
     def send_pose(self):
         """发送机械臂位姿"""
         # 获取滑块数据（实时读取当前值）
         arm_positions = [s.get() for s in self.arm_sliders]
-        grip_position = self.grip_slider.get()
+        grip7_position = self.grip7_slider.get()
+        grip8_position = self.grip8_slider.get()
 
         # ==========================================
         # 组装并发布机械臂消息 (1-6轴)
@@ -181,19 +218,23 @@ class SimpleArmGUI(Node):
         self.arm_pub.publish(arm_msg)
 
         # ==========================================
-        # 组装并发布夹爪消息 (7-8轴)
+        # 组装并发布夹爪消息 (7-8轴，独立控制)
         # ==========================================
         grip_msg = JointTrajectory()
         grip_msg.joint_names = ['joint7', 'joint8']
         grip_point = JointTrajectoryPoint()
-        grip_point.positions = [grip_position, -grip_position]
+        # joint7: 0 ~ 0.04, joint8: 0 ~ -0.04 (取反)
+        grip_point.positions = [grip7_position, -grip8_position]
         grip_point.time_from_start.sec = 0
         grip_point.time_from_start.nanosec = 200000000
         grip_msg.points.append(grip_point)
         self.grip_pub.publish(grip_msg)
 
         # 终端打印
-        self.get_logger().info(f"机械臂位姿: {[round(p, 2) for p in arm_positions]} | 夹爪: {grip_position:.3f}")
+        self.get_logger().info(
+            f"机械臂位姿: {[round(p, 2) for p in arm_positions]} | "
+            f"手指1: {grip7_position:.3f} | 手指2: {grip8_position:.3f}"
+        )
 
     def on_close(self):
         """关闭程序"""

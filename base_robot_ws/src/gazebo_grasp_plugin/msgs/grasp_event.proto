@@ -1,0 +1,9 @@
+syntax = "proto2";
+package gazebo.msgs;
+
+message GraspEvent
+{
+  required string arm = 1;
+  required string object = 2;
+  required bool attached = 3;
+}
