@@ -59,6 +59,7 @@ VLA_ROBOT/
 - **夹爪物理参数调优**：link7/link8 手指摩擦系数提升至 μ=10.0，阻尼 damping=10，摩擦 friction=5，大幅改善抓取稳定性
 - **夹爪关节力限制调整**：joint7/joint8 最大力矩 effort 从 10N 降至 5N，防止大力度造成物体弹飞
 - **gazebo_grasp_fix 插件双路径加载**：同时在 `arm.xacro` 和 `test.world` 中配置插件，确保 URDF spawn 和 world 直接加载两种方式均能覆盖
+- **测试场景物品物理调优**：coke_can 配置接触刚度 kp=1e+07、摩擦 μ=1.0，beer 使用标准圆柱碰撞体，cafe_table 台面高度 0.755m，配合夹爪修复插件确保抓取演示稳定可靠
 - **test.world 清理**：移除仿真运行时保存的 `<state>` 块（运行时状态数据不应纳入版本管理），添加机器人初始位姿
 - **Launch.md 全面完善**：新增系统前置要求、包结构说明、增量编译指南、完整依赖清单及一键安装命令、常见问题排查章节
 - **.gitignore 完善**：新增 VS Code 数据库缓存文件、Claude Code 工作目录忽略规则
@@ -67,7 +68,7 @@ VLA_ROBOT/
 | 文件 | 变更内容 |
 |------|----------|
 | `arm.xacro` | 夹爪手指高摩擦参数 + 关节阻尼 + gazebo_grasp_fix 插件配置 |
-| `test.world` | 清理仿真状态块 + 机器人初始位姿 + gazebo_grasp_fix 插件配置 |
+| `test.world` | 清理仿真状态块 + 机器人初始位姿 + gazebo_grasp_fix 插件 + 物品物理参数调优 |
 | `auto_task.py` | 重构为附着检测驱动的抓取任务流程 |
 | `simple_commander.py` | 新增底盘控制功能（线速度/角速度滑块） |
 | `Launch.md` | 全文重写，补充依赖说明、包结构、排查指南 |
