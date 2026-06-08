@@ -171,6 +171,13 @@ ros2 run base_robot test_kdl_roundtrip.py
 > 需先启动 2.1 核心仿真（因为需要 `robot_description` 参数）。
 
 ### 2.9 ASR 语音转文本测试
+以下内容需要安装dashscope、pyaudio
+```bash
+pip install pyaudio dashscope
+```
+
+#### 录音文件
+不启用gazebo仿真时：
 启动OpenVLA服务之后（见2.7节），执行以下指令（conda环境）：
 ```bash
 export DASHSCOPE_API_KEY="你的百炼API Key"
@@ -187,8 +194,30 @@ python3 asr_file_to_openvla_server.py Chinese.mp3
 [OpenVLA] status: success
 [OpenVLA] action: [0.0006859096428927063, -0.0010716421534033849, 0.001577533126315641, -0.015465142300316037, 0.006587913932169148, -0.006513903635389756, 0.996078431372549]
 ```
+启用gazebo仿真时：
+启动OpenVLA服务（见2.7节）、Gazebo/ROS2 仿真之后，执行以下指令（conda环境）：
+```bash
+export DASHSCOPE_API_KEY="你的百炼API Key"
+cd $WS/asr_test
+python3 asr_file_to_vla.py Chinese.mp3
+```
 
+#### 麦克风流式输入
+启动OpenVLA服务之后（见2.7节）、Gazebo/ROS2 仿真之后，执行以下指令（conda环境）：
+```bash
+export DASHSCOPE_API_KEY="你的百炼API Key"
+cd $WS/asr_test
+python3 asr_mic_to_vla.py
+```
 
+有多个输入设备时。可以执行以下指令：
+```bash
+python3 asr_mic_to_vla.py --list-devices
+```
+如果看到麦克风设备，比如 [2] USB Microphone，就运行：
+```bash
+python3 asr_mic_to_vla.py --input-device-index 2
+```
 ---
 
 ## 三、包结构说明

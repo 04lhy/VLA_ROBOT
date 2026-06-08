@@ -20,11 +20,13 @@ import shlex
 import subprocess
 from http import HTTPStatus
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 DEFAULT_MODEL = "fun-asr-realtime"
 DEFAULT_SAMPLE_RATE = 16000
 DEFAULT_TOPIC = "/vla_instruction"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_ROS_SETUP = PROJECT_ROOT / "base_robot_ws" / "install" / "setup.bash"
 
 BEIJING_WS_URL = "wss://dashscope.aliyuncs.com/api-ws/v1/inference"
 INTERNATIONAL_WS_URL = "wss://dashscope-intl.aliyuncs.com/api-ws/v1/inference"
@@ -82,27 +84,24 @@ def transcribe_file(audio_path: Path, *, model: str, sample_rate: int) -> str:
     return text
 
 
-def candidate_ros_setups() -> Iterable[Path]:
-    env_setup = os.environ.get("VLA_ROBOT_ROS_SETUP")
-    if env_setup:
-        yield Path(env_setup).expanduser()
+def resolve_ros_setup(explicit_setup: str | None) -> Path:
+    """Resolve the ROS2 setup file used before running `ros2 topic pub`.
 
-    yield Path("/root/autodl-tmp/VLA_ROBOT/base_robot_ws/install/setup.bash")
-    yield Path("/root/openvla_new/VLA_ROBOT/base_robot_ws/install/setup.bash")
-
-
-def resolve_ros_setup(explicit_setup: str | None) -> Path | None:
-    if explicit_setup:
-        setup = Path(explicit_setup).expanduser()
-        if not setup.exists():
-            raise FileNotFoundError(f"ROS setup file not found: {setup}")
-        return setup
-
-    for setup in candidate_ros_setups():
-        if setup.exists():
-            return setup
-    return None
-
+    By default this intentionally uses the setup file inside the same VLA_ROBOT
+    project tree as this script. That avoids accidentally publishing with a
+    setup.bash from another copy of the project.
+    """
+    setup = Path(explicit_setup).expanduser() if explicit_setup else DEFAULT_ROS_SETUP
+    if not setup.exists():
+        raise FileNotFoundError(
+            "ROS setup file not found: "
+            f"{setup}\n"
+            "Build and source the ROS workspace first, for example:\n"
+            f"  cd {PROJECT_ROOT / 'base_robot_ws'}\n"
+            "  colcon build --symlink-install\n"
+            "Or pass the correct file with --ros-setup /path/to/install/setup.bash"
+        )
+    return setup
 
 def build_ros_pub_command(text: str, topic: str, setup_file: Path | None) -> str:
     yaml_text = text.replace("'", "''")
@@ -170,7 +169,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--ros-setup",
         default=None,
-        help="Path to base_robot_ws/install/setup.bash. If omitted, common project paths are tried.",
+        help=f"Path to base_robot_ws/install/setup.bash. Defaults to {DEFAULT_ROS_SETUP}.",
     )
     parser.add_argument(
         "--no-publish",
@@ -228,10 +227,7 @@ def main() -> None:
     if args.no_publish:
         return
 
-    if setup_file is None:
-        print("[ROS] no setup.bash found; trying ros2 from current shell environment")
-    else:
-        print(f"[ROS] setup: {setup_file}")
+    print(f"[ROS] setup: {setup_file}")
 
     if args.print_command:
         print("[ROS] command:")
