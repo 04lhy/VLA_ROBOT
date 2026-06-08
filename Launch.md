@@ -149,7 +149,7 @@ ros2 run base_robot auto_task.py
 
 ```bash
 cd $WS/openvla/vla-scripts
-python3 deploy_4bit.py
+python3 deploy_4bit.py --openvla-path /your/path/openvla
 ```
 
 > **环境隔离要求**：必须在 mamba/conda 独立环境中运行，避免与 ROS2 的 Python 环境冲突。
@@ -169,6 +169,25 @@ ros2 run base_robot test_kdl_roundtrip.py
 > 测试正逆运动学往返精度、模拟 OpenVLA delta action、发布抬升指令到 `/vla_instruction`。
 >
 > 需先启动 2.1 核心仿真（因为需要 `robot_description` 参数）。
+
+### 2.9 ASR 语音转文本测试
+启动OpenVLA服务之后（见2.7节），执行以下指令（conda环境）：
+```bash
+export DASHSCOPE_API_KEY="你的百炼API Key"
+cd $WS/asr_test
+python3 asr_file_to_openvla_server.py Chinese.mp3
+```
+
+实测可以看到以下输出：
+```bash
+[ASR] audio: Chinese.mp3
+[ASR] text: 请夹起前面的瓶子。
+[OpenVLA] POST http://127.0.0.1:8000/act
+[OpenVLA] dummy image: 256x256, color=(128, 128, 128)
+[OpenVLA] status: success
+[OpenVLA] action: [0.0006859096428927063, -0.0010716421534033849, 0.001577533126315641, -0.015465142300316037, 0.006587913932169148, -0.006513903635389756, 0.996078431372549]
+```
+
 
 ---
 

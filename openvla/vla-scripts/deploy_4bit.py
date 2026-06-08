@@ -1,3 +1,4 @@
+import argparse
 import json_numpy
 json_numpy.patch()
 import torch
@@ -132,7 +133,7 @@ class OpenVLA4bitServer:
                 action = self.vla.predict_action(**inputs, unnorm_key=unnorm_key, do_sample=False)
             
             latest_action = action.tolist()
-            return JSONResponse({"status": "success", "action": latest_action})
+            return JSONResponse({"status": "success", "instruction": instruction, "prompt": prompt, "action": latest_action})
 
         except Exception as e:
             traceback.print_exc()
@@ -145,6 +146,19 @@ class OpenVLA4bitServer:
         self.app.post("/act")(self.predict_action)          # 机械臂控制
         uvicorn.run(self.app, host=host, port=port)
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Run an OpenVLA 4-bit action prediction server.")
+    parser.add_argument(
+        "--openvla-path",
+        default="openvla/openvla-7b",
+        help="Hugging Face model id or local OpenVLA checkpoint path.",
+    )
+    parser.add_argument("--host", default="127.0.0.1", help="Server host.")
+    parser.add_argument("--port", type=int, default=8000, help="Server port.")
+    return parser.parse_args()
+
+
 if __name__ == "__main__":
-    server = OpenVLA4bitServer()
-    server.run(host="127.0.0.1", port=8000)
+    args = parse_args()
+    server = OpenVLA4bitServer(openvla_path=args.openvla_path)
+    server.run(host=args.host, port=args.port)
