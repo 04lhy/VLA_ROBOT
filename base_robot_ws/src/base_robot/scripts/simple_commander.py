@@ -154,11 +154,14 @@ class SimpleArmGUI(Node):
         # 防抖计时器
         self.last_chassis_send_time = 0
         self.chassis_send_delay = 0.1  # 100ms
-        
+        self._closing = False  # 关闭标志，避免关闭窗口时 spin_once 死锁
+
         # --- 3. 启动 ROS 2 刷新定时器 ---
         self.ros_spin_timer()
 
     def ros_spin_timer(self):
+        if self._closing:
+            return
         rclpy.spin_once(self, timeout_sec=0.01)
         self.root.after(50, self.ros_spin_timer)
 
@@ -238,19 +241,23 @@ class SimpleArmGUI(Node):
 
     def on_close(self):
         """关闭程序"""
-        # 停止底盘
-        self.stop_chassis()
-        
+        self._closing = True
+        # 停止底盘（容错：仿真可能已退出）
+        try:
+            self.stop_chassis()
+        except Exception:
+            pass
         self.get_logger().info("关闭控制台...")
         self.root.destroy()
-        self.destroy_node()
-        rclpy.shutdown()
 
 def main(args=None):
     rclpy.init(args=args)
     gui = SimpleArmGUI()
     # 启动 Tkinter 的主循环
     gui.root.mainloop()
+    # 窗口关闭后再清理 ROS，避免在 Tkinter 回调里 shutdown 造成死锁
+    gui.destroy_node()
+    rclpy.shutdown()
 
 if __name__ == '__main__':
     main()

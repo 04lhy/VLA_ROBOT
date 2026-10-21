@@ -85,6 +85,8 @@ def generate_launch_description():
         parameters=[
             {'use_sim_time': True},
             {'robot_description': robot_description},
+            # test.world 里腕部摄像头的 sensor 名是 camera_sensor，故话题是 /camera_sensor/image_raw
+            {'camera_topic': '/camera_sensor/image_raw'},
         ],
         output='screen'
     )
