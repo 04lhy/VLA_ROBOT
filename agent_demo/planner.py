@@ -9,7 +9,16 @@ from typing import Any
 from agent_types import AgentState, PlanStep
 from llm_client import LLMClient, extract_json_object
 
-PLANNER_SYSTEM_PROMPT = """You are a robot task planner.
+# 固定巡检路线（语义地点名，需与 tools.LOCATION_COORDS 的 key 一致）
+PATROL_ROUTE = ["room1", "room2", "room3", "room4", "home"]
+
+_PATROL_NOTE = (
+    "Patrol task:\n"
+    "- When the user says \"开始巡检\" or \"patrol\", generate a patrol plan that navigates\n"
+    "  through these locations in order: " + " → ".join(PATROL_ROUTE) + ".\n\n"
+)
+
+PLANNER_SYSTEM_PROMPT = _PATROL_NOTE + """You are a robot task planner.
 Convert the user's instruction into a short executable JSON plan.
 
 Available tools:
@@ -134,6 +143,36 @@ class Planner:
 
     def _mock_plan(self, instruction: str) -> list[PlanStep]:
         text = instruction.lower()
+        if "巡检" in instruction or "patrol" in text:
+            return [
+                PlanStep(
+                    str(i), "navigate_to", {"location": loc},
+                    {"tool": "verify_navigation", "args": {"location": loc}},
+                    f"巡检 {loc}",
+                )
+                for i, loc in enumerate(PATROL_ROUTE, start=1)
+            ]
+        # =====================================================================
+        # TODO 未来「巡检 + 颜色识别」分支流程（接口已预留 tools.detect_color）：
+        #
+        #   for room in PATROL_ROUTE:
+        #       navigate_to(room)
+        #       color = detect_color(room).observations["color"]
+        #       if color == "green":
+        #           continue                            # 巡检下一个房间
+        #       elif color == "red":
+        #           navigate_to(f"{room}_table")        # 来到该房间的桌子面前
+        #           vla_manipulate("抓取杯子")
+        #           vla_manipulate("放回杯子")
+        #           continue                            # 巡检下一个房间
+        #
+        # 说明：当前 plan-execute 框架是线性 step 序列，不支持循环/条件分支。
+        # 后续实现上述分支的两种可选方案：
+        #   a) 在 executor 中引入条件分支（step 结果决定下一步，如
+        #      detect_color 返回 red 时追加「去桌子→抓取→放回」子计划）；
+        #   b) 复用 replan 机制：detect_color 返回 red 时让 executor 返回失败，
+        #      由 planner.replan 生成「去桌子→抓取→放回」的恢复计划。
+        # =====================================================================
         if "kitchen" in text or "厨房" in instruction:
             return [
                 PlanStep("1", "navigate_to", {"location": "kitchen"}, {"tool": "verify_navigation", "args": {"location": "kitchen"}}, "go to kitchen"),

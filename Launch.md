@@ -236,6 +236,17 @@ ros2 run base_robot nav_waypoints.py
 >
 > 需先启动 2.1 核心仿真与 2.3 导航功能。
 
+### 2.11 决策 Agent（plan-execute 框架）
+
+```bash
+cd $WS/agent_demo
+python3 main.py "开始巡检" --mock-planner --print-plan        # mock 计划
+python3 main.py "开始巡检" --mock-planner --real-navigation  # 真实导航巡检
+```
+
+> 语言输入 → LLM 生成计划 → 执行白名单工具（导航 / 检测 / 操作 / 验证）→ 失败重规划。
+> 详细用法、工具说明、巡检 / 颜色识别接口见 `agent_demo/README.md`。
+
 ---
 
 ## 三、包结构说明
@@ -407,6 +418,8 @@ VLA_ROBOT/
 ├── README.md                      # 版本更新日志
 ├── 夹爪抓取问题分析与修复方案.md    # 夹爪抓取问题根因分析与 gazebo_grasp_plugin 移植方案
 ├── .gitignore                     # Git 忽略规则
+├── agent_demo/                    # 决策 agent demo（plan-execute 框架）
+├── asr_test/                      # ASR 语音转文本测试
 ├── base_robot_ws/                 # ROS2 工作空间
 │   ├── src/
 │   │   ├── base_robot/            # 主 ROS2 包

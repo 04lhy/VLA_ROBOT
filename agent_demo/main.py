@@ -11,10 +11,10 @@ from dataclasses import asdict
 from agent_types import AgentState
 from executor import Executor
 from llm_client import DEFAULT_BASE_URL, DEFAULT_MODEL, LLMClient
-from planner import Planner
+from planner import PATROL_ROUTE, Planner
 from tools import ToolRegistry
 
-DEFAULT_LOCATIONS = ["start", "kitchen", "living_room", "table", "user"]
+DEFAULT_LOCATIONS = ["start", *PATROL_ROUTE]
 
 
 def parse_args() -> argparse.Namespace:
@@ -22,6 +22,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("instruction", nargs="?", default="去厨房拿一杯水回来", help="User task instruction.")
     parser.add_argument("--mock-planner", action="store_true", help="Use deterministic mock planner instead of LLM API.")
     parser.add_argument("--real-vla-publish", action="store_true", help="Actually publish vla_manipulate commands to /vla_instruction.")
+    parser.add_argument("--real-navigation", action="store_true", help="Actually navigate via Nav2 (instead of mock navigate_to).")
     parser.add_argument("--model", default=DEFAULT_MODEL, help="LLM model name.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="OpenAI-compatible base URL.")
     parser.add_argument("--api-key", default=os.environ.get("DEEPSEEK_API_KEY"), help="LLM API key. Prefer DEEPSEEK_API_KEY.")
@@ -48,7 +49,11 @@ def main() -> None:
 
     llm = None if args.mock_planner else LLMClient(api_key=args.api_key, base_url=args.base_url, model=args.model)
     planner = Planner(llm, mock=args.mock_planner)
-    tools = ToolRegistry(mock=not args.real_vla_publish, ros_setup=args.ros_setup)
+    tools = ToolRegistry(
+        mock=not args.real_vla_publish,
+        real_navigation=args.real_navigation,
+        ros_setup=args.ros_setup,
+    )
     executor = Executor(tools)
 
     print(f"[User] {args.instruction}")

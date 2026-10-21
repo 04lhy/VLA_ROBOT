@@ -35,6 +35,8 @@ VLA_ROBOT/
 ├── README.md                          # 本文件
 ├── 夹爪抓取问题分析与修复方案.md        # 夹爪抓取修复技术文档
 ├── .gitignore
+├── agent_demo/                        # 决策 agent demo（plan-execute 框架）
+├── asr_test/                          # ASR 语音转文本测试
 ├── base_robot_ws/                     # ROS2 工作空间
 │   └── src/
 │       ├── base_robot/                # 主 ROS2 包（机械臂 + 底盘 + 仿真）
@@ -45,10 +47,34 @@ VLA_ROBOT/
 
 ---
 
-## 🚀 V1.3.0 | 多点自主导航与启动健壮性增强
+## 🚀 V1.4.0 | 决策 Agent 与真实导航集成
 
 **发布日期**：2026-10-21
 **版本状态**：✅ 当前版本
+
+### ✨ 新增功能
+- **决策 agent 框架** (`agent_demo/`)：plan-execute 架构。Planner 通过 DeepSeek/OpenAI 兼容 API 调用 LLM 生成受限 JSON 计划，Executor 执行白名单工具（导航 / 检测 / 操作 / 验证），失败时自动 replan 重规划
+- **真实导航集成** (`agent_demo/tools.py`)：`navigate_to` 工具通过 Nav2 `NavigateToPose` action 真实控制小车移动（`--real-navigation` 开启），语义地点名经 `LOCATION_COORDS` 映射到地图坐标
+- **固定巡检路线** (`agent_demo/planner.py`)：输入「开始巡检」即依次导航各房间（`PATROL_ROUTE` 定义路线）
+- **颜色识别接口（规划中）**：`detect_color` 工具 + 各房间桌子坐标（`<room>_table`），预留摄像头 + YOLO 识别绿色/红色并按颜色分支巡检（绿色→下一间，红色→去桌子抓放杯子→下一间）
+
+### 🛠️ 优化 / 改进
+- `agent_demo/README.md` 修正硬编码路径（`/root/openvla_new` → 相对路径）
+
+### 📌 关键变更说明
+| 文件 | 变更内容 |
+|------|----------|
+| `agent_demo/tools.py` | `LOCATION_COORDS` 坐标表 + `navigate_to` 真实导航 + `detect_color` 颜色识别接口 |
+| `agent_demo/planner.py` | 固定巡检路线 `PATROL_ROUTE` + 颜色分支巡检注释 |
+| `agent_demo/main.py` | 新增 `--real-navigation` 开关 |
+| `agent_demo/README.md` | 巡检 / 颜色识别文档 + 路径修正 |
+
+---
+
+## 🚀 V1.3.0 | 多点自主导航与启动健壮性增强
+
+**发布日期**：2026-10-21
+**版本状态**：✅ 正式发布
 
 ### ✨ 新增功能
 - **多点自主导航脚本** (`nav_waypoints.py`)：按顺序依次前往地图上多个目标点（map 坐标系），支持单点超时、失败跳过、到达停留等配置，作为抓取任务与全场景巡检的导航基础

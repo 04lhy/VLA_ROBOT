@@ -8,6 +8,7 @@ that can later be backed by Nav2, VLN, OpenVLA, perception, and verifier nodes.
 from __future__ import annotations
 
 import json
+import math
 import shlex
 import subprocess
 from pathlib import Path
@@ -19,17 +20,39 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ROS_SETUP = PROJECT_ROOT / "base_robot_ws" / "install" / "setup.bash"
 DEFAULT_VLA_TOPIC = "/vla_instruction"
 
+# 语义地点 → 地图坐标 (x, y, yaw) 的 grounding 表。
+# 与 nav_waypoints.py 的 WAYPOINTS / test.world 机器人出生点保持一致，按实际地图修改。
+LOCATION_COORDS = {
+    "start": (2.0279, 1.8948, 1.7867),  # 机器人出生点
+    "room1": (3.5, 3.0, 0.0),
+    "room2": (3.5, -1.5, 0.0),
+    "room3": (5.0, 0.5, 0.0),
+    "room4": (0.5, 5.0, 0.0),
+    "home": (0.0, 0.0, 0.0),
+    # 每间房的桌子坐标（检测到红色目标时，前往该房间桌子前抓取杯子）。
+    # 示例值，需按实际地图/桌子摆放位置调整。
+    "room1_table": (3.5, 3.5, 0.0),
+    "room2_table": (3.5, -1.0, 0.0),
+    "room3_table": (5.0, 1.0, 0.0),
+    "room4_table": (0.5, 5.5, 0.0),
+}
+
 ToolFn = Callable[..., ToolResult]
 
 
 class ToolRegistry:
-    def __init__(self, *, mock: bool = True, ros_setup: str | None = None, vla_topic: str = DEFAULT_VLA_TOPIC):
+    def __init__(self, *, mock: bool = True, real_navigation: bool = False,
+                 ros_setup: str | None = None, vla_topic: str = DEFAULT_VLA_TOPIC,
+                 location_coords: dict[str, tuple[float, float, float]] | None = None):
         self.mock = mock
+        self.real_navigation = real_navigation
         self.ros_setup = Path(ros_setup).expanduser() if ros_setup else DEFAULT_ROS_SETUP
         self.vla_topic = vla_topic
+        self.location_coords = location_coords if location_coords is not None else LOCATION_COORDS
         self._tools: dict[str, ToolFn] = {
             "navigate_to": self.navigate_to,
             "detect_object": self.detect_object,
+            "detect_color": self.detect_color,
             "vla_manipulate": self.vla_manipulate,
             "verify_navigation": self.verify_navigation,
             "verify_grasp": self.verify_grasp,
@@ -52,13 +75,39 @@ class ToolRegistry:
             return ToolResult(tool=tool, success=False, message=f"Tool {tool} raised: {exc}")
 
     def navigate_to(self, location: str) -> ToolResult:
-        # Replace with Nav2 action client or VLN service later.
-        return ToolResult(
-            tool="navigate_to",
-            success=True,
-            message=f"Mock navigation reached {location}",
-            observations={"location": location, "mode": "mock"},
-        )
+        coord = self.location_coords.get(location)
+        if coord is None:
+            return ToolResult(
+                tool="navigate_to",
+                success=False,
+                message=f"Unknown location: {location}",
+                observations={"location": location},
+            )
+
+        if not self.real_navigation:
+            return ToolResult(
+                tool="navigate_to",
+                success=True,
+                message=f"Mock navigation reached {location}",
+                observations={"location": location, "coord": coord, "mode": "mock"},
+            )
+
+        x, y, yaw = coord
+        try:
+            self._navigate_to_pose(x, y, yaw)
+            return ToolResult(
+                tool="navigate_to",
+                success=True,
+                message=f"导航到 {location} ({x:.2f}, {y:.2f}) 完成",
+                observations={"location": location, "coord": coord, "mode": "real"},
+            )
+        except Exception as exc:
+            return ToolResult(
+                tool="navigate_to",
+                success=False,
+                message=f"导航失败: {exc}",
+                observations={"location": location, "coord": coord},
+            )
 
     def detect_object(self, object_name: str) -> ToolResult:
         # Replace with detector/VLM grounding later.
@@ -67,6 +116,31 @@ class ToolRegistry:
             success=True,
             message=f"Mock detector found {object_name}",
             observations={"object_name": object_name, "confidence": 0.9, "mode": "mock"},
+        )
+
+    def detect_color(self, location: str = "") -> ToolResult:
+        """识别当前相机画面中目标的颜色（绿色 / 红色）。
+
+        接口预留：后续接入摄像头 + YOLO。
+        真实实现大致流程：
+          1. 订阅相机图像话题（如 /camera_sensor/image_raw，见 test.world 里的
+             camera_sensor 深度相机 / camera 彩色相机）
+          2. 运行 YOLO 检测目标
+          3. 根据目标颜色返回 "green" / "red" / "none"
+
+        决策约定（供 planner 分支使用，见 planner.py 注释）：
+          - "green" → 巡检下一个房间
+          - "red"   → 前往该房间桌子（LOCATION_COORDS 里的 `<room>_table`），
+                      调用 vla_manipulate 抓取杯子再放回，然后巡检下一个房间
+
+        当前为 mock 占位，默认返回 "green"。
+        """
+        # TODO: 接入摄像头 + YOLO，返回真实识别到的颜色。
+        return ToolResult(
+            tool="detect_color",
+            success=True,
+            message=f"Mock color detection at {location}: green",
+            observations={"location": location, "color": "green", "mode": "mock"},
         )
 
     def vla_manipulate(self, instruction: str) -> ToolResult:
@@ -142,3 +216,36 @@ class ToolRegistry:
         completed = subprocess.run(["bash", "-lc", command], text=True, capture_output=True, timeout=20)
         if completed.returncode != 0:
             raise RuntimeError(f"ros2 topic pub failed\nstdout={completed.stdout}\nstderr={completed.stderr}")
+
+    def _navigate_to_pose(self, x: float, y: float, yaw: float, timeout: float = 120.0) -> None:
+        """通过 ros2 action 阻塞调用 Nav2 NavigateToPose 并等待到达。"""
+        if not self.ros_setup.exists():
+            raise FileNotFoundError(f"ROS setup file not found: {self.ros_setup}")
+
+        qz = math.sin(yaw / 2.0)
+        qw = math.cos(yaw / 2.0)
+        goal = {
+            "pose": {
+                "header": {"frame_id": "map"},
+                "pose": {
+                    "position": {"x": float(x), "y": float(y), "z": 0.0},
+                    "orientation": {"x": 0.0, "y": 0.0, "z": qz, "w": qw},
+                },
+            },
+        }
+        command = " ".join(
+            [
+                "source",
+                shlex.quote(str(self.ros_setup)),
+                "&&",
+                "ros2",
+                "action",
+                "send_goal",
+                "/navigate_to_pose",
+                "nav2_msgs/action/NavigateToPose",
+                shlex.quote(json.dumps(goal, ensure_ascii=False)),
+            ]
+        )
+        completed = subprocess.run(["bash", "-lc", command], text=True, capture_output=True, timeout=timeout)
+        if completed.returncode != 0:
+            raise RuntimeError(f"ros2 action send_goal failed\nstdout={completed.stdout}\nstderr={completed.stderr}")

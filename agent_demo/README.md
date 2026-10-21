@@ -14,7 +14,7 @@
 ## 使用 DeepSeek 兼容 API 运行
 
 ```bash
-cd /root/openvla_new/VLA_ROBOT/agent_demo
+cd agent_demo
 export DEEPSEEK_API_KEY="your key"
 python3 main.py "去厨房拿一杯水回来" --print-plan
 ```
@@ -24,6 +24,45 @@ python3 main.py "去厨房拿一杯水回来" --print-plan
 - `OpenAI(...)`
 - `base_url="https://api.deepseek.com"`
 - 默认模型：`deepseek-v4-pro`
+
+## 巡检 demo（输入"开始巡检"，小车依次到各房间）
+
+固定巡检路线由 `planner.PATROL_ROUTE` 定义，各地点坐标在 `tools.LOCATION_COORDS` 配置。Mock 模式（无需 ROS，只打印计划）：
+
+```bash
+cd agent_demo
+python3 main.py "开始巡检" --mock-planner --print-plan
+```
+
+真实导航模式（需已启动 base_robot + navigation 两个 launch）：
+
+```bash
+cd agent_demo
+python3 main.py "开始巡检" --mock-planner --real-navigation
+```
+
+`--real-navigation` 会通过 `ros2 action send_goal /navigate_to_pose` 逐点真实导航小车。默认 `ros_setup` 路径在 `tools.py` 里按项目根目录自动解析，通常无需 `--ros-setup`；若工作空间不在默认位置，可显式传入 `--ros-setup`。
+
+## 颜色识别巡检（规划中，接口已预留）
+
+计划在巡检中加入摄像头 + YOLO 颜色识别，按识别结果分支：
+
+```text
+for room in PATROL_ROUTE:
+    navigate_to(room)
+    color = detect_color(room).observations["color"]
+    if color == "green":
+        continue                            # 巡检下一个房间
+    elif color == "red":
+        navigate_to(f"{room}_table")        # 来到该房间的桌子面前
+        vla_manipulate("抓取杯子")
+        vla_manipulate("放回杯子")
+        continue                            # 巡检下一个房间
+```
+
+- `detect_color` 工具接口已加进 `tools.py`（当前 mock 返回 `"green"`），后续只需把内部实现换成「订阅相机图像 → YOLO 检测 → 返回颜色」。
+- 各房间桌子坐标已预留 `LOCATION_COORDS["<room>_table"]`，需按实际地图填值。
+- 分支逻辑见 `planner.py` 中 `_mock_plan` 的 TODO 注释，需后续在 executor/planner 里引入条件分支（或复用 replan 机制）。
 
 ## 当前可用工具
 
@@ -43,8 +82,9 @@ ToolResult(
 
 | 工具 | 参数 | 当前行为 | 后续真实实现 |
 |---|---|---|---|
-| `navigate_to` | `location: str` | Mock 成功。返回 `observations.location` 和 `mode="mock"`。 | 替换为 Nav2 `NavigateToPose` action、VLN service 或语义导航模块。 |
+| `navigate_to` | `location: str` | 默认 Mock 成功。`--real-navigation` 时通过 Nav2 `NavigateToPose` action 真实导航到 `tools.LOCATION_COORDS` 里配置的坐标。 | 已接 Nav2；后续可换 VLN service 或语义导航模块。 |
 | `detect_object` | `object_name: str` | Mock 成功，置信度为 `0.9`。 | 替换为目标检测器 / VLM grounding，例如 YOLO、GroundingDINO、RGB-D 检测或场景图查询。 |
+| `detect_color` | `location: str`（可选） | Mock 成功，返回 `observations.color="green"`。 | 接入摄像头 + YOLO，识别画面中绿色/红色目标，返回 `"green"` / `"red"` / `"none"`。 |
 | `vla_manipulate` | `instruction: str` | 默认 Mock 成功。使用 `--real-vla-publish` 时，会将 `instruction` 作为 `std_msgs/msg/String` 发布到 `/vla_instruction`。 | 保持为 OpenVLA bridge 入口，或后续替换为能报告完成状态的 ROS action/service。 |
 | `verify_navigation` | `location: str` | Mock 成功，`distance_to_goal=0.0`。 | 替换为 Nav2 action result 加 TF/AMCL 位姿阈值检查。 |
 | `verify_grasp` | `object_name: str | None` | Mock 成功，`attached=True`。 | 替换为 Gazebo grasp plugin 事件、夹爪/接触传感器、力反馈或视觉确认。 |
@@ -91,7 +131,7 @@ python3 main.py "拿起前面的杯子" --mock-planner
 
 ```bash
 python3 main.py "拿起前面的杯子" --mock-planner --real-vla-publish \
-  --ros-setup /root/openvla_new/VLA_ROBOT/base_robot_ws/install/setup.bash
+  --ros-setup $PROJECT_ROOT/base_robot_ws/install/setup.bash
 ```
 
 这会发布到：
@@ -266,7 +306,7 @@ Planner 会被要求只使用这些地点。后续该列表应来自地图配置
 
 ```bash
 python3 main.py "拿起前面的杯子" --mock-planner --real-vla-publish \
-  --ros-setup /root/openvla_new/VLA_ROBOT/base_robot_ws/install/setup.bash
+  --ros-setup $PROJECT_ROOT/base_robot_ws/install/setup.bash
 ```
 
 导航、感知和验证当前仍是 mock 占位。后续需要将 `tools.py` 中的方法替换为 Nav2/VLN/感知/verifier 集成。
