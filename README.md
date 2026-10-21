@@ -47,6 +47,88 @@ VLA_ROBOT/
 
 ---
 
+## 🧪 VLA 夹取测试
+
+通过 OpenVLA 驱动机械臂夹取物体，三终端流程：**VLA 服务 → 仿真 → 测试脚本**。
+
+### 终端 1：启动 OpenVLA 服务（mamba/conda 独立环境）
+
+```bash
+cd openvla/vla-scripts
+mamba activate vla_env          # 独立 Python 环境，避免与 ROS2 冲突
+python3 deploy_4bit.py          # 默认 openvla/openvla-7b，监听 http://127.0.0.1:8000/act
+# 权重已缓存可离线加载：
+# HF_HUB_OFFLINE=1 python3 deploy_4bit.py
+```
+
+### 终端 2：启动仿真
+
+```bash
+cd base_robot_ws
+source install/setup.bash
+ros2 launch base_robot base_robot.launch.py
+```
+
+### 终端 3：运行 VLA 夹取测试脚本
+
+```bash
+cd base_robot_ws
+source install/setup.bash
+ros2 run base_robot vla_grasp_test.py
+```
+
+### vla_grasp_test.py 参数
+
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `--instruction` | `pick up the coke can` | 发送给 VLA 的自然语言指令 |
+| `--object` | `coke_can` | 目标物体名（用于匹配 `grasp_events` 附着事件） |
+| `--timeout` | `120` | 等待夹取的超时时间（秒） |
+
+示例：
+
+```bash
+# 夹取可乐瓶（默认指令/物体/超时）
+ros2 run base_robot vla_grasp_test.py
+
+# 夹取啤酒瓶，指定指令与超时
+ros2 run base_robot vla_grasp_test.py --instruction "pick up the beer" --object beer --timeout 90
+```
+
+> 运行逻辑：脚本先持久订阅 `/gazebo/default/grasp_events` 监听附着事件 → 向 `/vla_instruction` 发布指令触发 VLA → 检测到 `attached: true` 判定夹取成功 → 发布 `stay still` 停止机械臂。
+
+VLA 指令也可运行时手动动态切换：
+
+```bash
+ros2 topic pub /vla_instruction std_msgs/msg/String "data: 'pick up the coke can'" -1
+```
+
+---
+
+## 🚀 V1.4.0 | VLA 夹取测试与相机/夹爪修复
+
+**发布日期**：2026-10-21
+**版本状态**：✅ 当前版本
+
+### ✨ 新增功能
+- **VLA 夹取测试脚本** (`vla_grasp_test.py`)：通过 `/vla_instruction` 触发 VLA 桥接节点驱动机械臂夹取物体，监听 `grasp_events` 附着事件确认夹取结果，支持 `--instruction` / `--object` / `--timeout` 参数
+
+### 🛠️ 优化 / 改进
+- **相机话题修复** (`base_robot.launch.py`)：`vla_gazebo_bridge` 节点新增 `camera_topic` 参数，指向 `test.world` 中腕部摄像头的实际话题 `/camera_sensor/image_raw`（此前误订阅 `/wrist_camera_sensor/image_raw`，导致画面全黑、VLA 无输入、机械臂不动）
+- **相机朝向修复** (`test.world`)：腕部相机 sensor pose 由 `yaw=180°`（朝上/朝后拍摄天花板）改为 `pitch=-90°`（沿手指方向朝物体拍摄）
+- **夹爪映射修复** (`vla_gazebo_bridge.py`)：VLA 夹爪输出按 `[0,1]`（0=闭合，1=张开）直接映射，修复旧代码 `(x+1)/2` 把 `[0,1]` 误当 `[-1,1]` 处理、导致夹爪永远半开夹不住的问题
+- **CMakeLists 注册新脚本**：`vla_grasp_test.py`
+
+### 📌 关键变更说明
+| 文件 | 变更内容 |
+|------|----------|
+| `vla_grasp_test.py` | 新增 VLA 夹取测试脚本 |
+| `base_robot.launch.py` | 新增 camera_topic 参数修复相机话题 |
+| `test.world` | 修复腕部相机朝向（yaw 180° → pitch -90°） |
+| `vla_gazebo_bridge.py` | 修复夹爪 [0,1] 映射 |
+
+---
+
 ## 🚀 V1.4.0 | 决策 Agent 与真实导航集成
 
 **发布日期**：2026-10-21
