@@ -21,6 +21,8 @@ install(PROGRAMS
   scripts/auto_task.py
   scripts/simple_commander.py
   scripts/test_kdl_roundtrip.py
+  scripts/nav_waypoints.py
+  scripts/set_initial_pose.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

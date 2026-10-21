@@ -3,12 +3,11 @@ import launch
 import launch_ros
 from ament_index_python.packages import get_package_share_directory
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.actions import RegisterEventHandler
+from launch.actions import RegisterEventHandler, TimerAction
 from launch.event_handlers import OnProcessExit
 
 
 def generate_launch_description():
-    robot_name_in_model = 'base_robot'
     urdf_tutorial_path = get_package_share_directory('base_robot')
     default_model_path = urdf_tutorial_path + '/urdf/4_robot/4_robot.urdf.xacro'
     default_world_path = urdf_tutorial_path + '/world/test.world'
@@ -36,6 +35,8 @@ def generate_launch_description():
     )
 
     # --- 2. Gazebo 启动 ---
+    # 注意：test.world 内已包含 base_robot 模型（含 diff_drive / gazebo_ros2_control /
+    # 传感器 / grasp_fix 等插件），因此无需再通过 spawn_entity 生成实体。
     launch_gazebo = launch.actions.IncludeLaunchDescription(
         PythonLaunchDescriptionSource([get_package_share_directory('gazebo_ros'), '/launch', '/gazebo.launch.py']),
         launch_arguments=[
@@ -44,35 +45,28 @@ def generate_launch_description():
         ]
     )
 
-    # --- 3. 生成实体 ---
-    spawn_entity_node = launch_ros.actions.Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
-        arguments=['-topic', '/robot_description', '-entity', robot_name_in_model],
-    )
-
-    # --- 4. 加载 joint_state_broadcaster ---
+    # --- 3. 加载 joint_state_broadcaster ---
     load_joint_state_broadcaster = launch_ros.actions.Node(
         package="controller_manager",
         executable="spawner",
         arguments=["joint_state_broadcaster"],
     )
 
-    # --- 5. 加载 arm_controller ---
+    # --- 4. 加载 arm_controller ---
     load_arm_controller = launch_ros.actions.Node(
         package="controller_manager",
         executable="spawner",
         arguments=["arm_controller"],
     )
 
-    # --- 6. 加载 gripper_controller ---
+    # --- 5. 加载 gripper_controller ---
     load_gripper_controller = launch_ros.actions.Node(
         package="controller_manager",
         executable="spawner",
         arguments=["gripper_controller"],
     )
 
-    # --- 7. 语音播报节点 ---
+    # --- 6. 语音播报节点 ---
     tts_node = launch_ros.actions.Node(
         package='base_robot',
         executable='tts_node.py',
@@ -83,7 +77,7 @@ def generate_launch_description():
         ]
     )
 
-    # --- 8. 启动 vla_gazebo_bridge ---
+    # --- 7. 启动 vla_gazebo_bridge ---
     vla_gazebo_bridge_node = launch_ros.actions.Node(
         package="base_robot",
         executable="vla_gazebo_bridge.py",
@@ -99,13 +93,13 @@ def generate_launch_description():
         action_declare_arg_model_path,
         robot_state_publisher_node,
         launch_gazebo,
-        spawn_entity_node,
         tts_node,
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=spawn_entity_node,
-                on_exit=[load_joint_state_broadcaster],
-            )
+        # 等 Gazebo 加载完 world（含 gazebo_ros2_control 插件）后再加载控制器。
+        # 用定时器替代原先的 spawn_entity 退出事件，避免 spawn_entity 因
+        # "already exists" / 服务超时导致控制器事件链卡住。
+        TimerAction(
+            period=8.0,
+            actions=[load_joint_state_broadcaster],
         ),
         RegisterEventHandler(
             event_handler=OnProcessExit(

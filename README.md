@@ -45,10 +45,39 @@ VLA_ROBOT/
 
 ---
 
+## 🚀 V1.3.0 | 多点自主导航与启动健壮性增强
+
+**发布日期**：2026-10-21
+**版本状态**：✅ 当前版本
+
+### ✨ 新增功能
+- **多点自主导航脚本** (`nav_waypoints.py`)：按顺序依次前往地图上多个目标点（map 坐标系），支持单点超时、失败跳过、到达停留等配置，作为抓取任务与全场景巡检的导航基础
+- **AMCL 初始位姿自动发布节点** (`set_initial_pose.py`)：Nav2 Humble 的 AMCL 已不再读取 yaml 里的 `set_initial_pose` / `initial_pose` 参数，新增节点在导航启动后自动向 `/initialpose` 发布位姿，确保定位正确
+- **自主任务导航回原点** (`auto_task.py`)：抓取完成后自动调用 Nav2 导航回原点 `(0, 0, 0)`
+
+### 🛠️ 优化 / 改进
+- **移除冗余 spawn_entity** (`base_robot.launch.py`)：`test.world` 已内嵌 `base_robot` 模型（含 diff_drive / gazebo_ros2_control / 传感器 / grasp_fix 等插件），移除 `spawn_entity` 后改用 `TimerAction` 定时加载控制器，根治 `Entity already exists` / 服务响应超时导致的控制器加载事件链卡死
+- **导航启动自动定位** (`navigation.launch.py`)：挂载初始位姿发布节点，无需再在 RViz 手动 2D Pose Estimate
+- **AMCL 初始位姿对齐** (`my_nav_params.yaml`)：`initial_pose` 与机器人出生点 `(2.0279, 1.8948, yaw 1.7867)` 保持一致
+- **夹爪张开鲁棒性提升** (`auto_task.py`)：张开指令发送次数 3→5、等待时长增加，降低首条指令丢失概率
+- **CMakeLists 注册新脚本**：`nav_waypoints.py` / `set_initial_pose.py`
+
+### 📌 关键变更说明
+| 文件 | 变更内容 |
+|------|----------|
+| `nav_waypoints.py` | 新增多点导航脚本 |
+| `set_initial_pose.py` | 新增 AMCL 初始位姿发布节点 |
+| `base_robot.launch.py` | 移除 spawn_entity，TimerAction 定时加载控制器 |
+| `navigation.launch.py` | 挂载初始位姿发布节点 |
+| `auto_task.py` | 新增导航回原点 + 夹爪鲁棒性提升 |
+| `my_nav_params.yaml` | AMCL 初始位姿对齐机器人出生点 |
+
+---
+
 ## 🚀 V1.2.0 | 夹爪抓取修复与底盘控制增强
 
 **发布日期**：2026-06-03
-**版本状态**：✅ 当前版本
+**版本状态**：✅ 正式发布
 
 ### ✨ 新增功能
 - **夹爪抓取修复插件** (`gazebo_grasp_plugin`)：移植自 [gazebo-pkgs](https://github.com/JenniferBuehler/gazebo-pkgs)，以 fixed joint 方案根治 Gazebo ODE 仿真中夹爪穿模/弹飞/打滑问题。纯 C++ Model Plugin，源码约 1250 行

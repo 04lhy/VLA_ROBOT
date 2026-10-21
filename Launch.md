@@ -70,9 +70,9 @@ source install/setup.bash
 ros2 launch base_robot base_robot.launch.py
 ```
 
-> **启动顺序链**：robot_state_publisher → Gazebo → 生成实体 → joint_state_broadcaster → arm_controller → gripper_controller → vla_gazebo_bridge
+> **启动顺序链**：robot_state_publisher → Gazebo → joint_state_broadcaster → arm_controller → gripper_controller → vla_gazebo_bridge
 >
-> 各环节通过 `RegisterEventHandler(OnProcessExit(...))` 串行启动，确保前一节点正常退出后再启动下一节点。
+> 机器人实体由 `test.world` 直接加载（不再通过 `spawn_entity` 生成）。控制器通过 `TimerAction`（延迟 8s，等待 Gazebo 加载完成）触发首个 spawner，后续各环节再通过 `RegisterEventHandler(OnProcessExit(...))` 串行启动。
 >
 > **关键修复插件**：
 > - `libgazebo_grasp_fix.so` — 通过 arm.xacro 及 test.world 中的 `<gazebo>` 标签自动加载。采用 fixed joint 方案根治仿真中夹爪穿模/弹飞/打滑问题。详见 `夹爪抓取问题分析与修复方案.md`。
@@ -100,6 +100,8 @@ ros2 launch base_robot navigation.launch.py
 ```
 
 > 启动 Nav2 bringup + RViz2，使用 `maps/room1.yaml` 地图和 `config/my_nav_params.yaml` 参数。
+>
+> AMCL 初始位姿会由 `set_initial_pose.py` 节点在启动后自动发布（无需在 RViz 手动 2D Pose Estimate）。初始位姿坐标在 `navigation.launch.py` 中配置，需与 `test.world` 中机器人出生点保持一致。
 >
 > 依赖：`ros-humble-navigation2`、`ros-humble-nav2-bringup`
 
@@ -142,8 +144,9 @@ ros2 run base_robot auto_task.py
 > 2. 夹爪完全张开 → 机械臂移动到预抓取位姿 1 → 移动到抓取位姿 2
 > 3. 夹爪闭合 → 等待附着确认（最多 90s 超时）
 > 4. 检测到附着成功 → 机械臂抬升至安全位姿
+> 5. 自主导航回原点 `(0, 0, 0)`
 >
-> 需先启动 2.1 核心仿真（不再需要 2.3 导航功能）。
+> 需先启动 2.1 核心仿真与 2.3 导航功能（第 5 步依赖 Nav2 导航栈）。
 
 ### 2.7 VLA 轻量化部署
 
@@ -218,6 +221,21 @@ python3 asr_mic_to_vla.py --list-devices
 ```bash
 python3 asr_mic_to_vla.py --input-device-index 2
 ```
+
+### 2.10 多点自主导航
+
+```bash
+cd $WS/base_robot_ws
+source install/setup.bash
+ros2 run base_robot nav_waypoints.py
+```
+
+> 依次前往多个地图目标点（`map` 坐标系），用于验证导航栈或执行巡检任务。
+>
+> 目标点列表在 `nav_waypoints.py` 顶部的 `WAYPOINTS` 列表中修改，每个点格式为 `(x, y, yaw)`；`WAIT_AT_WAYPOINT` 控制到达后停留时间，`NAV_TIMEOUT` 控制单点超时，`STOP_ON_FAILURE` 控制失败时是否停止。
+>
+> 需先启动 2.1 核心仿真与 2.3 导航功能。
+
 ---
 
 ## 三、包结构说明
@@ -227,7 +245,7 @@ python3 asr_mic_to_vla.py --input-device-index 2
 | 目录/文件 | 说明 |
 |-----------|------|
 | `launch/*.launch.py` | 4 个启动文件（base_robot / rviz / navigation / move） |
-| `scripts/` | 6 个 Python 脚本（见下表） |
+| `scripts/` | 9 个 Python 脚本（见下表） |
 | `urdf/4_robot/` | 机器人 URDF/Xacro 模型定义 |
 | `world/` | Gazebo 世界文件（test.world 等） |
 | `config/` | 控制器/Nav2/SLAM/RViz 配置文件 |
@@ -239,11 +257,14 @@ python3 asr_mic_to_vla.py --input-device-index 2
 | 脚本 | 功能 |
 |------|------|
 | `simple_commander.py` | Tkinter GUI：6 轴机械臂 + 双指夹爪 + 底盘控制 |
-| `auto_task.py` | 自主抓取演示任务（含附着检测） |
+| `auto_task.py` | 自主抓取演示任务（附着检测 + 导航回原点） |
+| `nav_waypoints.py` | 多点自主导航（顺序前往多个目标点） |
+| `set_initial_pose.py` | AMCL 初始位姿自动发布 |
 | `vla_gazebo_bridge.py` | VLA 推理结果 → Gazebo 关节指令桥接 |
 | `tts_node.py` | 语音播报节点 |
 | `test_kdl_roundtrip.py` | KDL 正逆运动学往返精度测试 |
-| `vla_test_action.py` | VLA action 测试 |
+| `fake_diff_drive.py` | 差速驱动模拟（离线调试） |
+| `arm_control_gui.py` | 机械臂 GUI 控制 |
 
 ### 3.2 kdl_parser_ros2
 
