@@ -10,7 +10,7 @@ from launch.event_handlers import OnProcessExit
 def generate_launch_description():
     urdf_tutorial_path = get_package_share_directory('base_robot')
     default_model_path = urdf_tutorial_path + '/urdf/4_robot/4_robot.urdf.xacro'
-    default_world_path = urdf_tutorial_path + '/world/test.world'
+    default_world_path = urdf_tutorial_path + '/world/demo_scene.world'
 
     action_declare_arg_model_path = launch.actions.DeclareLaunchArgument(
         name='model',
@@ -35,7 +35,7 @@ def generate_launch_description():
     )
 
     # --- 2. Gazebo 启动 ---
-    # 注意：test.world 内已包含 base_robot 模型（含 diff_drive / gazebo_ros2_control /
+    # 注意：demo_scene.world 内已包含 base_robot 模型（含 diff_drive / gazebo_ros2_control /
     # 传感器 / grasp_fix 等插件），因此无需再通过 spawn_entity 生成实体。
     launch_gazebo = launch.actions.IncludeLaunchDescription(
         PythonLaunchDescriptionSource([get_package_share_directory('gazebo_ros'), '/launch', '/gazebo.launch.py']),

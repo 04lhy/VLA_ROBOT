@@ -39,10 +39,10 @@ amcl:
     z_short: 0.05
     scan_topic: /laserscan/out
     initial_pose:
-      x: 2.0279
-      y: 1.8948
+      x: 0.0
+      y: 0.0
       z: 0.0
-      yaw: 1.7867
+      yaw: 0.0
     set_initial_pose: true
 
 bt_navigator:

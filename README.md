@@ -105,10 +105,29 @@ ros2 topic pub /vla_instruction std_msgs/msg/String "data: 'pick up the coke can
 
 ---
 
+---
+
+## 🚀 V1.5.0 | 更换工厂巡检地图
+
+**发布日期**：2026-10-22
+**版本状态**：✅ 当前版本
+
+### ✨ 新增功能
+- **新工厂巡检场景**（`world/demo_scene.world`）：4 个房间（西南红/东南蓝/东北黄/西北绿指示牌）+ 4 张桌子 + 4 个杯子，机器人出生在中央走廊 `(0,0,0)`
+- **SDF 直接生成导航地图**（`maps/demo_scene.yaml` / `demo_scene.pgm`）：由世界几何（墙/门/桌）栅格化生成，8 个巡检点全部连通可用，无需 SLAM
+- **专用 SLAM RViz 配置**（`config/slam.rviz`）：固定坐标系 `map`，含地图/雷达/机器人显示，修复原 `rviz.launch.py` 无配置导致的 RViz 空白
+
+### 🛠️ 优化 / 改进
+- `navigation.launch.py` / `set_initial_pose.py` / `my_nav_params.yaml` 的 AMCL 初始位姿对齐新出生点 `(0,0,0)`
+- `nav_waypoints.py` / `agent_demo/tools.py` 的巡检坐标表更新为新工厂 8 个巡检点（4 房间指示牌前 + 桌前）
+- `nav_waypoints.py` 单点导航超时 `NAV_TIMEOUT` 120s → 300s（新工厂跨房间路径更长，原超时偏紧）
+
+---
+
 ## 🚀 V1.4.0 | VLA 夹取测试与相机/夹爪修复
 
 **发布日期**：2026-10-21
-**版本状态**：✅ 当前版本
+**版本状态**：✅ 正式发布
 
 ### ✨ 新增功能
 - **VLA 夹取测试脚本** (`vla_grasp_test.py`)：通过 `/vla_instruction` 触发 VLA 桥接节点驱动机械臂夹取物体，监听 `grasp_events` 附着事件确认夹取结果，支持 `--instruction` / `--object` / `--timeout` 参数
@@ -127,12 +146,13 @@ ros2 topic pub /vla_instruction std_msgs/msg/String "data: 'pick up the coke can
 | `test.world` | 修复腕部相机朝向（yaw 180° → pitch -90°） |
 | `vla_gazebo_bridge.py` | 修复夹爪 [0,1] 映射 |
 
+
 ---
 
 ## 🚀 V1.4.0 | 决策 Agent 与真实导航集成
 
 **发布日期**：2026-10-21
-**版本状态**：✅ 当前版本
+**版本状态**：✅ 正式发布
 
 ### ✨ 新增功能
 - **决策 agent 框架** (`agent_demo/`)：plan-execute 架构。Planner 通过 DeepSeek/OpenAI 兼容 API 调用 LLM 生成受限 JSON 计划，Executor 执行白名单工具（导航 / 检测 / 操作 / 验证），失败时自动 replan 重规划

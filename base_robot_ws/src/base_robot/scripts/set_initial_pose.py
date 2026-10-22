@@ -18,9 +18,9 @@ from geometry_msgs.msg import PoseWithCovarianceStamped
 class InitialPosePublisher(Node):
     def __init__(self):
         super().__init__('set_initial_pose')
-        self.declare_parameter('x', 2.0279)
-        self.declare_parameter('y', 1.8948)
-        self.declare_parameter('yaw', 1.7867)
+        self.declare_parameter('x', 0.0)
+        self.declare_parameter('y', 0.0)
+        self.declare_parameter('yaw', 0.0)
         self.declare_parameter('delay', 15.0)
         self.declare_parameter('repeat', 3)
 

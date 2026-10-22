@@ -9,6 +9,7 @@ def generate_launch_description():
     urdf_tutorial_path = get_package_share_directory('base_robot')
     default_model_path = os.path.join(urdf_tutorial_path, 'urdf', '4_robot', '4_robot.urdf.xacro')
     my_slam_params_file = os.path.join(urdf_tutorial_path, 'config', 'my_slam_params.yaml')
+    rviz_config_file = os.path.join(urdf_tutorial_path, 'config', 'slam.rviz')
     
     # --- 1. 声明参数 ---
     action_declare_arg_model_path = launch.actions.DeclareLaunchArgument(
@@ -35,10 +36,11 @@ def generate_launch_description():
         ]
     )
 
-    # RViz2: 开启仿真时间以对齐坐标轴
+    # RViz2: 开启仿真时间以对齐坐标轴（加载 nav2 默认视图，含地图/雷达/机器人显示）
     rviz_node = launch_ros.actions.Node(
         package='rviz2',
         executable='rviz2',
+        arguments=['-d', rviz_config_file],
         parameters=[{'use_sim_time': True}]
     )
 

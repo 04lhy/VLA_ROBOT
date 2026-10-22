@@ -89,6 +89,8 @@ ros2 launch base_robot rviz.launch.py
 
 > 启动 async_slam_toolbox_node + RViz2，用于建图。需先启动 2.1 核心仿真。
 >
+> 说明：当前工厂场景的地图 `maps/demo_scene.yaml` / `demo_scene.pgm` 已由 SDF 世界几何直接生成（`world/demo_scene.world`），无需重新 SLAM。仅当修改了工厂结构时才需要重新建图并 `map_saver` 覆盖保存。
+>
 > 依赖：`ros-humble-slam-toolbox`
 
 ### 2.3 导航功能
@@ -99,9 +101,9 @@ source install/setup.bash
 ros2 launch base_robot navigation.launch.py
 ```
 
-> 启动 Nav2 bringup + RViz2，使用 `maps/room1.yaml` 地图和 `config/my_nav_params.yaml` 参数。
+> 启动 Nav2 bringup + RViz2，使用 `maps/demo_scene.yaml` 地图和 `config/my_nav_params.yaml` 参数。
 >
-> AMCL 初始位姿会由 `set_initial_pose.py` 节点在启动后自动发布（无需在 RViz 手动 2D Pose Estimate）。初始位姿坐标在 `navigation.launch.py` 中配置，需与 `test.world` 中机器人出生点保持一致。
+> AMCL 初始位姿会由 `set_initial_pose.py` 节点在启动后自动发布（无需在 RViz 手动 2D Pose Estimate）。初始位姿坐标在 `navigation.launch.py` 中配置，需与 `demo_scene.world` 中机器人出生点 `(0,0,0)` 保持一致。
 >
 > 依赖：`ros-humble-navigation2`、`ros-humble-nav2-bringup`
 

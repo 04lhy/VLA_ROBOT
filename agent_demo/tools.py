@@ -20,21 +20,23 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ROS_SETUP = PROJECT_ROOT / "base_robot_ws" / "install" / "setup.bash"
 DEFAULT_VLA_TOPIC = "/vla_instruction"
 
-# 语义地点 → 地图坐标 (x, y, yaw) 的 grounding 表。
-# 与 nav_waypoints.py 的 WAYPOINTS / test.world 机器人出生点保持一致，按实际地图修改。
+# 语义地点 → map 坐标 (x, y, yaw) 的 grounding 表。
+# map 帧与 Gazebo 世界帧是同一坐标系（见 maps/demo_scene.yaml 的 origin 只是地图像素左下角位置）。
+# 与 nav_waypoints.py 的 WAYPOINTS 保持一致。
 LOCATION_COORDS = {
-    "start": (2.0279, 1.8948, 1.7867),  # 机器人出生点
-    "room1": (3.5, 3.0, 0.0),
-    "room2": (3.5, -1.5, 0.0),
-    "room3": (5.0, 0.5, 0.0),
-    "room4": (0.5, 5.0, 0.0),
+    "start": (0.0, 0.0, 0.0),  # 机器人出生点 = 工厂中央走廊
+    # 4 个房间的「指示牌前」坐标（世界坐标系，与 nav_waypoints.py 一致）
+    # room1 西南(红)  room2 东南(蓝)  room3 东北(黄)  room4 西北(绿)
+    "room1": (-20.447, -14.889, 3.1416),
+    "room2": (21.333, -14.889, 0.0),
+    "room3": (21.333, 14.436, 0.0),
+    "room4": (-20.447, 14.122, 3.1416),
     "home": (0.0, 0.0, 0.0),
-    # 每间房的桌子坐标（检测到红色目标时，前往该房间桌子前抓取杯子）。
-    # 示例值，需按实际地图/桌子摆放位置调整。
-    "room1_table": (3.5, 3.5, 0.0),
-    "room2_table": (3.5, -1.0, 0.0),
-    "room3_table": (5.0, 1.0, 0.0),
-    "room4_table": (0.5, 5.5, 0.0),
+    # 每间房的「桌前」坐标（检测到红色目标时，前往该房间桌子前抓取杯子）。
+    "room1_table": (-18.062, -10.526, 0.0),
+    "room2_table": (15.082, -11.489, 3.1416),
+    "room3_table": (15.687, 12.585, 3.1416),
+    "room4_table": (-18.238, 12.883, 0.0),
 }
 
 ToolFn = Callable[..., ToolResult]

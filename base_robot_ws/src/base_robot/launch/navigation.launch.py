@@ -15,7 +15,7 @@ def generate_launch_description():
     # ========== 核心修改：地图路径调整 ==========
     map_yaml_path = launch.substitutions.LaunchConfiguration(
         'map',
-        default=os.path.join(base_robot_dir, 'maps', 'room1.yaml')
+        default=os.path.join(base_robot_dir, 'maps', 'demo_scene.yaml')
     )
     nav2_param_path = launch.substitutions.LaunchConfiguration(
         'params_file',
@@ -32,9 +32,9 @@ def generate_launch_description():
         name='set_initial_pose',
         parameters=[
             {'use_sim_time': use_sim_time},
-            {'x': 2.0279},
-            {'y': 1.8948},
-            {'yaw': 1.7867},
+            {'x': 0.0},
+            {'y': 0.0},
+            {'yaw': 0.0},
             {'delay': 15.0},
         ],
         output='screen'
