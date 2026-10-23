@@ -159,6 +159,7 @@ class VLAGazeboBridge(Node):
         self.declare_parameter('instruction', 'stay still')
         self.declare_parameter('camera_topic', '/wrist_camera_sensor/image_raw')
         self.declare_parameter('server_url', 'http://127.0.0.1:8000/act')
+        self.declare_parameter('server_timeout', 15.0)  # 推理延迟 2-3s/step，超时需留足余量
         self.declare_parameter('position_scale', 0.5)
         self.declare_parameter('rotation_scale', 0.5)
         self.declare_parameter('max_linear_step', 0.05)  # 最大线位移步长（米）
@@ -172,6 +173,7 @@ class VLAGazeboBridge(Node):
         self.instruction = self.get_parameter('instruction').get_parameter_value().string_value
         self.camera_topic = self.get_parameter('camera_topic').get_parameter_value().string_value
         self.server_url = self.get_parameter('server_url').get_parameter_value().string_value
+        self.server_timeout = self.get_parameter('server_timeout').get_parameter_value().double_value
         self.position_scale = self.get_parameter('position_scale').get_parameter_value().double_value
         self.rotation_scale = self.get_parameter('rotation_scale').get_parameter_value().double_value
         self.max_linear_step = self.get_parameter('max_linear_step').get_parameter_value().double_value
@@ -296,7 +298,7 @@ class VLAGazeboBridge(Node):
             }
 
             self.get_logger().info("Sending request to VLA server...")
-            response = requests.post(self.server_url, json=payload, timeout=5.0)
+            response = requests.post(self.server_url, json=payload, timeout=self.server_timeout)
             
             if response.status_code == 200:
                 result = response.json()
@@ -398,13 +400,11 @@ class VLAGazeboBridge(Node):
 
         # Step 5: 夹爪控制
         gripper_cmd = float(action_array[6])
-        # 映射到 joint7/joint8 的范围（0~0.04 为有效范围）
-        if abs(gripper_cmd) > 1.0:
-            gripper_cmd = max(-1.0, min(1.0, gripper_cmd))
-        # 归一化到 [0, 1] 范围
-        grip_norm = (gripper_cmd + 1.0) / 2.0
-        # 映射到夹爪开度 [0.0 (闭合), 0.04 (张开)]
-        grip_open = grip_norm * 0.04
+        # bridge_orig 归一化下夹爪输出为 [0,1]：0=闭合，1=张开。
+        # 直接映射到 joint7/joint8 开度 [0.0 (闭合), 0.04 (张开)]，
+        # 不要做 (x+1)/2 变换——那会把 [0,1] 压缩到 [0.5,1]，夹爪永远半开夹不住。
+        gripper_cmd = max(0.0, min(1.0, gripper_cmd))
+        grip_open = gripper_cmd * 0.04
 
         # Step 6: 发布关节指令
         self.get_logger().info(

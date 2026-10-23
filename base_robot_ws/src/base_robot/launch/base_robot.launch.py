@@ -77,7 +77,15 @@ def generate_launch_description():
         ]
     )
 
-    # --- 7. 启动 vla_gazebo_bridge ---
+    # --- 7. 启动机械臂预置位姿（确保腕部相机第一帧就能看到杯子）---
+    vla_preset_pose_node = launch_ros.actions.Node(
+        package="base_robot",
+        executable="vla_preset_pose.py",
+        name="vla_preset_pose",
+        output='screen'
+    )
+
+    # --- 8. 启动 vla_gazebo_bridge ---
     vla_gazebo_bridge_node = launch_ros.actions.Node(
         package="base_robot",
         executable="vla_gazebo_bridge.py",
@@ -118,6 +126,12 @@ def generate_launch_description():
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=load_gripper_controller,
+                on_exit=[vla_preset_pose_node],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=vla_preset_pose_node,
                 on_exit=[vla_gazebo_bridge_node],
             )
         ),

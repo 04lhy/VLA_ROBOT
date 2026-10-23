@@ -81,36 +81,98 @@ ros2 run base_robot vla_grasp_test.py
 
 | 参数 | 默认值 | 说明 |
 |------|--------|------|
-| `--instruction` | `pick up the coke can` | 发送给 VLA 的自然语言指令 |
-| `--object` | `coke_can` | 目标物体名（用于匹配 `grasp_events` 附着事件） |
-| `--timeout` | `120` | 等待夹取的超时时间（秒） |
+| `--instruction` | `pick up the dark blue plastic cup` | 发送给 VLA 的自然语言指令 |
+| `--object` | `plastic_cup_0` | 目标物体名（用 `gz model` 查询位姿判定抬起） |
+| `--timeout` | `180` | 等待夹取的超时时间（秒） |
 
 示例：
 
 ```bash
-# 夹取可乐瓶（默认指令/物体/超时）
+# 夹取蓝色塑料杯（默认指令/物体/超时）
 ros2 run base_robot vla_grasp_test.py
 
-# 夹取啤酒瓶，指定指令与超时
-ros2 run base_robot vla_grasp_test.py --instruction "pick up the beer" --object beer --timeout 90
+# 夹取指定杯子，指定指令与超时
+ros2 run base_robot vla_grasp_test.py --instruction "pick up the plastic cup" --object plastic_cup_0 --timeout 180
 ```
 
-> 运行逻辑：脚本先持久订阅 `/gazebo/default/grasp_events` 监听附着事件 → 向 `/vla_instruction` 发布指令触发 VLA → 检测到 `attached: true` 判定夹取成功 → 发布 `stay still` 停止机械臂。
+> 运行逻辑：脚本记录杯子初始高度 → 向 `/vla_instruction` 发布指令触发 VLA → 用 `gz model` 轮询杯子世界坐标 z 值，抬升超过阈值即判定夹取成功 → 发布 `stay still` 停止机械臂。
 
 VLA 指令也可运行时手动动态切换：
 
 ```bash
-ros2 topic pub /vla_instruction std_msgs/msg/String "data: 'pick up the coke can'" -1
+ros2 topic pub /vla_instruction std_msgs/msg/String "data: 'pick up the plastic cup'" -1
 ```
 
 ---
+
+## 🧪 数据采集抓取（collect_grasp_demos.py）
+
+脚本驱动机械臂完成一次完整的「抓取 → 抬起 → 倾倒 → 放回」，并在每个控制步记录「相机图像 + 末端 7 维增量动作 + 语言指令」，产出 OpenVLA LoRA 微调所需的 `(image, action, instruction)` 三元组。**无需 OpenVLA 服务**。
+
+```bash
+cd base_robot_ws
+source install/setup.bash
+ros2 run base_robot collect_grasp_demos.py              # 默认采集 20 条
+ros2 run base_robot collect_grasp_demos.py --episodes 1  # 单条演示
+ros2 run base_robot collect_grasp_demos.py --dry-run     # 只打印 FK/规划，不动机械臂
+```
+
+动作约定（与 `vla_gazebo_bridge.py` 完全一致）：
+`action = [dx, dy, dz, rx, ry, rz, gripper]`，`gripper ∈ [0,1]`（0=闭合，1=张开）。
+
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `--episodes` | `20` | 采集条数 |
+| `--out` | `~/vla_demos` | 输出目录（每条一个 `ep_XXXX/`：`images.npy` / `actions.npy` / `meta.json`） |
+| `--instruction` | `pick up the cup` | 语言指令 |
+| `--cup-model` | `plastic_cup_0` | 被抓取杯子模型名（用于定位） |
+| `--tilt-angle` | `1.57` | 倾倒时腕部 joint6 旋转角（弧度≈90°，负号反方向） |
+| `--grip-open` | `0.03` | 夹紧开度（0.04=8cm 全开，0.03≈6cm 夹住 6.6cm 杯子） |
+| `--joint-approach` / `--joint-grasp` / `--joint-lift` | 见脚本 | 三段关节角（approach 仅用于标定打印，不再进入动作序列） |
+| `--randomize-cup` | — | 杯子小范围随机平移，增加数据多样性 |
+| `--no-record` | — | 不落盘，只演示动作 |
+
+> 动作序列：home（张开）→ 水平前伸套杯 → 闭合夹住 → 抬起 → 倾倒 ~2s → 复原竖直 → 下降放回桌面 → 松开（张到最大 0.04）→ 机械臂退回 home。需配合 `gazebo_grasp_fix` 插件（`release_tolerance` 已调为 0.005）。
+
+---
+
+## 🚀 V1.6.0 | 自动化抓取数据采集与夹爪脱开修复
+
+**发布日期**：2026-10-23
+**版本状态**：✅ 当前版本
+
+### ✨ 新增功能
+- **自动化抓取数据采集脚本** (`collect_grasp_demos.py`)：脚本驱动机械臂完成「水平前伸抓取 → 抬起 → 倾倒 → 放回桌面 → 退回 home」，同步记录 (图像, 增量动作, 指令) 用于 OpenVLA LoRA 微调，无需 VLA 服务
+- **机械臂预置位姿节点** (`vla_preset_pose.py`)：arm_controller 激活后自动归零位，确保腕部相机第一帧就能看到杯子
+- **相机视角 RViz 配置** (`config/camera_view.rviz`)
+
+### 🛠️ 优化 / 改进
+- `collect_grasp_demos.py` 抓取改为**水平前伸**（不再先抬到杯子上方再压下去），末尾放回杯子后机械臂退回 home
+- **夹爪脱开修复** (`arm.xacro` / `demo_scene.world`)：`gazebo_grasp_fix` 的 `release_tolerance` 0.01 → 0.005，修复夹爪张开后杯子仍吸附在夹爪上的问题（手指 0.01m 位移恰好等于阈值，`0.01 > 0.01` 恒不成立）
+- `demo_scene.world` 桌子高度下调（台面 0.755 → 0.43），使杯子进入机械臂臂展范围，并新增 4 个杯子模型
+- `vla_gazebo_bridge.py` 新增 `server_timeout` 参数（默认 15s）；夹爪映射改为 `[0,1]` 直接映射，修复 `(x+1)/2` 导致夹爪永远半开夹不住的问题
+- `vla_grasp_test.py` 默认目标改为新场景 `plastic_cup_0`，超时 120s → 180s
+- `base_robot.launch.py` 新增 `vla_preset_pose` 节点，串联到 `load_gripper_controller` 之后、`vla_gazebo_bridge` 之前
+- `agent_demo/tools.py` `_navigate_to_pose` 超时 120s → 300s，与 `nav_waypoints.py` 对齐
+
+### 📌 关键变更说明
+| 文件 | 变更内容 |
+|------|----------|
+| `collect_grasp_demos.py` | 新增：抓取+倾倒+放回数据采集脚本 |
+| `vla_preset_pose.py` | 新增：机械臂预置位姿节点 |
+| `camera_view.rviz` | 新增：相机视角 RViz 配置 |
+| `arm.xacro` / `demo_scene.world` | `release_tolerance` 0.01→0.005 修复杯子吸附 |
+| `demo_scene.world` | 桌子高度下调 + 新增 4 个杯子 |
+| `vla_gazebo_bridge.py` | `server_timeout` + 夹爪映射修复 |
+| `vla_grasp_test.py` | 默认目标 plastic_cup_0 + 超时调整 |
+| `base_robot.launch.py` | 新增预置位姿节点串联 |
 
 ---
 
 ## 🚀 V1.5.0 | 更换工厂巡检地图
 
 **发布日期**：2026-10-22
-**版本状态**：✅ 当前版本
+**版本状态**：✅ 正式发布
 
 ### ✨ 新增功能
 - **新工厂巡检场景**（`world/demo_scene.world`）：4 个房间（西南红/东南蓝/东北黄/西北绿指示牌）+ 4 张桌子 + 4 个杯子，机器人出生在中央走廊 `(0,0,0)`

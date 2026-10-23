@@ -18,8 +18,10 @@ install(PROGRAMS
   scripts/arm_control_gui.py
   scripts/tts_node.py
   scripts/vla_gazebo_bridge.py
+  scripts/vla_preset_pose.py
   scripts/auto_task.py
   scripts/vla_grasp_test.py
+  scripts/collect_grasp_demos.py
   scripts/simple_commander.py
   scripts/test_kdl_roundtrip.py
   scripts/nav_waypoints.py

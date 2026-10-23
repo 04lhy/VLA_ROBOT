@@ -1095,7 +1095,7 @@
       <static>1</static>
       <link name='link'>
         <collision name='surface'>
-          <pose>0 0 0.755 0 -0 0</pose>
+          <pose>0 0 0.43 0 -0 0</pose>
           <geometry>
             <box>
               <size>0.913 0.913 0.04</size>
@@ -1116,10 +1116,10 @@
           </surface>
         </collision>
         <collision name='column'>
-          <pose>0 0 0.37 0 -0 0</pose>
+          <pose>0 0 0.215 0 -0 0</pose>
           <geometry>
             <box>
-              <size>0.042 0.042 0.74</size>
+              <size>0.042 0.042 0.43</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1161,6 +1161,7 @@
           <geometry>
             <mesh>
               <uri>model://cafe_table/meshes/cafe_table.dae</uri>
+              <scale>1 1 0.58</scale>
             </mesh>
           </geometry>
         </visual>
@@ -1174,7 +1175,7 @@
       <static>1</static>
       <link name='link'>
         <collision name='surface'>
-          <pose>0 0 0.755 0 -0 0</pose>
+          <pose>0 0 0.43 0 -0 0</pose>
           <geometry>
             <box>
               <size>0.913 0.913 0.04</size>
@@ -1195,10 +1196,10 @@
           </surface>
         </collision>
         <collision name='column'>
-          <pose>0 0 0.37 0 -0 0</pose>
+          <pose>0 0 0.215 0 -0 0</pose>
           <geometry>
             <box>
-              <size>0.042 0.042 0.74</size>
+              <size>0.042 0.042 0.43</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1240,6 +1241,7 @@
           <geometry>
             <mesh>
               <uri>model://cafe_table/meshes/cafe_table.dae</uri>
+              <scale>1 1 0.58</scale>
             </mesh>
           </geometry>
         </visual>
@@ -1253,7 +1255,7 @@
       <static>1</static>
       <link name='link'>
         <collision name='surface'>
-          <pose>0 0 0.755 0 -0 0</pose>
+          <pose>0 0 0.43 0 -0 0</pose>
           <geometry>
             <box>
               <size>0.913 0.913 0.04</size>
@@ -1274,10 +1276,10 @@
           </surface>
         </collision>
         <collision name='column'>
-          <pose>0 0 0.37 0 -0 0</pose>
+          <pose>0 0 0.215 0 -0 0</pose>
           <geometry>
             <box>
-              <size>0.042 0.042 0.74</size>
+              <size>0.042 0.042 0.43</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1319,6 +1321,7 @@
           <geometry>
             <mesh>
               <uri>model://cafe_table/meshes/cafe_table.dae</uri>
+              <scale>1 1 0.58</scale>
             </mesh>
           </geometry>
         </visual>
@@ -1332,7 +1335,7 @@
       <static>1</static>
       <link name='link'>
         <collision name='surface'>
-          <pose>0 0 0.755 0 -0 0</pose>
+          <pose>0 0 0.43 0 -0 0</pose>
           <geometry>
             <box>
               <size>0.913 0.913 0.04</size>
@@ -1353,10 +1356,10 @@
           </surface>
         </collision>
         <collision name='column'>
-          <pose>0 0 0.37 0 -0 0</pose>
+          <pose>0 0 0.215 0 -0 0</pose>
           <geometry>
             <box>
-              <size>0.042 0.042 0.74</size>
+              <size>0.042 0.042 0.43</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1398,6 +1401,7 @@
           <geometry>
             <mesh>
               <uri>model://cafe_table/meshes/cafe_table.dae</uri>
+              <scale>1 1 0.58</scale>
             </mesh>
           </geometry>
         </visual>
@@ -1459,17 +1463,16 @@
             </mesh>
           </geometry>
           <material>
-            <script>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/GreyTransparent</name>
-            </script>
+            <ambient>0 0 0.3 1</ambient>
+            <diffuse>0 0.15 0.9 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
           </material>
         </visual>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>-17.0615 -10.5262 0.781645 0 0 0</pose>
+      <pose>-17.0615 -10.5262 0.456645 0 0 0</pose>
     </model>
     <model name='plastic_cup_0_clone'>
       <link name='link'>
@@ -1523,17 +1526,16 @@
             </mesh>
           </geometry>
           <material>
-            <script>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/GreyTransparent</name>
-            </script>
+            <ambient>0 0 0.3 1</ambient>
+            <diffuse>0 0.15 0.9 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
           </material>
         </visual>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>14.0824 -11.489 0.781645 0 0 0</pose>
+      <pose>14.0824 -11.489 0.456645 0 0 0</pose>
     </model>
     <model name='plastic_cup_0_clone_0'>
       <link name='link'>
@@ -1587,17 +1589,16 @@
             </mesh>
           </geometry>
           <material>
-            <script>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/GreyTransparent</name>
-            </script>
+            <ambient>0 0 0.3 1</ambient>
+            <diffuse>0 0.15 0.9 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
           </material>
         </visual>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>14.687 12.5845 0.781645 0 0 0</pose>
+      <pose>14.687 12.5845 0.456645 0 0 0</pose>
     </model>
     <model name='plastic_cup_0_clone_1'>
       <link name='link'>
@@ -1651,20 +1652,19 @@
             </mesh>
           </geometry>
           <material>
-            <script>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/GreyTransparent</name>
-            </script>
+            <ambient>0 0 0.3 1</ambient>
+            <diffuse>0 0.15 0.9 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
           </material>
         </visual>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>-17.2384 12.8825 0.781645 0 0 0</pose>
+      <pose>-17.2384 12.8825 0.456645 0 0 0</pose>
     </model>
       <model name='base_robot'>
-      <pose>0 0 -0.001 0 0 0</pose>
+      <pose>-17.06 -10.88 -0.001 0 0 1.5708</pose>
       <link name='base_footprint'>
         <inertial>
           <pose>-3.6e-05 0 0.116705 0 -0 0</pose>
@@ -2729,7 +2729,7 @@
           <max_contacts>10</max_contacts>
         </collision>
         <collision name='link6_fixed_joint_lump__camera_link_collision_1'>
-          <pose>-0.03 0 0.06 -0 0.3 3.14159</pose>
+          <pose>-0.03 0 0.06 -0 -1.5708 0</pose>
           <geometry>
             <box>
               <size>0.0125 0.0125 0.0125</size>
@@ -2759,7 +2759,7 @@
           </geometry>
         </visual>
         <visual name='link6_fixed_joint_lump__camera_link_visual_1'>
-          <pose>-0.03 0 0.06 -0 0.3 3.14159</pose>
+          <pose>-0.03 0 0.06 -0 -1.5708 0</pose>
           <geometry>
             <box>
               <size>0.0125 0.0125 0.0125</size>
@@ -2793,7 +2793,7 @@
               <far>100</far>
             </clip>
           </camera>
-          <pose>-0.03 0 0.06 -0 0.3 3.14159</pose>
+          <pose>-0.03 0 0.06 -0 -1.5708 0</pose>
         </sensor>
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
@@ -2966,11 +2966,11 @@
         <update_rate>50</update_rate>
         <grip_count_threshold>1</grip_count_threshold>
         <max_grip_count>10</max_grip_count>
-        <release_tolerance>0.01</release_tolerance>
+        <release_tolerance>0.005</release_tolerance>
         <disable_collisions_on_attach>true</disable_collisions_on_attach>
         <contact_topic>__default_topic__</contact_topic>
       </plugin>
-      <pose>0 0 -0.001 0 0 0</pose>
+      <pose>-17.06 -10.88 -0.001 0 0 1.5708</pose>
     </model>
   </world>
 </sdf>

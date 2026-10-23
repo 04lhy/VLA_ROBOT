@@ -10,12 +10,13 @@ Type 为空），因此不能靠 grasp_events 话题做判定，改用 gz model 
 前置条件：
 1. OpenVLA 服务已启动（deploy_4bit.py，监听 http://127.0.0.1:8000/act）
 2. base_robot.launch.py 已启动（自动拉起 vla_gazebo_bridge + gazebo_grasp_plugin）
-3. 世界中有目标物体（默认 coke_can）
+3. 世界中有目标物体（demo_scene 里为 plastic_cup_0*，无 coke_can）
+4. 机器人必须先导航/手动移动到桌边（机械臂臂展 ~0.5m，桌边 0.3-0.4m 处正对杯子）
 
 用法：
     ros2 run base_robot vla_grasp_test.py
-    ros2 run base_robot vla_grasp_test.py --instruction "pick up the coke can" \
-        --object coke_can --timeout 120
+    ros2 run base_robot vla_grasp_test.py --instruction "pick up the plastic cup" \
+        --object plastic_cup_0 --timeout 180
 """
 
 import argparse
@@ -107,12 +108,12 @@ class VLAGraspTest(Node):
 
 def main():
     parser = argparse.ArgumentParser(description="VLA 夹取测试")
-    parser.add_argument("--instruction", default="pick up the coke can",
+    parser.add_argument("--instruction", default="pick up the dark blue plastic cup",
                         help="发送给 VLA 的自然语言指令")
-    parser.add_argument("--object", default="coke_can",
-                        help="目标物体名（用于查询 gz model 位姿）")
-    parser.add_argument("--timeout", type=float, default=120.0,
-                        help="等待夹取的超时时间（秒）")
+    parser.add_argument("--object", default="plastic_cup_0",
+                        help="目标物体名（用于查询 gz model 位姿），新场景 demo_scene 中为 plastic_cup_0*")
+    parser.add_argument("--timeout", type=float, default=180.0,
+                        help="等待夹取的超时时间（秒），4bit 推理 2-3s/step 需留足余量")
     parser.add_argument("--lift-threshold", type=float, default=0.05,
                         help="判定抬起的 z 抬升阈值（米）")
     args = parser.parse_args()

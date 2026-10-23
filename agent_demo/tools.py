@@ -219,8 +219,12 @@ class ToolRegistry:
         if completed.returncode != 0:
             raise RuntimeError(f"ros2 topic pub failed\nstdout={completed.stdout}\nstderr={completed.stderr}")
 
-    def _navigate_to_pose(self, x: float, y: float, yaw: float, timeout: float = 120.0) -> None:
-        """通过 ros2 action 阻塞调用 Nav2 NavigateToPose 并等待到达。"""
+    def _navigate_to_pose(self, x: float, y: float, yaw: float, timeout: float = 300.0) -> None:
+        """通过 ros2 action 阻塞调用 Nav2 NavigateToPose 并等待到达。
+
+        timeout 与 nav_waypoints.py 的 NAV_TIMEOUT 保持一致（新工厂跨房间路径更长，
+        原 120s 偏紧，见 README V1.5.0）。
+        """
         if not self.ros_setup.exists():
             raise FileNotFoundError(f"ROS setup file not found: {self.ros_setup}")
 
