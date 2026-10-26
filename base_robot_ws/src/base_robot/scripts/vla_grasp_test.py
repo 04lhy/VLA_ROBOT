@@ -15,7 +15,7 @@ Type 为空），因此不能靠 grasp_events 话题做判定，改用 gz model 
 
 用法：
     ros2 run base_robot vla_grasp_test.py
-    ros2 run base_robot vla_grasp_test.py --instruction "pick up the plastic cup" \
+    ros2 run base_robot vla_grasp_test.py --instruction "pick up the cup and pour" \
         --object plastic_cup_0 --timeout 180
 """
 
@@ -108,8 +108,8 @@ class VLAGraspTest(Node):
 
 def main():
     parser = argparse.ArgumentParser(description="VLA 夹取测试")
-    parser.add_argument("--instruction", default="pick up the dark blue plastic cup",
-                        help="发送给 VLA 的自然语言指令")
+    parser.add_argument("--instruction", default="pick up the cup and pour",
+                        help="发送给 VLA 的自然语言指令（微调模型须与训练指令逐字一致）")
     parser.add_argument("--object", default="plastic_cup_0",
                         help="目标物体名（用于查询 gz model 位姿），新场景 demo_scene 中为 plastic_cup_0*")
     parser.add_argument("--timeout", type=float, default=180.0,

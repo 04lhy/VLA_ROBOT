@@ -42,8 +42,8 @@ import wandb
 from prismatic.models.backbones.llm.prompting import PurePromptBuilder, VicunaV15ChatPromptBuilder
 from prismatic.util.data_utils import PaddedCollatorForActionPrediction
 from prismatic.vla.action_tokenizer import ActionTokenizer
-from prismatic.vla.datasets import RLDSBatchTransform, RLDSDataset
-from prismatic.vla.datasets.rlds.utils.data_utils import save_dataset_statistics
+# [方案A] 用 npy 目录数据集替代 RLDS/tfds 加载（数据由 vla-scripts/convert_demos.py 转换生成）
+from prismatic.vla.gazebo_demos import GazeboDemosDataset, save_dataset_statistics
 
 from prismatic.extern.hf.configuration_prismatic import OpenVLAConfig
 from prismatic.extern.hf.modeling_prismatic import OpenVLAForActionPrediction
@@ -206,20 +206,17 @@ def finetune(cfg: FinetuneConfig) -> None:
     #     prompt_builder_fn=PurePromptBuilder if "v01" not in cfg.vla_path else VicunaV15ChatPromptBuilder,
     # )
     # ---
-    batch_transform = RLDSBatchTransform(
+    # [方案A] 加载 npy 目录数据集（<data_root_dir>/<dataset_name>/ep_XXXX/ + dataset_statistics.json）
+    vla_dataset = GazeboDemosDataset(
+        Path(cfg.data_root_dir) / cfg.dataset_name,
         action_tokenizer,
         processor.tokenizer,
         image_transform=processor.image_processor.apply_transform,
         prompt_builder_fn=PurePromptBuilder if "v01" not in cfg.vla_path else VicunaV15ChatPromptBuilder,
-    )
-    vla_dataset = RLDSDataset(
-        cfg.data_root_dir,
-        cfg.dataset_name,
-        batch_transform,
-        resize_resolution=tuple(vla.module.config.image_sizes),
-        shuffle_buffer_size=cfg.shuffle_buffer_size,
+        stats_key=cfg.dataset_name,
         image_aug=cfg.image_aug,
     )
+    print(f"[GazeboDemos] {len(vla_dataset)} 个样本 (episode x step)")
 
     # [Important] Save Dataset Statistics =>> used to de-normalize actions for inference!
     if distributed_state.is_main_process:
@@ -232,10 +229,18 @@ def finetune(cfg: FinetuneConfig) -> None:
     dataloader = DataLoader(
         vla_dataset,
         batch_size=cfg.batch_size,
-        sampler=None,
+        shuffle=True,
+        drop_last=True,
         collate_fn=collator,
-        num_workers=0,  # Important =>> Set to 0 if using RLDS; TFDS rolls its own parallelism!
+        num_workers=2,
+        persistent_workers=True,
     )
+
+    # RLDS 加载器隐式循环 epoch；npy Dataset 需要显式无限循环（配合 max_steps 早停）
+    def infinite_batches():
+        while True:
+            for batch in dataloader:
+                yield batch
 
     # Initialize Logging =>> W&B
     if distributed_state.is_main_process:
@@ -250,7 +255,7 @@ def finetune(cfg: FinetuneConfig) -> None:
     with tqdm.tqdm(total=cfg.max_steps, leave=False) as progress:
         vla.train()
         optimizer.zero_grad()
-        for batch_idx, batch in enumerate(dataloader):
+        for batch_idx, batch in enumerate(infinite_batches()):
             with torch.autocast("cuda", dtype=torch.bfloat16):
                 output: CausalLMOutputWithPast = vla(
                     input_ids=batch["input_ids"].to(device_id),

@@ -1,4 +1,6 @@
 import argparse
+import json
+import os
 import json_numpy
 json_numpy.patch()
 import torch
@@ -43,6 +45,20 @@ class OpenVLA4bitServer:
             device_map="auto",
         )
         self.vla.tie_weights()
+
+        # [方案A] 本地微调 ckpt 目录若带 dataset_statistics.json，加载进 norm_stats
+        #   （同 deploy.py 的 hack；AutoConfig 不会自动读这个文件）
+        if os.path.isdir(self.openvla_path):
+            stats_path = os.path.join(self.openvla_path, "dataset_statistics.json")
+            if os.path.isfile(stats_path):
+                with open(stats_path, "r") as f:
+                    self.vla.norm_stats = json.load(f)
+                print(f"✅ 已加载动作统计: {stats_path} (keys: {list(self.vla.norm_stats)})")
+
+        # 反归一化用的数据集 key：微调后设 VLA_UNNORM_KEY=gazebo_4room；
+        # 设成空字符串则自动选唯一 key（单数据集 ckpt 推荐留空）
+        self.unnorm_key = os.environ.get("VLA_UNNORM_KEY", "bridge_orig") or None
+        print(f"unnorm_key = {self.unnorm_key!r}")
         print("✅ Model loaded successfully!")
 
     # ===================== 实时监控网页（带摄像头画面）=====================
@@ -118,7 +134,7 @@ class OpenVLA4bitServer:
             payload = await request.json()
             image = np.array(payload["image"], dtype=np.uint8)
             instruction = payload["instruction"]
-            unnorm_key = "bridge_orig"
+            unnorm_key = self.unnorm_key
 
             # 保存最新图像（给网页显示）
             latest_image = image.copy()

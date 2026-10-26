@@ -24,6 +24,7 @@ adapter_config.json
 # 录制的传感器数据和图像非常大，不要进 Git
 data/
 datasets/
+vla_demos/
 *.bag
 *.mcap
 *.mp4

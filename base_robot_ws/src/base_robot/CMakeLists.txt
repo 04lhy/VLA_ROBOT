@@ -22,6 +22,7 @@ install(PROGRAMS
   scripts/auto_task.py
   scripts/vla_grasp_test.py
   scripts/collect_grasp_demos.py
+  scripts/collect_4room_demos.py
   scripts/simple_commander.py
   scripts/test_kdl_roundtrip.py
   scripts/nav_waypoints.py

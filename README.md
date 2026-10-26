@@ -34,6 +34,8 @@ VLA_ROBOT/
 ├── Launch.md                          # 环境配置与启动命令完整文档
 ├── README.md                          # 本文件
 ├── 夹爪抓取问题分析与修复方案.md        # 夹爪抓取修复技术文档
+├── 服务器OpenVLA微调部署指南.md         # 方案A 服务器迁移/训练/部署手册
+├── vla_demos/                         # 采集原始数据（ep_XXXX npy，git 忽略，rsync 传输）
 ├── .gitignore
 ├── agent_demo/                        # 决策 agent demo（plan-execute 框架）
 ├── asr_test/                          # ASR 语音转文本测试
@@ -81,7 +83,7 @@ ros2 run base_robot vla_grasp_test.py
 
 | 参数 | 默认值 | 说明 |
 |------|--------|------|
-| `--instruction` | `pick up the dark blue plastic cup` | 发送给 VLA 的自然语言指令 |
+| `--instruction` | `pick up the cup and pour` | 发送给 VLA 的自然语言指令（微调模型须与训练指令逐字一致） |
 | `--object` | `plastic_cup_0` | 目标物体名（用 `gz model` 查询位姿判定抬起） |
 | `--timeout` | `180` | 等待夹取的超时时间（秒） |
 
@@ -136,10 +138,43 @@ ros2 run base_robot collect_grasp_demos.py --dry-run     # 只打印 FK/规划�
 
 ---
 
+## 🚀 V1.7.0 | OpenVLA 微调数据链路（方案 A：npy 直连）
+
+**发布日期**：2026-10-26
+**版本状态**：✅ 当前版本
+
+### ✨ 新增功能
+- **多房间循环采集脚本** (`collect_4room_demos.py`)：4 桌 × 4 边共 16 个抓取停靠位，`gz model` teleport 到位后跑死动作并逐步记录 (图像, 7 维增量动作, 指令)；抬起后检测杯子 z 抬升，**夹取失败的 episode 自动丢弃**
+- **数据转换脚本** (`openvla/vla-scripts/convert_demos.py`)：采集目录 → 训练格式——图像重采样 224×224、成功过滤、连续重编号、统计每维 q01/q99 产出 `dataset_statistics.json`（schema 与 OpenVLA `predict_action` 反归一化互逆）；`--set-instruction` 统一训练指令，当前定版 **`pick up the cup and pour`**（覆盖抓取+倾倒全序列）
+- **GazeboDemosDataset** (`openvla/prismatic/vla/gazebo_demos.py`)：mmap 直读 npy 的 PyTorch 数据集，样本构造对齐上游 `RLDSBatchTransform`（prompt / labels / 256-bin 动作离散化），**不依赖 RLDS/tensorflow/tfds**
+- **文档**：`openvla/vla-scripts/GAZEBO_FINETUNE.md`（转换→训练→部署→bridge 量纲全流程）、`服务器OpenVLA微调部署指南.md`（服务器要求、传输清单、最小 conda 环境、冒烟/正式训练、双路部署、排坑表）
+
+### 🛠️ 优化 / 改进
+- `finetune.py`：RLDS 加载块替换为 `GazeboDemosDataset`（shuffle + drop_last + 无限 epoch 循环补上 RLDS 隐式行为），`save_dataset_statistics` 本地实现，ckpt 分支逻辑不变
+- `prismatic/vla/__init__.py`：`materialize` 改惰性导入——原 eager import 缺失的 RLDS 模块导致整个 `prismatic.vla` 包无法导入（`finetune.py` 此前直接 ImportError）
+- `deploy_4bit.py`：加载本地 ckpt 目录自动读取同目录 `dataset_statistics.json` 填入 `norm_stats`；`unnorm_key` 改由环境变量 `VLA_UNNORM_KEY` 控制（留空自动选唯一 key；不设默认仍 `bridge_orig`，基座模型用法不变）
+- `vla_grasp_test.py`：默认指令同步改为 `pick up the cup and pour`（面向微调模型；测基座请显式传老话术）
+- `CMakeLists.txt` 注册 `collect_4room_demos.py`；`.gitignore` 忽略 `vla_demos/`
+
+### 📌 数据集现状
+| 项 | 值 |
+|------|------|
+| 规模 | 51 episodes × 90 步 = 4590 样本（16 停靠位全覆盖，每站 2–4 条） |
+| 转换产物 | `openvla/datasets/gazebo_4room/`（661MB，git 忽略） |
+| 动作统计 (q01/q99) | dx±0.031m · dz±0.026m · rx±0.174rad · ry±0.01rad · gripper{0,1} |
+| 归一化验证 | 与 `predict_action` 反归一化全量往返误差 ≈ 0 |
+
+### ⚠️ 注意事项
+- 部署微调模型时 `vla_gazebo_bridge.py` 须覆盖量纲参数（`position_scale:=1.0`、`max_angular_step:=0.2` 等，见 GAZEBO_FINETUNE.md 第 4 节），沿用默认会够不到杯子、倾倒被削顶
+- 服务器环境**不要 `pip install -e .`**（会拖 tensorflow/tfds/dlimp），按部署指南 §3 最小 pip 集
+- `collect_4room_demos.py` 续采前需修：`ep_idx=24` 硬编码（会覆盖已有 ep_0024–0050）与 `--out` 默认值（指向他人机器路径）
+
+---
+
 ## 🚀 V1.6.0 | 自动化抓取数据采集与夹爪脱开修复
 
 **发布日期**：2026-10-23
-**版本状态**：✅ 当前版本
+**版本状态**：✅ 正式发布
 
 ### ✨ 新增功能
 - **自动化抓取数据采集脚本** (`collect_grasp_demos.py`)：脚本驱动机械臂完成「水平前伸抓取 → 抬起 → 倾倒 → 放回桌面 → 退回 home」，同步记录 (图像, 增量动作, 指令) 用于 OpenVLA LoRA 微调，无需 VLA 服务
