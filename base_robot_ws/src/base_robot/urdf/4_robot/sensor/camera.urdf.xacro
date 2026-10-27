@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:macro name="camera_xacro" params="xyz parent_link:=base_link rpy:='0 0 0'">
+    <!-- prefix 用于区分多个相机实例（默认 camera，保持原有命名不变；前置相机传 front_camera） -->
+    <xacro:macro name="camera_xacro" params="xyz parent_link:=base_link rpy:='0 0 0' prefix:=camera">
         <!-- ============相机模块 - 缩小一半的小正方体================ -->
-        <link name="camera_link">
+        <link name="${prefix}_link">
             <visual>
                 <origin xyz="0 0 0.0" rpy="0 0 0" />
                 <geometry>
                     <box size="0.0125 0.0125 0.0125" />
                 </geometry>
-                <material name="red">
+                <material name="${prefix}_red">
                     <color rgba="1.0 0.0 0.0 1.0"/>
                 </material>
             </visual>
@@ -17,22 +18,22 @@
                 <geometry>
                     <box size="0.0125 0.0125 0.0125" />
                 </geometry>
-                <material name="red">
+                <material name="${prefix}_red">
                     <color rgba="1.0 0.0 0.0 1.0"/>
                 </material>
             </collision>
             <xacro:box_inertia m="0.0025" w="0.0125" h="0.0125" d="0.0125" />
         </link>
-        <link name="camera_optical_link"></link>
-        <joint name="camera_optical_joint" type="fixed">
-            <parent link="camera_link" />
-            <child link="camera_optical_link" />
+        <link name="${prefix}_optical_link"></link>
+        <joint name="${prefix}_optical_joint" type="fixed">
+            <parent link="${prefix}_link" />
+            <child link="${prefix}_optical_link" />
             <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
         </joint>
 
-        <joint name="camera_joint" type="fixed">
+        <joint name="${prefix}_joint" type="fixed">
             <parent link="${parent_link}" />
-            <child link="camera_link" />
+            <child link="${prefix}_link" />
             <origin xyz="${xyz}" rpy="${rpy}" />
         </joint>
     </xacro:macro>

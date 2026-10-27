@@ -41,6 +41,8 @@
     <xacro:imu_xacro xyz="0 0 0.02"/>
     <xacro:laser_xacro xyz="0 0 0.10"/>
     <xacro:camera_xacro xyz="-0.03 0.0 0.06" parent_link="link6" rpy="${-pi} ${-pi/2} 0"/>
+    <!-- 前置相机：底盘前端顶部、水平朝前（离地约 0.176m），用于观察前方路面与墙壁 -->
+    <xacro:camera_xacro xyz="0.22 0 0.06625" parent_link="base_link" rpy="0 0 0" prefix="front_camera"/>
     <xacro:microphone_xacro xyz="0.15 0 0.08"/>
     <xacro:gazebo_sensor_plugin/>
 
