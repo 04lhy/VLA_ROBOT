@@ -56,6 +56,8 @@ colcon build --packages-select base_robot
 colcon build --packages-select base_robot gazebo_grasp_plugin
 ```
 
+> **⚠️ 改 world 文件后必须重新编译**（即使工作空间是 `--symlink-install`）：`demo_scene.world` / `test.world` 里的 `../meshes/`、`../config/` 相对引用由 CMakeLists 在构建时烘焙成 install 目录绝对路径后再安装——install 里实际加载的是 `build/base_robot/world_gen/` 的烘焙副本，**只改 `src` 不编译不生效**（直接照旧跑 launch 会导致 gzserver 崩溃或控制器全挂，见 7.6）。
+>
 > **提示**：建议将 `source $WS/base_robot_ws/install/setup.bash` 添加到 `~/.bashrc` 中，避免每次新终端都要手动 source。
 
 ---
@@ -456,13 +458,20 @@ ls ~/.gazebo/models/
 
 ### 7.2 控制器加载失败
 
+典型现象：spawner 持续报 `Could not contact service /controller_manager/list_controllers`，或 gzserver 日志出现 `Exception occured in the Load function of plugin with name[gazebo_ros2_control]`。
+
 ```bash
-# 确认 controller_manager 已安装
+# 1. 确认 controller_manager 已安装
 ros2 pkg list | grep controller_manager
 
-# 检查 controller_position.yaml 路径是否正确
-# 包内路径: base_robot/config/controller_position.yaml
+# 2. 确认"安装后" world 里的控制器 yaml 路径已烘焙为本机绝对路径
+grep "<parameters>" install/base_robot/share/base_robot/world/demo_scene.world
+# 期望: <parameters>.../base_robot_ws/install/base_robot/share/base_robot/config/controller_position.yaml</parameters>
+# 若出现相对 ../config/... 或旧机器路径，说明烘焙产物过期（没重新编译）：
+colcon build --packages-select base_robot --symlink-install
 ```
+
+> `gazebo_ros2_control` 的 `<parameters>` 不按 world 文件目录解析相对路径；找不到 yaml 会导致整个插件不运行，三个控制器（joint_state_broadcaster / arm_controller / gripper_controller）全部失效。
 
 ### 7.3 夹爪抓取失败（物体弹飞/打滑）
 
@@ -493,3 +502,14 @@ cd $WS/base_robot_ws
 rm -rf build/ install/ log/
 colcon build --symlink-install
 ```
+
+### 7.6 gzserver 启动即崩溃
+
+- **exit -11（段错误）**：一般是 world 的 `../` 相对 mesh 引用没被烘焙（install 产物过期，或 src 被手改成相对路径后没重新编译）。核验：
+  ```bash
+  grep -c '\.\./' $WS/base_robot_ws/install/base_robot/share/base_robot/world/demo_scene.world   # 应为 0
+  ```
+  非 0 → `cd base_robot_ws && colcon build --packages-select base_robot --symlink-install`
+- **exit -6 + "Failed to initialize scene"，RTShader 报 "Your GAZEBO_RESOURCE_PATH is probably improperly set"**：是外部覆盖了 `GAZEBO_MODEL_PATH` / `GAZEBO_RESOURCE_PATH`、丢掉了 Gazebo 自带的 `/usr/share/gazebo-11`。**不要在 launch 或 shell 里整段覆盖这两个变量**（本项目的 launch 方案已定案为 CMake 烘焙，见 1.2 注意事项）
+- **`Failed to find mesh file [file:///home/xxx/...]` 刷屏**：world 里残留了别的机器的绝对路径，重新烘焙即可
+- 善后提示：`pkill -f 'gzserver'` 这类写法会匹配到自己这条命令行、把当前 shell 一起杀掉——查进程用 `pgrep -x gzserver`，清理用 `kill <PID>`

@@ -23,6 +23,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--mock-planner", action="store_true", help="Use deterministic mock planner instead of LLM API.")
     parser.add_argument("--real-vla-publish", action="store_true", help="Actually publish vla_manipulate commands to /vla_instruction.")
     parser.add_argument("--real-navigation", action="store_true", help="Actually navigate via Nav2 (instead of mock navigate_to).")
+    parser.add_argument("--real-detection", action="store_true", help="detect_color grabs a live camera frame and runs YOLO ONNX (sim must be running).")
+    parser.add_argument("--color-model", default=None, help="Path to best.onnx (default: color_yolo/model/best.onnx).")
+    parser.add_argument("--color-python", default=None, help="Python interpreter with ultralytics+onnxruntime (default: conda color env).")
+    parser.add_argument("--color-conf", type=float, default=0.3, help="Detection confidence threshold for detect_color.")
     parser.add_argument("--model", default=DEFAULT_MODEL, help="LLM model name.")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="OpenAI-compatible base URL.")
     parser.add_argument("--api-key", default=os.environ.get("DEEPSEEK_API_KEY"), help="LLM API key. Prefer DEEPSEEK_API_KEY.")
@@ -52,7 +56,11 @@ def main() -> None:
     tools = ToolRegistry(
         mock=not args.real_vla_publish,
         real_navigation=args.real_navigation,
+        real_detection=args.real_detection,
         ros_setup=args.ros_setup,
+        color_model=args.color_model,
+        color_python=args.color_python,
+        color_conf=args.color_conf,
     )
     executor = Executor(tools)
 

@@ -39,6 +39,7 @@ VLA_ROBOT/
 ├── .gitignore
 ├── agent_demo/                        # 决策 agent demo（plan-execute 框架）
 ├── asr_test/                          # ASR 语音转文本测试
+├── color_yolo/                        # 前置相机红/绿指示牌检测链路（采集/标注/CPU 推理，V1.8.0 新增）
 ├── base_robot_ws/                     # ROS2 工作空间
 │   └── src/
 │       ├── base_robot/                # 主 ROS2 包（机械臂 + 底盘 + 仿真）
@@ -138,10 +139,62 @@ ros2 run base_robot collect_grasp_demos.py --dry-run     # 只打印 FK/规划�
 
 ---
 
+## 🚀 V1.8.0 | 底盘前置深度相机与红/绿指示牌检测链路（color_yolo）
+
+**发布日期**：2026-10-28
+**版本状态**：✅ 正式发布（前置相机 + world 路径烘焙 + color_yolo 数据/训练/部署链路 + agent_demo 颜色分支巡检）
+
+### ✨ 新增功能
+
+- **底盘前置深度相机**（`demo_scene.world` / `test.world`，已提交）：底盘前部新增 `front_camera_sensor`（depth 类型），话题 `/front_camera_sensor/image_raw`，800×600、名义 10Hz 实测 ≈8Hz；真实内参 fx=fy=428.9、cx=400.5、cy=300.5。光学中心离地**实测 0.157m**（= base_footprint→base_link 0.091m + 安装 0.06625m；提交信息里写的 0.176m 有误）
+- **color_yolo 红/绿检测数据链路**（顶层新目录）：给决策 agent 提供巡检分支信号——**绿色→继续巡检下一间 / 红色→去桌前抓取**。推理纯走 CPU（显存仅 8G 需与 OpenVLA 共存），0 显存占用
+  - `config/markers.yaml`：4 块指示牌 link 位姿/尺寸/颜色真值、4 个巡检停靠位、相机内参来源、base_footprint→base_link 0.091m 偏移
+  - `tools/geometry.py` + `tools/selftest_projection.py`：纯 numpy 世界点→相机像素投影数学与离线自检（无 ROS 依赖，可离线复跑）
+  - `tools/capture_frames.py`：单帧落盘 PNG + CameraInfo + 相机世界位姿（sha1 去重）
+  - `tools/sweep_stations.py`：位姿扫描采集；`--mode teleport|nav2`（默认 teleport）、`--pose-mode measured`（用 `gz model -p` 读回的实测位姿当真值）、`--standoff <m>`（直接指定机器人到牌子水平距离，±0.25m 取三档）、`--dry-run` 离线看计划
+  - `tools/annotate.py`：世界真值自动产 YOLO 标签 + `dataset/vis/` 画框自检图 + `data.yaml`；train/val 按「位姿」分组切分，避免同场景泄漏
+  - `tools/check_alignment.py`：HSV 检出真实色块 vs 投影框的客观核验（IoU / 中心偏差）
+  - `tools/detect_onnx.py`：单帧颜色推理（color 环境跑，无 ROS 依赖），输出 `{"color","detections","infer_ms"}` 单行 JSON，供 agent_demo 子进程调用
+  - `model/best.onnx`：部署用 ONNX 模型（`*.onnx`/`runs/` 均在 .gitignore，换机需从 best.pt 重新导出后拷入）
+  - **YOLO11n 训练完成**：94 epochs 早停（patience=30），val 全类 mAP50=0.995、mAP50-95=0.995，red/green P≈0.98、R=1.0
+  - **接进 agent_demo**：`tools.py` 的 `detect_color` 真实实现（`--real-detection`）——系统 python 抓帧 + color 环境推理两步子进程；`executor.py` 在 red 时自动插入「去 `<room>_table` → 抓取杯子 → 放回杯子」子计划（原 planner TODO 落地）；巡检 mock 计划改为每间房 navigate+detect_color
+
+### 🛠️ 优化 / 改进
+
+- **world 路径机器无关化定案**（`demo_scene.world` / `test.world`，共 19 处上一台机器的 `/home/aunk_lg/...` 硬编码绝对路径）：git 里保留 `../meshes/`、`../config/` 相对写法，由 `CMakeLists.txt` 构建时烘焙成安装目录绝对路径再安装。**Gazebo 里直接用相对路径不可行**——`<parameters>` 不按 world 目录解析（找不到 yaml → gazebo_ros2_control 插件异常、三个控制器全挂、spawner 挂死等待），mesh 相对引用实测触发 gzserver segfault（exit -11）。曾用覆盖 `GAZEBO_MODEL_PATH/RESOURCE_PATH` 的 launch 方案尝试救相对路径，因丢掉了 Gazebo 自带 `/usr/share/gazebo-11` 导致 "Failed to initialize scene" + SIGABRT，已废弃回退，勿再走
+- **⚠️ 新增构建规则：编辑 world 文件后必须重新构建** `colcon build --packages-select base_robot --symlink-install`，否则 install 用的还是旧烘焙产物（CMake 已挂 `CMAKE_CONFIGURE_DEPENDS`，改 world 会自动触发重新 configure）
+- **指示牌颜色改 2 类红/绿**（配合 2 类检测模型）：西南=红、东南=绿、西北=绿、东北=红（原东南蓝、东北黄取消）；牌子 link 名去颜色后缀，统一 `room_{sw,se,nw,ne}_marker`
+- `.gitignore` 新增 `color_yolo/raw/` 忽略（原始采集帧不入库）
+
+### 📌 数据与性能现状（2026-10-28 实测）
+
+| 项 | 值 |
+|------|------|
+| 已采集 | 4 房 × 5 停靠位 × 2 帧 = **40 帧 / 40 框**（red 20、green 20；其中 16 框被画面边缘切断） |
+| 采集距离 | `--standoff 2.4`（预测可见率 93–100%，0 失败） |
+| train/val | 34 / 6（`dataset/data.yaml`） |
+| 训练 | YOLO11n @imgsz 320，94 epochs 早停，val mAP50 **0.995**（red/green 各 0.995，R=1.0，无串类） |
+| ONNX 全量抽查 | conf=0.25 对 40 帧：40/40 匹配、FP=0、FN=0、IoU 中位 0.976（最差 0.958）；部署阈值 conf=0.3 |
+| agent 联测 | 真实 detect_color @4 个 2.4m 停靠位：room1 红 0.944 / room2 绿 0.958 / room3 红 0.944 / room4 绿 0.948，**4/4 全对**；单次调用 ≈1.1s（大头是 color 环境进程启动，模型本体 13.3ms/帧） |
+| 标注-渲染对齐 | 全部框 IoU 中位 0.947（最小 0.933）、中心偏差中位 3.1px / 最大 4.5px；未切断框（24 个）0.944 / 4.1px；0 个框找不到对应色块 |
+| CPU 推理 | YOLO11n ONNX @320 稳态 7.9ms/帧，含预处理端到端 9.7ms/帧，显存 0 |
+
+### ⚠️ 注意事项
+
+- **巡检停靠位已从 1.20m 后退到 2.40m**（2026-10-28 定案落地）：相机仅离地 0.157m，1.2m 处牌子中心仰角 48.1° > 垂直半视场 34.97°，0% 在画面内；距离 ≥1.13m 开始入画、≥1.99m 完整入画，训练帧采自 2.15~2.65m。停靠位三处已同步为 2.4m（`markers.yaml` / `agent_demo/tools.py` LOCATION_COORDS / `nav_waypoints.py` WAYPOINTS），**改任一必须三处一起改**，否则停靠位会漂出训练分布
+- `gz model` teleport **不要用 `-p x y z r p Y` 连写**——负坐标会被 getopt 当选项吞掉、报 "Invalid arguments" 且静默不生效；用分轴参数 `-x <x> -y <y> -z <z> -Y <yaw>`（sweep_stations.py 即此写法）
+- 采集脚本（`sweep_stations.py` / `capture_frames.py`）必须用**系统 python3 + 已 source ROS 环境**跑，不能在 conda 环境执行；只有训练/推理用 `color` 环境
+- 标注真值必须用 teleport 后 `gz model -p` 读回的实测位姿（gz 报的是 base_footprint，换算 base_link 还要补 0.091m）；**禁用 AMCL/里程计 TF**，否则定位误差被写进标签
+- 采图所在仿真必须**完整 launch 启动**（含控制器）：只起 gzserver 会让 gazebo_ros2_control 加载失败、机械臂失驱塌下挡住前置相机，整批图报废
+- 陈旧产物待处理：已提交的 `urdf/4_robot/4_robot.urdf` 中 mesh 是上一台机器绝对路径（xacro 源用 `$(find base_robot)` 是正确的，此 `.urdf` 为陈旧生成物，暂未处理）
+- V1.5.0 条目记载的牌子配色「西南红/东南蓝/东北黄/西北绿」已过时，本版改为红/绿 2 类
+
+---
+
 ## 🚀 V1.7.0 | OpenVLA 微调数据链路（方案 A：npy 直连）
 
 **发布日期**：2026-10-26
-**版本状态**：✅ 当前版本
+**版本状态**：✅ 正式发布
 
 ### ✨ 新增功能
 - **多房间循环采集脚本** (`collect_4room_demos.py`)：4 桌 × 4 边共 16 个抓取停靠位，`gz model` teleport 到位后跑死动作并逐步记录 (图像, 7 维增量动作, 指令)；抬起后检测杯子 z 抬升，**夹取失败的 episode 自动丢弃**

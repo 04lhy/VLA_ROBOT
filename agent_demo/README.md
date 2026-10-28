@@ -43,9 +43,9 @@ python3 main.py "开始巡检" --mock-planner --real-navigation
 
 `--real-navigation` 会通过 `ros2 action send_goal /navigate_to_pose` 逐点真实导航小车。默认 `ros_setup` 路径在 `tools.py` 里按项目根目录自动解析，通常无需 `--ros-setup`；若工作空间不在默认位置，可显式传入 `--ros-setup`。
 
-## 颜色识别巡检（规划中，接口已预留）
+## 颜色识别巡检（2026-10-28 已接入）
 
-计划在巡检中加入摄像头 + YOLO 颜色识别，按识别结果分支：
+巡检时对每间房停靠位做一次颜色识别，按结果分支：
 
 ```text
 for room in PATROL_ROUTE:
@@ -60,9 +60,23 @@ for room in PATROL_ROUTE:
         continue                            # 巡检下一个房间
 ```
 
-- `detect_color` 工具接口已加进 `tools.py`（当前 mock 返回 `"green"`），后续只需把内部实现换成「订阅相机图像 → YOLO 检测 → 返回颜色」。
-- 各房间桌子坐标已预留 `LOCATION_COORDS["<room>_table"]`，需按实际地图填值。
-- 分支逻辑见 `planner.py` 中 `_mock_plan` 的 TODO 注释，需后续在 executor/planner 里引入条件分支（或复用 replan 机制）。
+实现方式：
+
+- **真实检测**：`main.py --real-detection`（需仿真在跑）。`detect_color` 内部走两步子进程——
+  1. 系统 python + source ROS 跑 `color_yolo/tools/capture_frames.py` 从前置相机抓 1 帧；
+  2. conda `color` 环境跑 `color_yolo/tools/detect_onnx.py`（YOLO11n `best.onnx` @imgsz320，默认 conf=0.3，纯 CPU）。
+  两个环境不能同进程（rclpy 在系统侧、ultralytics 在 conda 侧），所以拆成子进程串联。
+- **红分支**：`executor.py` 检测到 `color=="red"` 时向原计划动态插入「去 `<room>_table` → 抓取杯子 → 放回杯子」子计划（navigate 带 verify_navigation、抓取带 verify_grasp）；green / none 不分支。
+- **模型相关参数**：`--color-model`、`--color-python`、`--color-conf`；默认值在 `tools.py` 顶部常量。
+- **停靠位**：四个房间停靠位在牌子正前方 **2.40m**（1.2m 时牌子出画，见顶层 README V1.8.0），与 `color_yolo/config/markers.yaml`、`nav_waypoints.py` 三处一致，改一处必须三处同步。
+- 40 帧全量 ONNX 抽查 0 误检 0 漏检（conf=0.25），4 个停靠位联机实测颜色 4/4 正确。
+
+```bash
+# 真实导航 + 真实识别的完整巡检（仿真与 Nav2 需在跑；红色房会自动插抓杯子计划，
+# 抓取本身还要 --real-vla-publish 才会真发到 /vla_instruction）
+cd agent_demo
+python3 main.py "开始巡检" --mock-planner --real-navigation --real-detection
+```
 
 ## 当前可用工具
 
@@ -84,7 +98,7 @@ ToolResult(
 |---|---|---|---|
 | `navigate_to` | `location: str` | 默认 Mock 成功。`--real-navigation` 时通过 Nav2 `NavigateToPose` action 真实导航到 `tools.LOCATION_COORDS` 里配置的坐标。 | 已接 Nav2；后续可换 VLN service 或语义导航模块。 |
 | `detect_object` | `object_name: str` | Mock 成功，置信度为 `0.9`。 | 替换为目标检测器 / VLM grounding，例如 YOLO、GroundingDINO、RGB-D 检测或场景图查询。 |
-| `detect_color` | `location: str`（可选） | Mock 成功，返回 `observations.color="green"`。 | 接入摄像头 + YOLO，识别画面中绿色/红色目标，返回 `"green"` / `"red"` / `"none"`。 |
+| `detect_color` | `location: str`（可选） | 默认 Mock 返回 `"green"`；`--real-detection` 时抓 1 帧相机图 → YOLO ONNX（CPU）识别，返回 `"red"` / `"green"` / `"none"` + 检测框。 | 已接摄像头 + YOLO11n；单次调用 ≈1.1s（进程启动为主），可换常驻节点降延迟。 |
 | `vla_manipulate` | `instruction: str` | 默认 Mock 成功。使用 `--real-vla-publish` 时，会将 `instruction` 作为 `std_msgs/msg/String` 发布到 `/vla_instruction`。 | 保持为 OpenVLA bridge 入口，或后续替换为能报告完成状态的 ROS action/service。 |
 | `verify_navigation` | `location: str` | Mock 成功，`distance_to_goal=0.0`。 | 替换为 Nav2 action result 加 TF/AMCL 位姿阈值检查。 |
 | `verify_grasp` | `object_name: str | None` | Mock 成功，`attached=True`。 | 替换为 Gazebo grasp plugin 事件、夹爪/接触传感器、力反馈或视觉确认。 |

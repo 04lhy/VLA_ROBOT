@@ -1021,7 +1021,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <link name='room_sw_marker_red'>
+      <link name='room_sw_marker'>
         <pose>-22.09 -14.4185 1.25 0 -0 1.5708</pose>
         <visual name='visual'>
           <geometry>
@@ -1038,7 +1038,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <link name='room_se_marker_blue'>
+      <link name='room_se_marker'>
         <pose>22.09 -14.4185 1.25 0 -0 1.5708</pose>
         <visual name='visual'>
           <geometry>
@@ -1047,15 +1047,15 @@
             </box>
           </geometry>
           <material>
-            <ambient>0 0.25 1 1</ambient>
-            <diffuse>0 0.25 1 1</diffuse>
+            <ambient>0 1 0 1</ambient>
+            <diffuse>0 1 0 1</diffuse>
           </material>
         </visual>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <link name='room_nw_marker_green'>
+      <link name='room_nw_marker'>
         <pose>-22.09 14.592 1.25 0 -0 1.5708</pose>
         <visual name='visual'>
           <geometry>
@@ -1072,7 +1072,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <link name='room_ne_marker_yellow'>
+      <link name='room_ne_marker'>
         <pose>22.09 14.9066 1.25 0 -0 1.5708</pose>
         <visual name='visual'>
           <geometry>
@@ -1081,8 +1081,8 @@
             </box>
           </geometry>
           <material>
-            <ambient>1 0.8 0 1</ambient>
-            <diffuse>1 0.8 0 1</diffuse>
+            <ambient>1 0 0 1</ambient>
+            <diffuse>1 0 0 1</diffuse>
           </material>
         </visual>
         <self_collide>0</self_collide>
@@ -1848,7 +1848,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/base_link.STL</uri>
+              <uri>../meshes/base_link.STL</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2039,7 +2039,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/base_link.dae</uri>
+              <uri>../meshes/base_link.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2411,7 +2411,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link1.STL</uri>
+              <uri>../meshes/link1.STL</uri>
             </mesh>
           </geometry>
           <surface>
@@ -2436,7 +2436,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link1.dae</uri>
+              <uri>../meshes/link1.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2483,7 +2483,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link2.STL</uri>
+              <uri>../meshes/link2.STL</uri>
             </mesh>
           </geometry>
           <surface>
@@ -2508,7 +2508,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link2.dae</uri>
+              <uri>../meshes/link2.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2555,7 +2555,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link3.STL</uri>
+              <uri>../meshes/link3.STL</uri>
             </mesh>
           </geometry>
           <surface>
@@ -2580,7 +2580,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link3.dae</uri>
+              <uri>../meshes/link3.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2627,7 +2627,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link4.STL</uri>
+              <uri>../meshes/link4.STL</uri>
             </mesh>
           </geometry>
           <surface>
@@ -2652,7 +2652,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link4.dae</uri>
+              <uri>../meshes/link4.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2699,7 +2699,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link5.STL</uri>
+              <uri>../meshes/link5.STL</uri>
             </mesh>
           </geometry>
           <surface>
@@ -2724,7 +2724,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link5.dae</uri>
+              <uri>../meshes/link5.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2771,7 +2771,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link6_1.STL</uri>
+              <uri>../meshes/link6_1.STL</uri>
             </mesh>
           </geometry>
           <surface>
@@ -2817,7 +2817,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link6.dae</uri>
+              <uri>../meshes/link6.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2898,7 +2898,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link7.STL</uri>
+              <uri>../meshes/link7.STL</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2920,7 +2920,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link7.dae</uri>
+              <uri>../meshes/link7.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2965,7 +2965,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link8.STL</uri>
+              <uri>../meshes/link8.STL</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2987,7 +2987,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/meshes/link8.dae</uri>
+              <uri>../meshes/link8.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -2996,7 +2996,7 @@
         <kinematic>0</kinematic>
       </link>
       <plugin name='gazebo_ros2_control' filename='libgazebo_ros2_control.so'>
-        <parameters>/home/aunk_lg/VLA/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/config/controller_position.yaml</parameters>
+        <parameters>../config/controller_position.yaml</parameters>
       </plugin>
       <static>0</static>
       <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>

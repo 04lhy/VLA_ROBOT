@@ -24,6 +24,10 @@ Convert the user's instruction into a short executable JSON plan.
 Available tools:
 - navigate_to(location: string): move the robot to a known location.
 - detect_object(object_name: string): locate a target object in the current scene.
+- detect_color(location: string): read the marker color in front of the camera; returns
+  "red" / "green" / "none". A "red" result makes the executor automatically insert the
+  "go to <room>_table, grasp cup, place cup back" sub-plan; you do NOT need to emit
+  those steps yourself.
 - vla_manipulate(instruction: string): run a local manipulation instruction through OpenVLA.
 - verify_navigation(location: string): verify the robot reached a location.
 - verify_object_visible(object_name: string): verify an object is visible.
@@ -144,35 +148,22 @@ class Planner:
     def _mock_plan(self, instruction: str) -> list[PlanStep]:
         text = instruction.lower()
         if "巡检" in instruction or "patrol" in text:
-            return [
-                PlanStep(
-                    str(i), "navigate_to", {"location": loc},
+            # 每间房：停靠(2.4m 位) -> 颜色识别。红色触发的
+            # 「去桌前→抓取→放回」子计划由 executor 自动插入（见 executor.py），
+            # 绿色/无目标则直接巡检下一间房。
+            steps: list[PlanStep] = []
+            for i, loc in enumerate(PATROL_ROUTE, start=1):
+                steps.append(PlanStep(
+                    f"{i}.nav", "navigate_to", {"location": loc},
                     {"tool": "verify_navigation", "args": {"location": loc}},
                     f"巡检 {loc}",
-                )
-                for i, loc in enumerate(PATROL_ROUTE, start=1)
-            ]
-        # =====================================================================
-        # TODO 未来「巡检 + 颜色识别」分支流程（接口已预留 tools.detect_color）：
-        #
-        #   for room in PATROL_ROUTE:
-        #       navigate_to(room)
-        #       color = detect_color(room).observations["color"]
-        #       if color == "green":
-        #           continue                            # 巡检下一个房间
-        #       elif color == "red":
-        #           navigate_to(f"{room}_table")        # 来到该房间的桌子面前
-        #           vla_manipulate("抓取杯子")
-        #           vla_manipulate("放回杯子")
-        #           continue                            # 巡检下一个房间
-        #
-        # 说明：当前 plan-execute 框架是线性 step 序列，不支持循环/条件分支。
-        # 后续实现上述分支的两种可选方案：
-        #   a) 在 executor 中引入条件分支（step 结果决定下一步，如
-        #      detect_color 返回 red 时追加「去桌子→抓取→放回」子计划）；
-        #   b) 复用 replan 机制：detect_color 返回 red 时让 executor 返回失败，
-        #      由 planner.replan 生成「去桌子→抓取→放回」的恢复计划。
-        # =====================================================================
+                ))
+                if loc != "home":
+                    steps.append(PlanStep(
+                        f"{i}.color", "detect_color", {"location": loc}, None,
+                        f"{loc} 颜色识别（red→executor 自动插入抓取子计划）",
+                    ))
+            return steps
         if "kitchen" in text or "厨房" in instruction:
             return [
                 PlanStep("1", "navigate_to", {"location": "kitchen"}, {"tool": "verify_navigation", "args": {"location": "kitchen"}}, "go to kitchen"),

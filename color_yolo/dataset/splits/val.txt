@@ -1,0 +1,6 @@
+/home/lhy/Desktop/VLA_ROBOT/color_yolo/dataset/images/room2_014_00000.png
+/home/lhy/Desktop/VLA_ROBOT/color_yolo/dataset/images/room2_014_00001.png
+/home/lhy/Desktop/VLA_ROBOT/color_yolo/dataset/images/room1_001_00000.png
+/home/lhy/Desktop/VLA_ROBOT/color_yolo/dataset/images/room1_001_00001.png
+/home/lhy/Desktop/VLA_ROBOT/color_yolo/dataset/images/room4_005_00000.png
+/home/lhy/Desktop/VLA_ROBOT/color_yolo/dataset/images/room4_005_00001.png

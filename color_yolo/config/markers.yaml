@@ -1,0 +1,78 @@
+# 前置相机颜色识别的几何真值。
+#
+# 唯一来源是仿真侧的两个文件，world 一改这里必须同步：
+#   world:  base_robot_ws/src/base_robot/world/demo_scene.world （model base_factory）
+#   urdf:   base_robot_ws/src/base_robot/urdf/4_robot/plugins/sensor_plugin.xacro
+#
+# link 是 base_factory 内联的静态 link，不是独立 model，所以 /gazebo/model_states
+# 查不到它们的位姿 —— 这也是把真值写死在这里而不是运行时查询的原因。
+
+classes: [red, green]
+
+world_model:
+  name: base_factory
+  # <model name='base_factory'><pose>0.4434 -0.470209 0 0 0 0</pose>
+  # link 的 <pose> 是相对这个位姿的，真值位姿 = model_pose ∘ link_pose
+  pose: [0.4434, -0.470209, 0.0, 0.0, 0.0, 0.0]
+
+camera:
+  optical_frame: front_camera_optical_link
+  base_frame: base_link
+  image_raw_topic: /front_camera_sensor/image_raw
+  depth_topic: /front_camera_sensor/depth/image_raw
+  camera_info_topic: /front_camera_sensor/camera_info
+  width: 800
+  height: 600
+  horizontal_fov: 1.5009831567
+  # 传感器挂载：base_link 系 x=0.22 前向、z=0.06625、rpy=0（水平朝前）
+  mounting_xyz: [0.22, 0.0, 0.06625]
+  mounting_rpy: [0.0, 0.0, 0.0]
+  # base_footprint -> base_link 的 z 偏移，读自 URDF 的 base_footprint_joint
+  # (urdf/4_robot/4_robot.urdf: origin xyz="0 0 0.091")。
+  # gz model -p 报的是 base_footprint，而 mounting_xyz 定义在 base_link 系下，
+  # 两者之间必须补上这一段。注意：这意味着相机离地 0.091 + 0.06625 = 0.157m，
+  # 而不是 d9ef926 提交信息里写的 0.176m（那个数是估的）。
+  footprint_to_base_link_z: 0.091
+  update_rate: 10.0
+
+# 四块指示牌。size = box <size>：x 宽、y 板厚、z 高；pose 直接抄 world 文件。
+# 四块几何完全一致（0.8 x 0.015 x 0.6，离地 1.25，yaw=pi/2），只有颜色和位置不同。
+# 2026-10-28：SE 原为蓝、NE 原为黄，已统一改成绿/红，全图只剩 2 类需要识别。
+# link 名已去掉颜色后缀（room_*_marker），免得日后改色时名字又说谎。
+markers:
+  - name: room_sw_marker
+    room: room1
+    class_name: red
+    pose: [-22.09, -14.4185, 1.25, 0.0, 0.0, 1.5708]
+    size: [0.8, 0.015, 0.6]
+
+  - name: room_nw_marker
+    room: room4
+    class_name: green
+    pose: [-22.09, 14.592, 1.25, 0.0, 0.0, 1.5708]
+    size: [0.8, 0.015, 0.6]
+
+  - name: room_se_marker
+    room: room2
+    class_name: green
+    pose: [22.09, -14.4185, 1.25, 0.0, 0.0, 1.5708]
+    size: [0.8, 0.015, 0.6]
+
+  - name: room_ne_marker
+    room: room3
+    class_name: red
+    pose: [22.09, 14.9066, 1.25, 0.0, 0.0, 1.5708]
+    size: [0.8, 0.015, 0.6]
+
+# 巡检停靠位（与 agent_demo/tools.py 的 LOCATION_COORDS、nav_waypoints.py 的 WAYPOINTS 一致）。
+# 已核对：四个停靠位都在对应牌子正前方 2.40m、横向偏移 ~0.000m。
+# 2026-10-28：1.20m -> 2.40m。相机离地只有 0.157m、垂直半视场 34.97°，
+# 1.2m 停靠时牌子仰角 48.1°、0% 入画；训练帧采自 standoff 2.15~2.65m
+# （sweep --standoff 2.4），部署停靠位必须落在同一分布里。
+# 注意改这里后 sweep 仍自洽：backs = standoff - distance + delta，以牌子为锚反推，
+# 不依赖停靠位到牌子的具体距离。
+dock_stations:
+  room1: [-19.247, -14.889, 3.1416]
+  room2: [20.133, -14.889, 0.0]
+  room3: [20.133, 14.436, 0.0]
+  room4: [-19.247, 14.122, 3.1416]

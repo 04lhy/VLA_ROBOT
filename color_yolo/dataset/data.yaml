@@ -1,0 +1,6 @@
+path: /home/lhy/Desktop/VLA_ROBOT/color_yolo/dataset
+train: splits/train.txt
+val: splits/val.txt
+names:
+  0: red
+  1: green
