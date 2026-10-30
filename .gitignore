@@ -25,6 +25,7 @@ adapter_config.json
 data/
 datasets/
 vla_demos/
+vla_demos_v2/
 color_yolo/raw/
 # ultralytics 扫标签生成的缓存，随数据集变化，不入库
 color_yolo/dataset/*.cache

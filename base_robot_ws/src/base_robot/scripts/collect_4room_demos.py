@@ -16,7 +16,12 @@
   action = [dx, dy, dz, rx, ry, rz, gripper]
     - dx/dy/dz  : arm_base_link 系下的末端位置增量（米）
     - rx/ry/rz  : arm_base_link 系下的轴角姿态增量（弧度），R_next = delta_R @ R_cur
-    - gripper   : [0,1]，0=闭合，1=张开
+    - gripper   : [0,1] 连续值 = 开度/0.04（1=全张开，夹住杯子≈0.75），与 bridge 侧
+                  grip_open = cmd * 0.04 严格互逆；不再用 0/1 二值（推理端 0=全闭合会把杯子夹飞）
+
+帧裁剪（v2）：旧版 ~40% 的帧是零动作静止帧（保持段整段 + 段边界重复端点），
+导致 LoRA 学成"不动"也能拿高 action_accuracy。本版：移动段跳过与上一目标重复的
+首点；夹爪开合保持段只留 --hold-frames 帧；纯保持段（位姿与夹爪均不变）整段不记录。
 
 输出：每个 episode 一个目录
   demos/ep_XXXX/
@@ -417,7 +422,7 @@ class DemoCollector(Node):
             (waypoints["grasp"], grip),   # 闭合夹住
             (waypoints["lift"], grip),    # 抬起
             (waypoints["tilt"], grip),    # 倾斜（倾倒）
-            (waypoints["tilt"], grip),    # 保持倾斜（原地停留）
+            (waypoints["tilt"], grip),    # 保持倾斜（v2：纯保持段整段跳过，不记录）
             (waypoints["lift"], grip),    # 复原竖直
             (waypoints["grasp"], grip),   # 下降放回桌面
             (waypoints["grasp"], 0.04),   # 松开夹爪，杯子落回桌面
@@ -425,6 +430,31 @@ class DemoCollector(Node):
         ]
 
         steps_per_seg = max(2, int(round(self.args.seg_duration / self.args.control_dt)))
+        hold = max(1, self.args.hold_frames)
+
+        # ---- 展平成"唯一执行目标"序列 (angles, grip_open, seg_id) ----
+        # 移动段：插值去掉 step 0（其位姿 == 上一段终点，旧版由此产生大量零动作帧）
+        # 同位姿且夹爪变化段（闭合/松开）：只保留 hold 帧，用于教夹爪切换
+        # 纯保持段（位姿与夹爪都不变，如 tilt->tilt）：整段跳过，不再记录
+        targets = []
+        for wi in range(len(seq) - 1):
+            a_angles, a_grip = seq[wi]
+            b_angles, b_grip = seq[wi + 1]
+            if np.allclose(a_angles, b_angles):
+                if abs(a_grip - b_grip) < 1e-6:
+                    continue
+                for _ in range(hold):
+                    targets.append((list(a_angles), b_grip, wi))
+            else:
+                for step in range(1, steps_per_seg):
+                    frac = step / (steps_per_seg - 1)
+                    ang = list(np.array(a_angles)
+                              + (np.array(b_angles) - np.array(a_angles)) * frac)
+                    targets.append((ang, b_grip, wi))
+
+        # 抬起段（wi==2, grasp->lift）最后一个目标执行完后做抓取成功检测
+        lift_idx = [i for i, t in enumerate(targets) if t[2] == 2]
+        check_lift_idx = lift_idx[-1] if lift_idx else -1
 
         images = []
         actions = []
@@ -435,38 +465,31 @@ class DemoCollector(Node):
         last_grip = None
         grasp_success = False
 
-        for wi in range(len(seq) - 1):
-            a_angles, a_grip = seq[wi]
-            b_angles, b_grip = seq[wi + 1]
-            interp = self._interp(a_angles, b_angles, steps_per_seg)
+        for ti, (next_angles, grip_open, _wi) in enumerate(targets):
+            image = self.get_camera_image()
+            p_cur, R_cur = self.kin.forward(cur_angles)
+            p_next, R_next = self.kin.forward(next_angles)
+            # 夹爪连续值：开度/0.04 ∈ [0,1]（1=全开，夹杯≈0.75），与 bridge 端映射互逆
+            grip_cmd = float(grip_open) / 0.04
+            action = pose_delta_action(p_cur, R_cur, p_next, R_next, grip_cmd)
 
-            for step in range(len(interp)):
-                next_angles = list(interp[step])
-                grip_open = b_grip
+            if self.args.record and image is not None:
+                images.append(image)
+                actions.append(action)
+                ee_poses.append(np.concatenate([p_cur, [0, 0, 0, 1.0]]))
+                joints.append(cur_angles)
 
-                image = self.get_camera_image()
-                p_cur, R_cur = self.kin.forward(cur_angles)
-                p_next, R_next = self.kin.forward(next_angles)
-                grip_cmd = 1.0 if grip_open > 0.035 else 0.0
-                action = pose_delta_action(p_cur, R_cur, p_next, R_next, grip_cmd)
+            self.publish_arm(next_angles, self.args.control_dt)
+            if last_grip is None or abs(grip_open - last_grip) > 1e-4:
+                self.publish_gripper(grip_open, 0.3)
+                last_grip = grip_open
+            time.sleep(self.args.control_dt)
+            rclpy.spin_once(self, timeout_sec=0.01)
 
-                if self.args.record and image is not None:
-                    images.append(image)
-                    actions.append(action)
-                    ee_poses.append(np.concatenate([p_cur, [0, 0, 0, 1.0]]))
-                    joints.append(cur_angles)
+            cur_angles = next_angles
 
-                self.publish_arm(next_angles, self.args.control_dt)
-                if last_grip is None or abs(grip_open - last_grip) > 1e-4:
-                    self.publish_gripper(grip_open, 0.3)
-                    last_grip = grip_open
-                time.sleep(self.args.control_dt)
-                rclpy.spin_once(self, timeout_sec=0.01)
-
-                cur_angles = next_angles
-
-            # 抓取检测：抬起段（wi==2，grasp->lift）执行完后，杯子应被抬离桌面
-            if wi == 2 and cup_z0 is not None:
+            if ti == check_lift_idx and cup_z0 is not None:
+                time.sleep(0.5)  # 等抬升物理过程稳定再读杯子位姿
                 cup_pose = self._gz_pose(cup_model)
                 if cup_pose is not None and cup_pose[2] > cup_z0 + 0.05:
                     grasp_success = True
@@ -532,7 +555,12 @@ class DemoCollector(Node):
             return
 
         os.makedirs(self.args.out, exist_ok=True)
-        ep_idx = 24
+        if self.args.start_ep is not None:
+            ep_idx = self.args.start_ep
+        else:  # 默认续采：接在 out 目录里已有 ep_XXXX 之后（旧版硬编码 24 会覆盖数据）
+            nums = [int(d.split("_")[1]) for d in os.listdir(self.args.out)
+                    if d.startswith("ep_") and d.split("_")[1].isdigit()]
+            ep_idx = max(nums, default=-1) + 1
         for cycle in range(self.args.cycles):
             self.get_logger().info(f"===== 循环 {cycle} =====")
             for st in stations:
@@ -574,13 +602,18 @@ def main():
     parser.add_argument("--stations", type=lambda s: [int(x) for x in s.split(",")],
                         default=list(range(16)),
                         help="采集哪些停靠位（下标 0-15，逗号分隔，默认全部 16 个）")
-    parser.add_argument("--out", default="/home/ljh/robot2/NOW/VLA_ROBOT-main/vla_demos")
+    parser.add_argument("--out", default=os.path.expanduser("~/vla_demos"),
+                        help="输出目录（内含 ep_XXXX/；默认续接已有编号，不覆盖旧数据）")
+    parser.add_argument("--start-ep", type=int, default=None,
+                        help="episode 起始编号（默认自动：接在 out 目录已有 ep_XXXX 之后）")
+    parser.add_argument("--hold-frames", type=int, default=2,
+                        help="夹爪开合保持段保留帧数（0 动作帧；纯保持段一律不记录）")
     parser.add_argument("--instruction", default="pick up the cup")
     parser.add_argument("--camera-topic", default="/camera_sensor/image_raw")
     parser.add_argument("--seg-duration", type=float, default=2.0,
                         help="每段轨迹时长（秒）")
-    parser.add_argument("--control-dt", type=float, default=0.5,
-                        help="控制/采样周期（秒），微调建议 0.1~0.2（5-10Hz）")
+    parser.add_argument("--control-dt", type=float, default=0.2,
+                        help="控制/采样周期（秒），5Hz；与 GAZEBO_FINETUNE.md 的动作量纲统计一致")
     parser.add_argument("--joint-grasp", default="0,1.66,-0.52,0,-1.05,0",
                         help="抓取关节角（6 个，逗号分隔）")
     parser.add_argument("--joint-lift", default="0,1.42,-0.68,0,-0.65,0",
