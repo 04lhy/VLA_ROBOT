@@ -157,7 +157,69 @@ ros2 run base_robot auto_task.py
 ```bash
 cd $WS/openvla/vla-scripts
 python3 deploy_4bit.py --openvla-path /your/path/openvla
+
+# 当前微调权重（gazebo_4room_v4，4 房间裁剪数据 × 1200 步，帧堆叠，10q 冷启动验证通过）：
+VLA_UNNORM_KEY= ~/miniforge3/envs/openvla_env/bin/python deploy_4bit.py \
+    --openvla-path ~/models/gazebo_ft/gazebo_4room_v4
 ```
+
+> 微调模型部署/桥接参数与验证记录见 `openvla/vla-scripts/GAZEBO_FINETUNE.md`（§3–§6）；
+> launch 会自动起 `vla_gazebo_bridge`，手动试验前注意先杀掉自启桥接（FINETUNE §4 警告）。
+> v3 回滚 = 服务器换 `~/models/gazebo_ft/gazebo_4room_v3` + 桥接去掉 `stack_frames`。
+
+**手动闭环试验标准流程（第十q轮冷启动验证通过，逐步另开终端；`$WS` 见文首）**：
+
+1. 起仿真并拦截自启桥接（launch 后立刻 0.3s 轮询 pkill）：
+```bash
+source /opt/ros/humble/setup.bash && source $WS/base_robot_ws/install/setup.bash
+ros2 launch base_robot base_robot.launch.py
+# 另开终端：
+timeout 180 bash -c 'while true; do if pgrep -f "vla_gazebo_bridge[.]py" >/dev/null; then pkill -f "vla_gazebo_bridge[.]py"; echo INTERCEPTED; break; fi; sleep 0.3; done'
+```
+
+2. 等世界加载完并**静置 ≥75s**（新载物理弹跳会把底盘甩位），同时抓 robot_description：
+```bash
+timeout 240 bash -c 'until ros2 topic echo /robot_description --once >/dev/null 2>&1; do sleep 2; done' && sleep 75
+ros2 topic echo /robot_description --once --field data > /tmp/rd_raw.txt
+python3 -c "import yaml; raw=open('/tmp/rd_raw.txt').read(); i=raw.find('\n---\n'); s=raw[:i+1] if i!=-1 else raw; assert '<robot' in s; yaml.dump({'/**':{'ros__parameters':{'robot_description':s}}}, open('/tmp/bridge_rd_params.yaml','w'))" && echo PARAMS_OK
+```
+
+3. 传送归位（station southeast_blue_south 取杯位），并**双测确认**（一致后不再动底盘）：
+```bash
+gz model -m base_robot -x 14.152 -y -11.868 -z 0 -R 0 -P 0 -Y 1.5708
+gz model -m plastic_cup_0_clone -x 14.152 -y -11.514 -z 0.456645 -R 0 -P 0 -Y 0
+sleep 8; gz model -m base_robot -p; sleep 3; gz model -m plastic_cup_0_clone -p
+```
+
+4. f1 预热位慢发 + 张爪 + 静置（GT 首帧，与门控配套，每轮必做）：
+```bash
+timeout 6 ros2 topic pub -r 2 /arm_controller/joint_trajectory trajectory_msgs/msg/JointTrajectory "{joint_names: [joint1, joint2, joint3, joint4, joint5, joint6], points: [{positions: [0.0, 0.493, 0.084, 0.001, -0.5, -0.001], velocities: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], time_from_start: {sec: 3}}]}"
+timeout 4 ros2 topic pub -r 5 /gripper_controller/joint_trajectory trajectory_msgs/msg/JointTrajectory "{joint_names: [joint7, joint8], points: [{positions: [0.04, -0.04], velocities: [0.0, 0.0], time_from_start: {sec: 1}}]}"
+sleep 12
+```
+
+5. 手动起桥接（**勿传 `-p instruction`**，默认空=等 topic 门控，否则出幽灵步）+ 杯位记录器：
+```bash
+ros2 run base_robot vla_gazebo_bridge.py --ros-args -p use_sim_time:=true \
+  -p camera_topic:=/camera_sensor/image_raw -p position_scale:=1.0 -p rotation_scale:=1.0 \
+  -p max_linear_step:=0.04 -p max_angular_step:=0.2 \
+  -p escape_gt_file:=$WS/openvla/datasets/gazebo_4room_v2/ep_0004/actions.npy \
+  -p escape_gt_meta:=$WS/openvla/datasets/gazebo_4room_v2/ep_0004/meta.json \
+  -p escape_stall_frames:=4 -p escape_phase_gap:=8 -p min_ee_z:=0.19 \
+  -p stack_frames:=true --params-file /tmp/bridge_rd_params.yaml
+# 另开终端：
+while true; do echo "$(date +%s) $(gz model -m plastic_cup_0_clone -p)"; sleep 2; done > /tmp/cup_track.log
+```
+
+6. 确认就绪后 topic 起手（日志里应出现 `Grip close depth gate: allow z<=…`，且
+   `grep -c "VLA action"` = 0 才可发；`--once` 必须包 timeout，桥接死了会挂）：
+```bash
+timeout 12 ros2 topic pub --once /vla_instruction std_msgs/msg/String "data: 'pick up the cup and pour'"
+```
+
+> 夹爪三级门控（帧门 ptr≥8 / 深度门 z≤GT f8+2cm / 到位即捏 0.75）与指令门控均在代码
+> 内置，参数走默认即可；改过 `vla_gazebo_bridge.py` 必须
+> `colcon build --packages-select base_robot` 重建后再起桥接（脚本是拷贝非软链）。
 
 > **环境隔离要求**：必须在 mamba/conda 独立环境中运行，避免与 ROS2 的 Python 环境冲突。
 >

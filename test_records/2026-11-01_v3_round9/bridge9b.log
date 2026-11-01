@@ -1,0 +1,945 @@
+[INFO] [1793503362.044505622] [vla_gazebo_bridge]: GT escape enabled: /home/lhy/Desktop/VLA_ROBOT/openvla/datasets/gazebo_4room_v2/ep_0004/actions.npy (54 steps)
+[INFO] [1793503362.045644307] [vla_gazebo_bridge]: GT ee trajectory loaded: 54 poses
+[INFO] [1793503362.046042965] [vla_gazebo_bridge]: Initializing KDL from robot_description parameter...
+Unknown tag "material" in /robot[@name='base_robot_4']/link[@name='base_link']/collision[1]
+Unknown tag "material" in /robot[@name='base_robot_4']/link[@name='zhicheng_link1']/collision[1]
+Unknown tag "material" in /robot[@name='base_robot_4']/link[@name='zhicheng_link2']/collision[1]
+Unknown tag "material" in /robot[@name='base_robot_4']/link[@name='zhicheng_link3']/collision[1]
+Unknown tag "material" in /robot[@name='base_robot_4']/link[@name='zhicheng_link4']/collision[1]
+Unknown tag "material" in /robot[@name='base_robot_4']/link[@name='zhicheng_ban']/collision[1]
+Unknown tag "material" in /robot[@name='base_robot_4']/link[@name='imu_link']/collision[1]
+Unknown tag "material" in /robot[@name='base_robot_4']/link[@name='laser_cylinder_link']/collision[1]
+Unknown tag "material" in /robot[@name='base_robot_4']/link[@name='laser_link']/collision[1]
+Unknown tag "material" in /robot[@name='base_robot_4']/link[@name='camera_link']/collision[1]
+Unknown tag "material" in /robot[@name='base_robot_4']/link[@name='front_camera_link']/collision[1]
+Unknown tag "ros2_control" in /robot[@name='base_robot_4']
+[INFO] [1793503362.051627854] [vla_gazebo_bridge]: KDL initialized: 6 joints, chain from arm_base_link to link6
+[INFO] [1793503362.051852153] [vla_gazebo_bridge]: KDL kinematics initialized successfully
+[INFO] [1793503362.655068993] [vla_gazebo_bridge]: All joint states received
+[INFO] [1793503362.885709584] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503364.531857869] [vla_gazebo_bridge]: [VLA] VLA action raw=[0.03  0.    0.001 0.    0.01  0.    1.   ], chosen=[0.03  0.    0.001 0.    0.01  0.    1.   ], gt_ptr=1, stall=0, nopro=0
+[INFO] [1793503364.533186247] [vla_gazebo_bridge]: Current pos: [0.055 0.001 0.203], Target pos: [0.085 0.001 0.204], Delta pos: [0.03  0.    0.001]
+[INFO] [1793503364.533745983] [vla_gazebo_bridge]: Joint angles: [-0. -0. -0.  0.  0. -0.] -> [-0.     0.405  0.026 -0.001 -0.421  0.001]
+[INFO] [1793503364.534508770] [vla_gazebo_bridge]: IK action sent! Angles: [-0.     0.405  0.026 -0.001 -0.421  0.001], Gripper: 0.040
+[INFO] [1793503364.680955954] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503366.038824759] [vla_gazebo_bridge]: [VLA] VLA action raw=[0.03  0.    0.001 0.    0.01  0.    1.   ], chosen=[0.03  0.    0.001 0.    0.01  0.    1.   ], gt_ptr=1, stall=0, nopro=1
+[INFO] [1793503366.039478185] [vla_gazebo_bridge]: Current pos: [0.055 0.001 0.203], Target pos: [0.085 0.001 0.204], Delta pos: [0.03  0.    0.001]
+[INFO] [1793503366.039854112] [vla_gazebo_bridge]: Joint angles: [-0. -0. -0.  0.  0. -0.] -> [-0.     0.405  0.026 -0.001 -0.421  0.001]
+[INFO] [1793503366.040418242] [vla_gazebo_bridge]: IK action sent! Angles: [-0.     0.405  0.026 -0.001 -0.421  0.001], Gripper: 0.040
+[INFO] [1793503366.190475854] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503367.604320431] [vla_gazebo_bridge]: [VLA] VLA action raw=[0.03  0.    0.001 0.    0.01  0.    1.   ], chosen=[0.03  0.    0.001 0.    0.01  0.    1.   ], gt_ptr=2, stall=0, nopro=0
+[INFO] [1793503367.604952645] [vla_gazebo_bridge]: Current pos: [0.086 0.001 0.213], Target pos: [0.116 0.001 0.214], Delta pos: [0.03  0.    0.001]
+[INFO] [1793503367.605318225] [vla_gazebo_bridge]: Joint angles: [-0.     0.405 -0.    -0.001 -0.421  0.001] -> [ 0.     0.741 -0.024  0.    -0.723 -0.   ]
+[INFO] [1793503367.605874451] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.     0.741 -0.024  0.    -0.723 -0.   ], Gripper: 0.040
+[INFO] [1793503367.761283153] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503369.073602392] [vla_gazebo_bridge]: [VLA] VLA action raw=[0.03  0.    0.001 0.    0.01  0.    1.   ], chosen=[0.03  0.    0.001 0.    0.01  0.    1.   ], gt_ptr=2, stall=0, nopro=1
+[INFO] [1793503369.074281024] [vla_gazebo_bridge]: Current pos: [0.086 0.001 0.213], Target pos: [0.116 0.001 0.214], Delta pos: [0.03  0.    0.001]
+[INFO] [1793503369.074632547] [vla_gazebo_bridge]: Joint angles: [-0.     0.405 -0.    -0.001 -0.421  0.001] -> [ 0.     0.741 -0.024  0.    -0.723 -0.   ]
+[INFO] [1793503369.075192131] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.     0.741 -0.024  0.    -0.723 -0.   ], Gripper: 0.040
+[INFO] [1793503369.244511393] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503370.749607312] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.03   0.    -0.019  0.     0.01   0.     1.   ], chosen=[ 0.03   0.    -0.002  0.     0.01   0.     1.   ], gt_ptr=4, stall=0, nopro=0
+[INFO] [1793503370.750329156] [vla_gazebo_bridge]: Current pos: [0.116 0.001 0.214], Target pos: [0.146 0.001 0.212], Delta pos: [ 0.03   0.    -0.002]
+[INFO] [1793503370.750769892] [vla_gazebo_bridge]: Joint angles: [ 0.     0.741 -0.024  0.    -0.723 -0.   ] -> [ 0.     1.011 -0.073  0.    -0.934 -0.   ]
+[INFO] [1793503370.751367914] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.     1.011 -0.073  0.    -0.934 -0.   ], Gripper: 0.040
+[INFO] [1793503370.909529733] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503372.303753641] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.03   0.    -0.019  0.     0.01   0.     1.   ], chosen=[ 0.03   0.    -0.005  0.     0.01   0.     1.   ], gt_ptr=4, stall=0, nopro=1
+[INFO] [1793503372.304396901] [vla_gazebo_bridge]: Current pos: [0.116 0.001 0.214], Target pos: [0.146 0.001 0.209], Delta pos: [ 0.03   0.    -0.005]
+[INFO] [1793503372.304745819] [vla_gazebo_bridge]: Joint angles: [ 0.     0.741 -0.024  0.    -0.723 -0.   ] -> [ 0.     1.03  -0.064  0.    -0.962 -0.   ]
+[INFO] [1793503372.305321640] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.     1.03  -0.064  0.    -0.962 -0.   ], Gripper: 0.040
+[INFO] [1793503372.484541749] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503374.019114914] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.03   0.    -0.019  0.     0.01   0.     1.   ], chosen=[ 0.03   0.    -0.007  0.     0.01   0.     1.   ], gt_ptr=5, stall=0, nopro=0
+[INFO] [1793503374.019819299] [vla_gazebo_bridge]: Current pos: [0.146 0.001 0.212], Target pos: [0.176 0.001 0.205], Delta pos: [ 0.03   0.    -0.007]
+[INFO] [1793503374.020186688] [vla_gazebo_bridge]: Joint angles: [ 0.     1.011 -0.073  0.    -0.934 -0.   ] -> [ 0.     1.241 -0.135  0.    -1.092 -0.   ]
+[INFO] [1793503374.020766423] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.     1.241 -0.135  0.    -1.092 -0.   ], Gripper: 0.040
+[INFO] [1793503374.193544338] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503375.525919917] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.03   0.    -0.019  0.     0.01   0.     1.   ], chosen=[ 0.03   0.    -0.009  0.     0.01   0.     1.   ], gt_ptr=5, stall=0, nopro=1
+[INFO] [1793503375.527312354] [vla_gazebo_bridge]: Current pos: [0.146 0.001 0.209], Target pos: [0.176 0.001 0.201], Delta pos: [ 0.03   0.    -0.009]
+[INFO] [1793503375.528101093] [vla_gazebo_bridge]: Joint angles: [ 0.     1.03  -0.064  0.    -0.962 -0.   ] -> [ 0.     1.274 -0.123  0.    -1.136 -0.   ]
+[INFO] [1793503375.528863788] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.     1.274 -0.123  0.    -1.136 -0.   ], Gripper: 0.040
+[INFO] [1793503375.721202409] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503377.277255945] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.03   0.    -0.019  0.     0.01   0.     1.   ], chosen=[ 0.03  0.   -0.01  0.    0.01  0.    1.  ], gt_ptr=7, stall=0, nopro=0
+[INFO] [1793503377.278006821] [vla_gazebo_bridge]: Current pos: [0.176 0.001 0.205], Target pos: [0.206 0.001 0.195], Delta pos: [ 0.03  0.   -0.01]
+[INFO] [1793503377.278375550] [vla_gazebo_bridge]: Joint angles: [ 0.     1.241 -0.135  0.    -1.092 -0.   ] -> [ 0.     1.437 -0.21   0.    -1.203 -0.   ]
+[INFO] [1793503377.279077470] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.     1.437 -0.21   0.    -1.203 -0.   ], Gripper: 0.040
+[INFO] [1793503377.468195885] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503378.971193925] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.03   0.    -0.019  0.     0.01   0.     1.   ], chosen=[ 0.03   0.    -0.012  0.     0.01   0.     1.   ], gt_ptr=7, stall=0, nopro=1
+[WARN] [1793503378.971610310] [vla_gazebo_bridge]: z-floor clamp: target z 0.189 -> 0.190
+[INFO] [1793503378.972109756] [vla_gazebo_bridge]: Current pos: [0.176 0.001 0.201], Target pos: [0.206 0.001 0.19 ], Delta pos: [ 0.03   0.    -0.012]
+[INFO] [1793503378.972437270] [vla_gazebo_bridge]: Joint angles: [ 0.     1.274 -0.123  0.    -1.136 -0.   ] -> [ 0.     1.471 -0.201  0.    -1.245 -0.   ]
+[INFO] [1793503378.973210931] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.     1.471 -0.201  0.    -1.245 -0.   ], Gripper: 0.040
+[INFO] [1793503379.148922708] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503380.613643157] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.03   0.    -0.019  0.     0.01   0.     1.   ], chosen=[ 0.03   0.    -0.013  0.     0.01   0.     1.   ], gt_ptr=8, stall=0, nopro=0
+[WARN] [1793503380.614041975] [vla_gazebo_bridge]: z-floor clamp: target z 0.182 -> 0.190
+[INFO] [1793503380.614610990] [vla_gazebo_bridge]: Current pos: [0.206 0.001 0.195], Target pos: [0.236 0.001 0.19 ], Delta pos: [ 0.03   0.    -0.013]
+[INFO] [1793503380.614975805] [vla_gazebo_bridge]: Joint angles: [-0.     1.438 -0.21   0.    -1.203 -0.   ] -> [-0.     1.562 -0.31   0.    -1.217 -0.   ]
+[INFO] [1793503380.615892529] [vla_gazebo_bridge]: IK action sent! Angles: [-0.     1.562 -0.31   0.    -1.217 -0.   ], Gripper: 0.040
+[INFO] [1793503380.799664432] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503382.168280971] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[-0.019  0.    -0.016  0.    -0.01   0.     1.   ], chosen=[ 0.027 -0.    -0.026  0.     0.01  -0.     0.75 ], gt_ptr=9, stall=0, nopro=0
+[WARN] [1793503382.168814849] [vla_gazebo_bridge]: z-floor clamp: target z 0.162 -> 0.190
+[INFO] [1793503382.169679607] [vla_gazebo_bridge]: Current pos: [0.206 0.001 0.188], Target pos: [0.234 0.001 0.19 ], Delta pos: [ 0.027 -0.    -0.026]
+[INFO] [1793503382.170164941] [vla_gazebo_bridge]: Joint angles: [ 0.     1.471 -0.201  0.    -1.22  -0.   ] -> [ 0.     1.54  -0.304  0.    -1.177 -0.   ]
+[INFO] [1793503382.171009960] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.     1.54  -0.304  0.    -1.177 -0.   ], Gripper: 0.030
+[INFO] [1793503382.366031485] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503384.011302962] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[-0.019  0.    -0.016  0.    -0.01   0.     1.   ], chosen=[ 0.002  0.     0.008 -0.    -0.    -0.     0.75 ], gt_ptr=10, stall=0, nopro=0
+[INFO] [1793503384.012238383] [vla_gazebo_bridge]: Current pos: [0.236 0.001 0.19 ], Target pos: [0.238 0.001 0.198], Delta pos: [0.002 0.    0.008]
+[INFO] [1793503384.012642578] [vla_gazebo_bridge]: Joint angles: [-0.     1.562 -0.31   0.    -1.217 -0.   ] -> [-0.     1.524 -0.329  0.    -1.161 -0.   ]
+[INFO] [1793503384.013273767] [vla_gazebo_bridge]: IK action sent! Angles: [-0.     1.524 -0.329  0.    -1.161 -0.   ], Gripper: 0.030
+[INFO] [1793503384.195278199] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503385.632221091] [vla_gazebo_bridge]: Model recovered, handing control back
+[INFO] [1793503385.632922803] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.03   0.    -0.019  0.     0.01   0.     1.   ], chosen=[ 0.006  0.     0.004 -0.     0.001 -0.     0.787], gt_ptr=10, stall=0, nopro=1
+[INFO] [1793503385.633603622] [vla_gazebo_bridge]: Current pos: [0.234 0.002 0.19 ], Target pos: [0.24  0.002 0.194], Delta pos: [0.006 0.    0.004]
+[INFO] [1793503385.633970485] [vla_gazebo_bridge]: Joint angles: [ 0.000e+00  1.541e+00 -3.040e-01 -1.000e-03 -1.177e+00 -2.000e-03] -> [ 0.000e+00  1.537e+00 -3.320e-01 -1.000e-03 -1.144e+00 -2.000e-03]
+[INFO] [1793503385.634640528] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.000e+00  1.537e+00 -3.320e-01 -1.000e-03 -1.144e+00 -2.000e-03], Gripper: 0.031
+[INFO] [1793503385.809909022] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503387.199210946] [vla_gazebo_bridge]: [VLA] VLA action raw=[0.    0.    0.008 0.    0.    0.    0.75 ], chosen=[ 0.005  0.     0.005 -0.     0.001 -0.     0.782], gt_ptr=10, stall=0, nopro=2
+[INFO] [1793503387.200126497] [vla_gazebo_bridge]: Current pos: [0.238 0.001 0.198], Target pos: [0.243 0.001 0.202], Delta pos: [0.005 0.    0.005]
+[INFO] [1793503387.200663624] [vla_gazebo_bridge]: Joint angles: [-0.     1.524 -0.329  0.    -1.161 -0.   ] -> [-0.     1.516 -0.355  0.    -1.126 -0.   ]
+[INFO] [1793503387.201524720] [vla_gazebo_bridge]: IK action sent! Angles: [-0.     1.516 -0.355  0.    -1.126 -0.   ], Gripper: 0.031
+[INFO] [1793503387.381037971] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503388.645228398] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[-0.027  0.    -0.007  0.    -0.01   0.     1.   ], chosen=[ 0.001  0.     0.008  0.     0.    -0.     0.75 ], gt_ptr=11, stall=0, nopro=0
+[INFO] [1793503388.645903592] [vla_gazebo_bridge]: Current pos: [0.24  0.002 0.194], Target pos: [0.241 0.002 0.202], Delta pos: [0.001 0.    0.008]
+[INFO] [1793503388.646388491] [vla_gazebo_bridge]: Joint angles: [ 0.000e+00  1.537e+00 -3.320e-01 -1.000e-03 -1.144e+00 -2.000e-03] -> [ 0.000e+00  1.500e+00 -3.500e-01 -1.000e-03 -1.088e+00 -2.000e-03]
+[INFO] [1793503388.647001692] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.000e+00  1.500e+00 -3.500e-01 -1.000e-03 -1.088e+00 -2.000e-03], Gripper: 0.030
+[INFO] [1793503388.800208443] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503390.311580330] [vla_gazebo_bridge]: Model recovered, handing control back
+[INFO] [1793503390.312150957] [vla_gazebo_bridge]: [VLA] VLA action raw=[-0.001  0.     0.009  0.     0.     0.     0.75 ], chosen=[ 0.001  0.     0.008  0.     0.    -0.     0.75 ], gt_ptr=11, stall=0, nopro=1
+[INFO] [1793503390.312657372] [vla_gazebo_bridge]: Current pos: [0.243 0.001 0.202], Target pos: [0.244 0.001 0.211], Delta pos: [0.001 0.    0.008]
+[INFO] [1793503390.312986224] [vla_gazebo_bridge]: Joint angles: [-0.     1.516 -0.355  0.    -1.126 -0.   ] -> [-0.     1.48  -0.373  0.    -1.071 -0.   ]
+[INFO] [1793503390.313627465] [vla_gazebo_bridge]: IK action sent! Angles: [-0.     1.48  -0.373  0.    -1.071 -0.   ], Gripper: 0.030
+[INFO] [1793503390.490121473] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503391.907325914] [vla_gazebo_bridge]: [VLA] VLA action raw=[0.    0.    0.008 0.    0.    0.    0.75 ], chosen=[ 0.001  0.     0.008  0.     0.    -0.     0.75 ], gt_ptr=11, stall=0, nopro=2
+[INFO] [1793503391.908102230] [vla_gazebo_bridge]: Current pos: [0.241 0.002 0.202], Target pos: [0.242 0.002 0.21 ], Delta pos: [0.001 0.    0.008]
+[INFO] [1793503391.908598536] [vla_gazebo_bridge]: Joint angles: [ 0.000e+00  1.500e+00 -3.500e-01 -1.000e-03 -1.088e+00 -2.000e-03] -> [ 0.000e+00  1.463e+00 -3.690e-01 -1.000e-03 -1.033e+00 -2.000e-03]
+[INFO] [1793503391.909372723] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.000e+00  1.463e+00 -3.690e-01 -1.000e-03 -1.033e+00 -2.000e-03], Gripper: 0.030
+[INFO] [1793503392.109780805] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503393.627593951] [vla_gazebo_bridge]: [VLA] VLA action raw=[-0.001  0.     0.009  0.     0.     0.     0.75 ], chosen=[ 0.     0.     0.008  0.     0.    -0.     0.75 ], gt_ptr=11, stall=0, nopro=3
+[INFO] [1793503393.628354787] [vla_gazebo_bridge]: Current pos: [0.244 0.001 0.211], Target pos: [0.244 0.001 0.219], Delta pos: [0.    0.    0.008]
+[INFO] [1793503393.628766998] [vla_gazebo_bridge]: Joint angles: [-0.     1.48  -0.373  0.    -1.071 -0.   ] -> [-0.     1.444 -0.392  0.    -1.016 -0.   ]
+[INFO] [1793503393.629593027] [vla_gazebo_bridge]: IK action sent! Angles: [-0.     1.444 -0.392  0.    -1.016 -0.   ], Gripper: 0.030
+[INFO] [1793503393.795711319] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503395.133271970] [vla_gazebo_bridge]: [VLA] VLA action raw=[0.    0.    0.008 0.    0.    0.    0.75 ], chosen=[ 0.     0.     0.008  0.     0.    -0.     0.75 ], gt_ptr=11, stall=0, nopro=4
+[INFO] [1793503395.134510230] [vla_gazebo_bridge]: Current pos: [0.242 0.002 0.21 ], Target pos: [0.242 0.002 0.219], Delta pos: [0.    0.    0.008]
+[INFO] [1793503395.134959608] [vla_gazebo_bridge]: Joint angles: [ 0.000e+00  1.463e+00 -3.690e-01 -1.000e-03 -1.033e+00 -2.000e-03] -> [ 0.000e+00  1.427e+00 -3.880e-01 -1.000e-03 -9.780e-01 -2.000e-03]
+[INFO] [1793503395.135816252] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.000e+00  1.427e+00 -3.880e-01 -1.000e-03 -9.780e-01 -2.000e-03], Gripper: 0.030
+[INFO] [1793503395.314602797] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503396.888328620] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[-0.001  0.    -0.008  0.     0.     0.     1.   ], chosen=[ 0.001  0.     0.008 -0.     0.     0.     0.75 ], gt_ptr=12, stall=0, nopro=0
+[INFO] [1793503396.888956069] [vla_gazebo_bridge]: Current pos: [0.244 0.001 0.219], Target pos: [0.245 0.001 0.227], Delta pos: [0.001 0.    0.008]
+[INFO] [1793503396.889303396] [vla_gazebo_bridge]: Joint angles: [-0.     1.444 -0.392  0.    -1.016 -0.   ] -> [-0.     1.412 -0.412  0.    -0.964 -0.   ]
+[INFO] [1793503396.889886651] [vla_gazebo_bridge]: IK action sent! Angles: [-0.     1.412 -0.412  0.    -0.964 -0.   ], Gripper: 0.030
+[INFO] [1793503397.076564787] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503398.530705892] [vla_gazebo_bridge]: Model recovered, handing control back
+[INFO] [1793503398.531516067] [vla_gazebo_bridge]: [VLA] VLA action raw=[-0.001  0.     0.009  0.     0.     0.     0.75 ], chosen=[ 0.001  0.     0.008 -0.     0.     0.     0.75 ], gt_ptr=12, stall=0, nopro=1
+[INFO] [1793503398.532179345] [vla_gazebo_bridge]: Current pos: [0.242 0.002 0.219], Target pos: [0.243 0.002 0.227], Delta pos: [0.001 0.    0.008]
+[INFO] [1793503398.532717357] [vla_gazebo_bridge]: Joint angles: [ 0.000e+00  1.427e+00 -3.880e-01 -1.000e-03 -9.780e-01 -2.000e-03] -> [ 0.000e+00  1.394e+00 -4.080e-01 -1.000e-03 -9.250e-01 -2.000e-03]
+[INFO] [1793503398.533595179] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.000e+00  1.394e+00 -4.080e-01 -1.000e-03 -9.250e-01 -2.000e-03], Gripper: 0.030
+[INFO] [1793503398.744111234] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503400.229909889] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[-0.001  0.    -0.008  0.     0.     0.     1.   ], chosen=[ 0.001  0.     0.008 -0.     0.     0.     0.75 ], gt_ptr=13, stall=0, nopro=0
+[INFO] [1793503400.230619086] [vla_gazebo_bridge]: Current pos: [0.245 0.001 0.227], Target pos: [0.246 0.001 0.236], Delta pos: [0.001 0.    0.008]
+[INFO] [1793503400.231047929] [vla_gazebo_bridge]: Joint angles: [-0.     1.412 -0.412  0.    -0.964 -0.   ] -> [-0.     1.381 -0.433  0.    -0.912 -0.   ]
+[INFO] [1793503400.231851838] [vla_gazebo_bridge]: IK action sent! Angles: [-0.     1.381 -0.433  0.    -0.912 -0.   ], Gripper: 0.030
+[INFO] [1793503400.443709392] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503401.836344537] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[-0.001  0.    -0.008  0.     0.     0.     1.   ], chosen=[ 0.     0.     0.009 -0.    -0.    -0.     0.75 ], gt_ptr=14, stall=0, nopro=0
+[INFO] [1793503401.837041931] [vla_gazebo_bridge]: Current pos: [0.243 0.002 0.227], Target pos: [0.243 0.002 0.236], Delta pos: [0.    0.    0.009]
+[INFO] [1793503401.837463051] [vla_gazebo_bridge]: Joint angles: [ 0.000e+00  1.394e+00 -4.080e-01 -1.000e-03 -9.250e-01 -2.000e-03] -> [ 0.000e+00  1.361e+00 -4.280e-01 -1.000e-03 -8.720e-01 -2.000e-03]
+[INFO] [1793503401.838104856] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.000e+00  1.361e+00 -4.280e-01 -1.000e-03 -8.720e-01 -2.000e-03], Gripper: 0.030
+[INFO] [1793503402.021641870] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503403.633456605] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[-0.001  0.    -0.008  0.     0.     0.     1.   ], chosen=[-0.     0.     0.009  0.    -0.     0.     0.75 ], gt_ptr=15, stall=0, nopro=0
+[INFO] [1793503403.634160166] [vla_gazebo_bridge]: Current pos: [0.246 0.001 0.236], Target pos: [0.246 0.001 0.244], Delta pos: [-0.     0.     0.009]
+[INFO] [1793503403.634576234] [vla_gazebo_bridge]: Joint angles: [-0.     1.381 -0.433  0.    -0.912 -0.   ] -> [-0.     1.349 -0.453  0.    -0.86  -0.   ]
+[INFO] [1793503403.635195568] [vla_gazebo_bridge]: IK action sent! Angles: [-0.     1.349 -0.453  0.    -0.86  -0.   ], Gripper: 0.030
+[INFO] [1793503403.825456096] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503405.434136547] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[-0.001  0.    -0.008  0.     0.     0.     1.   ], chosen=[-0.001  0.     0.009  0.    -0.     0.     0.75 ], gt_ptr=16, stall=0, nopro=0
+[INFO] [1793503405.434935852] [vla_gazebo_bridge]: Current pos: [0.243 0.002 0.236], Target pos: [0.242 0.002 0.244], Delta pos: [-0.001  0.     0.009]
+[INFO] [1793503405.435394636] [vla_gazebo_bridge]: Joint angles: [ 0.000e+00  1.361e+00 -4.280e-01 -1.000e-03 -8.720e-01 -2.000e-03] -> [ 0.000e+00  1.327e+00 -4.480e-01 -1.000e-03 -8.180e-01 -2.000e-03]
+[INFO] [1793503405.436266850] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.000e+00  1.327e+00 -4.480e-01 -1.000e-03 -8.180e-01 -2.000e-03], Gripper: 0.030
+[INFO] [1793503405.621467051] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503407.247512734] [vla_gazebo_bridge]: Model recovered, handing control back
+[INFO] [1793503407.248198637] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.001  0.     0.008  0.026 -0.    -0.     0.75 ], gt_ptr=16, stall=0, nopro=1
+[INFO] [1793503407.248800862] [vla_gazebo_bridge]: Current pos: [0.246 0.001 0.244], Target pos: [0.245 0.001 0.252], Delta pos: [-0.001  0.     0.008]
+[INFO] [1793503407.249174348] [vla_gazebo_bridge]: Joint angles: [-0.     1.349 -0.453  0.    -0.86  -0.   ] -> [ 1.000e-03  1.322e+00 -4.700e-01  3.000e-03 -8.150e-01  2.400e-02]
+[INFO] [1793503407.249792957] [vla_gazebo_bridge]: IK action sent! Angles: [ 1.000e-03  1.322e+00 -4.700e-01  3.000e-03 -8.150e-01  2.400e-02], Gripper: 0.030
+[INFO] [1793503407.452594654] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503408.922848385] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.     0.     0.006  0.048 -0.    -0.     0.75 ], gt_ptr=16, stall=0, nopro=2
+[INFO] [1793503408.923803074] [vla_gazebo_bridge]: Current pos: [0.242 0.002 0.244], Target pos: [0.242 0.002 0.251], Delta pos: [-0.     0.     0.006]
+[INFO] [1793503408.924325866] [vla_gazebo_bridge]: Joint angles: [ 0.000e+00  1.327e+00 -4.480e-01 -1.000e-03 -8.180e-01 -2.000e-03] -> [ 1.000e-03  1.304e+00 -4.630e-01  2.000e-03 -7.800e-01  4.400e-02]
+[INFO] [1793503408.925876506] [vla_gazebo_bridge]: IK action sent! Angles: [ 1.000e-03  1.304e+00 -4.630e-01  2.000e-03 -7.800e-01  4.400e-02], Gripper: 0.030
+[INFO] [1793503409.099223662] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503410.804559993] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.     0.     0.005  0.067 -0.    -0.     0.75 ], gt_ptr=16, stall=0, nopro=3
+[INFO] [1793503410.805292846] [vla_gazebo_bridge]: Current pos: [0.245 0.001 0.252], Target pos: [0.245 0.001 0.257], Delta pos: [-0.     0.     0.005]
+[INFO] [1793503410.805776553] [vla_gazebo_bridge]: Joint angles: [ 1.000e-03  1.322e+00 -4.700e-01  3.000e-03 -8.150e-01  2.400e-02] -> [ 0.003  1.303 -0.483  0.011 -0.783  0.085]
+[INFO] [1793503410.806718738] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.003  1.303 -0.483  0.011 -0.783  0.085], Gripper: 0.030
+[INFO] [1793503411.035997682] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503412.628002063] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.     0.     0.005  0.083 -0.    -0.     0.75 ], gt_ptr=16, stall=0, nopro=4
+[INFO] [1793503412.628809547] [vla_gazebo_bridge]: Current pos: [0.242 0.002 0.251], Target pos: [0.242 0.002 0.255], Delta pos: [-0.     0.     0.005]
+[INFO] [1793503412.629574335] [vla_gazebo_bridge]: Joint angles: [ 1.000e-03  1.304e+00 -4.630e-01  2.000e-03 -7.800e-01  4.400e-02] -> [ 0.002  1.289 -0.474  0.008 -0.753  0.123]
+[INFO] [1793503412.630466446] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.002  1.289 -0.474  0.008 -0.753  0.123], Gripper: 0.030
+[INFO] [1793503412.799554805] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503414.420248560] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.     0.     0.004  0.097 -0.    -0.     0.75 ], gt_ptr=16, stall=0, nopro=5
+[INFO] [1793503414.421118146] [vla_gazebo_bridge]: Current pos: [0.245 0.001 0.257], Target pos: [0.244 0.001 0.261], Delta pos: [-0.     0.     0.004]
+[INFO] [1793503414.421490500] [vla_gazebo_bridge]: Joint angles: [ 0.003  1.303 -0.483  0.011 -0.783  0.085] -> [ 0.006  1.29  -0.493  0.024 -0.76   0.172]
+[INFO] [1793503414.422033641] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.006  1.29  -0.493  0.024 -0.76   0.172], Gripper: 0.030
+[INFO] [1793503414.605053516] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503415.985290894] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.     0.     0.003  0.108 -0.    -0.     0.75 ], gt_ptr=16, stall=0, nopro=6
+[INFO] [1793503415.986058928] [vla_gazebo_bridge]: Current pos: [0.242 0.002 0.255], Target pos: [0.241 0.002 0.259], Delta pos: [-0.     0.     0.003]
+[INFO] [1793503415.986497571] [vla_gazebo_bridge]: Joint angles: [ 0.002  1.289 -0.474  0.008 -0.753  0.123] -> [ 0.004  1.277 -0.482  0.015 -0.733  0.226]
+[INFO] [1793503415.987152873] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.004  1.277 -0.482  0.015 -0.733  0.226], Gripper: 0.030
+[INFO] [1793503416.176843056] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503417.811099184] [vla_gazebo_bridge]: [ESCAPE-PROGRESS] VLA action raw=[-0.001  0.    -0.008  0.     0.     0.     0.75 ], chosen=[-0.001  0.     0.009  0.    -0.     0.     0.75 ], gt_ptr=18, stall=0, nopro=0
+[INFO] [1793503417.812589296] [vla_gazebo_bridge]: Current pos: [0.244 0.001 0.261], Target pos: [0.243 0.001 0.27 ], Delta pos: [-0.001  0.     0.009]
+[INFO] [1793503417.813172349] [vla_gazebo_bridge]: Joint angles: [ 0.006  1.29  -0.493  0.024 -0.76   0.172] -> [ 0.006  1.259 -0.514  0.025 -0.708  0.17 ]
+[INFO] [1793503417.814108643] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.006  1.259 -0.514  0.025 -0.708  0.17 ], Gripper: 0.030
+[INFO] [1793503417.969876102] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503419.436782567] [vla_gazebo_bridge]: Model recovered, handing control back
+[INFO] [1793503419.437794183] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.001  0.     0.008  0.026 -0.    -0.     0.75 ], gt_ptr=18, stall=0, nopro=1
+[INFO] [1793503419.438691307] [vla_gazebo_bridge]: Current pos: [0.241 0.002 0.259], Target pos: [0.24  0.002 0.266], Delta pos: [-0.001  0.     0.008]
+[INFO] [1793503419.439142923] [vla_gazebo_bridge]: Joint angles: [ 0.004  1.277 -0.482  0.015 -0.733  0.226] -> [ 0.005  1.251 -0.5    0.018 -0.688  0.249]
+[INFO] [1793503419.439909805] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.005  1.251 -0.5    0.018 -0.688  0.249], Gripper: 0.030
+[INFO] [1793503419.620284291] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503421.165065841] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.001  0.     0.007  0.048 -0.    -0.     0.75 ], gt_ptr=19, stall=0, nopro=0
+[INFO] [1793503421.166117565] [vla_gazebo_bridge]: Current pos: [0.243 0.001 0.27 ], Target pos: [0.242 0.001 0.277], Delta pos: [-0.001  0.     0.007]
+[INFO] [1793503421.166585257] [vla_gazebo_bridge]: Joint angles: [ 0.006  1.259 -0.514  0.025 -0.708  0.17 ] -> [ 0.008  1.238 -0.529  0.033 -0.671  0.211]
+[INFO] [1793503421.167733732] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.008  1.238 -0.529  0.033 -0.671  0.211], Gripper: 0.030
+[INFO] [1793503421.355940177] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503422.801121925] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.001  0.     0.006  0.067 -0.    -0.     0.75 ], gt_ptr=19, stall=0, nopro=1
+[INFO] [1793503422.801946633] [vla_gazebo_bridge]: Current pos: [0.24  0.002 0.266], Target pos: [0.239 0.002 0.272], Delta pos: [-0.001  0.     0.006]
+[INFO] [1793503422.802358395] [vla_gazebo_bridge]: Joint angles: [ 0.005  1.251 -0.5    0.018 -0.688  0.249] -> [ 0.006  1.232 -0.513  0.023 -0.656  0.311]
+[INFO] [1793503422.803240894] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.006  1.232 -0.513  0.023 -0.656  0.311], Gripper: 0.030
+[INFO] [1793503422.969299546] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503424.660218853] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.001  0.     0.005  0.083 -0.    -0.     0.75 ], gt_ptr=19, stall=0, nopro=2
+[INFO] [1793503424.661018233] [vla_gazebo_bridge]: Current pos: [0.242 0.001 0.277], Target pos: [0.241 0.001 0.282], Delta pos: [-0.001  0.     0.005]
+[INFO] [1793503424.661392284] [vla_gazebo_bridge]: Joint angles: [ 0.008  1.238 -0.529  0.033 -0.671  0.211] -> [ 0.01   1.223 -0.541  0.045 -0.643  0.284]
+[INFO] [1793503424.662153131] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.01   1.223 -0.541  0.045 -0.643  0.284], Gripper: 0.030
+[INFO] [1793503424.850903080] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503426.396512082] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.001  0.     0.004  0.097 -0.    -0.     0.75 ], gt_ptr=19, stall=0, nopro=3
+[INFO] [1793503426.397203375] [vla_gazebo_bridge]: Current pos: [0.239 0.002 0.272], Target pos: [0.239 0.002 0.276], Delta pos: [-0.001  0.     0.004]
+[INFO] [1793503426.397604571] [vla_gazebo_bridge]: Joint angles: [ 0.006  1.232 -0.513  0.023 -0.656  0.311] -> [ 0.007  1.219 -0.523  0.031 -0.632  0.401]
+[INFO] [1793503426.398307818] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.007  1.219 -0.523  0.031 -0.632  0.401], Gripper: 0.030
+[INFO] [1793503426.593985034] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503428.402593144] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.001  0.     0.003  0.108 -0.    -0.     0.75 ], gt_ptr=19, stall=0, nopro=4
+[INFO] [1793503428.403436823] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.282], Target pos: [0.241 0.001 0.285], Delta pos: [-0.001  0.     0.003]
+[INFO] [1793503428.403859787] [vla_gazebo_bridge]: Joint angles: [ 0.01   1.223 -0.541  0.045 -0.643  0.284] -> [ 0.013  1.213 -0.55   0.062 -0.622  0.378]
+[INFO] [1793503428.404508514] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.013  1.213 -0.55   0.062 -0.622  0.378], Gripper: 0.030
+[INFO] [1793503428.566365282] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503430.087338020] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.     0.     0.003  0.118 -0.    -0.     0.75 ], gt_ptr=19, stall=0, nopro=5
+[INFO] [1793503430.088200863] [vla_gazebo_bridge]: Current pos: [0.239 0.002 0.276], Target pos: [0.238 0.002 0.279], Delta pos: [-0.     0.     0.003]
+[INFO] [1793503430.088625551] [vla_gazebo_bridge]: Joint angles: [ 0.007  1.219 -0.523  0.031 -0.632  0.401] -> [ 0.009  1.21  -0.531  0.04  -0.614  0.511]
+[INFO] [1793503430.089336945] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.009  1.21  -0.531  0.04  -0.614  0.511], Gripper: 0.030
+[INFO] [1793503430.278493776] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503432.088397442] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.    -0.009  0.     0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.174 -0.    -0.     0.75 ], gt_ptr=20, stall=0, nopro=0
+[INFO] [1793503432.089115078] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503432.089531773] [vla_gazebo_bridge]: Joint angles: [ 0.013  1.213 -0.55   0.062 -0.622  0.378] -> [ 0.018  1.212 -0.552  0.085 -0.616  0.533]
+[INFO] [1793503432.090742903] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.018  1.212 -0.552  0.085 -0.616  0.533], Gripper: 0.030
+[INFO] [1793503432.319008988] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503433.897080670] [vla_gazebo_bridge]: Model recovered, handing control back
+[INFO] [1793503433.898124634] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=20, stall=0, nopro=1
+[INFO] [1793503433.899120241] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503433.899767790] [vla_gazebo_bridge]: Joint angles: [ 0.009  1.21  -0.531  0.04  -0.614  0.511] -> [ 0.012  1.21  -0.532  0.052 -0.61   0.676]
+[INFO] [1793503433.900565510] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.012  1.21  -0.532  0.052 -0.61   0.676], Gripper: 0.030
+[INFO] [1793503434.073284953] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503435.663086247] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.122  0.    -0.     0.75 ], gt_ptr=20, stall=0, nopro=2
+[INFO] [1793503435.663774573] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503435.664134763] [vla_gazebo_bridge]: Joint angles: [ 0.018  1.212 -0.551  0.085 -0.616  0.533] -> [ 0.021  1.211 -0.553  0.1   -0.611  0.642]
+[INFO] [1793503435.664780949] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.021  1.211 -0.553  0.1   -0.611  0.642], Gripper: 0.030
+[INFO] [1793503435.870616927] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503437.455688991] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.077  0.    -0.     0.75 ], gt_ptr=20, stall=0, nopro=3
+[INFO] [1793503437.456438565] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503437.457204133] [vla_gazebo_bridge]: Joint angles: [ 0.012  1.21  -0.532  0.052 -0.61   0.676] -> [ 0.013  1.21  -0.532  0.057 -0.608  0.749]
+[INFO] [1793503437.458205101] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.013  1.21  -0.532  0.057 -0.608  0.749], Gripper: 0.030
+[INFO] [1793503437.656934303] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503439.307670730] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=20, stall=0, nopro=4
+[INFO] [1793503439.308410119] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503439.308774646] [vla_gazebo_bridge]: Joint angles: [ 0.021  1.211 -0.553  0.1   -0.611  0.642] -> [ 0.017  1.212 -0.551  0.078 -0.618  0.486]
+[INFO] [1793503439.309441460] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.017  1.212 -0.551  0.078 -0.618  0.486], Gripper: 0.030
+[INFO] [1793503439.462757000] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503440.974111976] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=20, stall=0, nopro=5
+[INFO] [1793503440.975012221] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503440.975472738] [vla_gazebo_bridge]: Joint angles: [ 0.013  1.21  -0.532  0.057 -0.608  0.749] -> [ 0.01   1.21  -0.531  0.046 -0.612  0.584]
+[INFO] [1793503440.976240200] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.01   1.21  -0.531  0.046 -0.612  0.584], Gripper: 0.030
+[INFO] [1793503441.146060493] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503442.734201379] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.122  0.     0.     0.75 ], gt_ptr=20, stall=0, nopro=6
+[INFO] [1793503442.734977151] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503442.735419570] [vla_gazebo_bridge]: Joint angles: [ 0.017  1.212 -0.551  0.078 -0.618  0.486] -> [ 0.014  1.213 -0.55   0.062 -0.622  0.378]
+[INFO] [1793503442.736213776] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.014  1.213 -0.55   0.062 -0.622  0.378], Gripper: 0.030
+[INFO] [1793503442.910729751] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503444.262239278] [vla_gazebo_bridge]: [ESCAPE-PROGRESS] VLA action raw=[ 0.     0.    -0.009  0.     0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.174 -0.    -0.     0.75 ], gt_ptr=22, stall=0, nopro=0
+[INFO] [1793503444.262861219] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503444.263228980] [vla_gazebo_bridge]: Joint angles: [ 0.01   1.21  -0.531  0.046 -0.612  0.584] -> [ 0.013  1.21  -0.532  0.057 -0.608  0.75 ]
+[INFO] [1793503444.264041892] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.013  1.21  -0.532  0.057 -0.608  0.75 ], Gripper: 0.030
+[INFO] [1793503444.448984318] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503446.000885520] [vla_gazebo_bridge]: Model recovered, handing control back
+[INFO] [1793503446.001837368] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174 -0.    -0.     0.75 ], gt_ptr=22, stall=0, nopro=1
+[INFO] [1793503446.002669241] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503446.003185080] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.213 -0.55   0.062 -0.622  0.378] -> [ 0.018  1.212 -0.551  0.085 -0.616  0.533]
+[INFO] [1793503446.004105282] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.018  1.212 -0.551  0.085 -0.616  0.533], Gripper: 0.030
+[INFO] [1793503446.150430661] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503447.662542464] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.122 -0.    -0.     0.75 ], gt_ptr=22, stall=0, nopro=2
+[INFO] [1793503447.663229193] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503447.663808831] [vla_gazebo_bridge]: Joint angles: [ 0.013  1.21  -0.532  0.057 -0.608  0.75 ] -> [ 0.014  1.209 -0.533  0.063 -0.605  0.866]
+[INFO] [1793503447.664381831] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.014  1.209 -0.533  0.063 -0.605  0.866], Gripper: 0.030
+[INFO] [1793503447.832234647] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503449.372436584] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.078 -0.    -0.     0.75 ], gt_ptr=22, stall=0, nopro=3
+[INFO] [1793503449.373511366] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503449.374007685] [vla_gazebo_bridge]: Joint angles: [ 0.018  1.212 -0.551  0.085 -0.616  0.533] -> [ 0.02   1.212 -0.552  0.094 -0.613  0.603]
+[INFO] [1793503449.375139525] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.02   1.212 -0.552  0.094 -0.613  0.603], Gripper: 0.030
+[INFO] [1793503449.544678470] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503451.064635017] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=22, stall=0, nopro=4
+[INFO] [1793503451.065634000] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503451.066131264] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.209 -0.533  0.063 -0.605  0.866] -> [ 0.012  1.21  -0.532  0.053 -0.61   0.701]
+[INFO] [1793503451.067020259] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.012  1.21  -0.532  0.053 -0.61   0.701], Gripper: 0.030
+[INFO] [1793503451.233906217] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503452.915939879] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=22, stall=0, nopro=5
+[INFO] [1793503452.916786562] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503452.917252213] [vla_gazebo_bridge]: Joint angles: [ 0.02   1.212 -0.552  0.094 -0.613  0.603] -> [ 0.016  1.213 -0.551  0.072 -0.619  0.448]
+[INFO] [1793503452.918182897] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.016  1.213 -0.551  0.072 -0.619  0.448], Gripper: 0.030
+[INFO] [1793503453.100509548] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503454.682795710] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=22, stall=0, nopro=6
+[INFO] [1793503454.683567165] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503454.683969066] [vla_gazebo_bridge]: Joint angles: [ 0.012  1.21  -0.532  0.053 -0.609  0.701] -> [ 0.01   1.21  -0.531  0.042 -0.613  0.536]
+[INFO] [1793503454.684584088] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.01   1.21  -0.531  0.042 -0.613  0.536], Gripper: 0.030
+[INFO] [1793503454.841452452] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503456.289738603] [vla_gazebo_bridge]: [ESCAPE-PROGRESS] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174 -0.    -0.     0.75 ], gt_ptr=23, stall=0, nopro=0
+[INFO] [1793503456.290435584] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503456.290842224] [vla_gazebo_bridge]: Joint angles: [ 0.016  1.213 -0.551  0.072 -0.619  0.448] -> [ 0.02   1.212 -0.552  0.094 -0.613  0.604]
+[INFO] [1793503456.291475500] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.02   1.212 -0.552  0.094 -0.613  0.604], Gripper: 0.030
+[INFO] [1793503456.470244123] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503457.909021899] [vla_gazebo_bridge]: Model recovered, handing control back
+[INFO] [1793503457.909886857] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174 -0.    -0.     0.75 ], gt_ptr=23, stall=0, nopro=1
+[INFO] [1793503457.910444529] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503457.910798873] [vla_gazebo_bridge]: Joint angles: [ 0.01   1.21  -0.531  0.042 -0.613  0.536] -> [ 0.012  1.21  -0.532  0.053 -0.609  0.701]
+[INFO] [1793503457.911403266] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.012  1.21  -0.532  0.053 -0.609  0.701], Gripper: 0.030
+[INFO] [1793503458.066130167] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503459.672636461] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.122 -0.    -0.     0.75 ], gt_ptr=23, stall=0, nopro=2
+[INFO] [1793503459.673479818] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503459.673907575] [vla_gazebo_bridge]: Joint angles: [ 0.02   1.212 -0.552  0.094 -0.613  0.604] -> [ 0.023  1.211 -0.553  0.109 -0.607  0.714]
+[INFO] [1793503459.674566003] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.023  1.211 -0.553  0.109 -0.607  0.714], Gripper: 0.030
+[INFO] [1793503459.839013330] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503461.362571843] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.078 -0.    -0.     0.75 ], gt_ptr=23, stall=0, nopro=3
+[INFO] [1793503461.363393699] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503461.363813389] [vla_gazebo_bridge]: Joint angles: [ 0.012  1.21  -0.532  0.053 -0.609  0.701] -> [ 0.013  1.209 -0.532  0.058 -0.607  0.775]
+[INFO] [1793503461.364580476] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.013  1.209 -0.532  0.058 -0.607  0.775], Gripper: 0.030
+[INFO] [1793503461.546872386] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503463.024668948] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=23, stall=0, nopro=4
+[INFO] [1793503463.025387585] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503463.025900653] [vla_gazebo_bridge]: Joint angles: [ 0.023  1.211 -0.553  0.109 -0.607  0.714] -> [ 0.019  1.212 -0.552  0.088 -0.615  0.557]
+[INFO] [1793503463.026687550] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.019  1.212 -0.552  0.088 -0.615  0.557], Gripper: 0.030
+[INFO] [1793503463.177149385] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503464.626180748] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=23, stall=0, nopro=5
+[INFO] [1793503464.626836898] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503464.627206836] [vla_gazebo_bridge]: Joint angles: [ 0.013  1.21  -0.532  0.058 -0.607  0.775] -> [ 0.011  1.21  -0.531  0.047 -0.612  0.61 ]
+[INFO] [1793503464.627861369] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.011  1.21  -0.531  0.047 -0.612  0.61 ], Gripper: 0.030
+[INFO] [1793503464.794413381] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503466.457042850] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=23, stall=0, nopro=6
+[INFO] [1793503466.457750875] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503466.458183551] [vla_gazebo_bridge]: Joint angles: [ 0.019  1.212 -0.552  0.088 -0.615  0.557] -> [ 0.014  1.213 -0.55   0.066 -0.621  0.403]
+[INFO] [1793503466.458818861] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.014  1.213 -0.55   0.066 -0.621  0.403], Gripper: 0.030
+[INFO] [1793503466.641719163] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503468.193917751] [vla_gazebo_bridge]: [ESCAPE-PROGRESS] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.174 -0.    -0.     0.75 ], gt_ptr=24, stall=0, nopro=0
+[INFO] [1793503468.194619825] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503468.194984723] [vla_gazebo_bridge]: Joint angles: [ 0.011  1.21  -0.531  0.047 -0.612  0.61 ] -> [ 0.013  1.21  -0.532  0.058 -0.607  0.776]
+[INFO] [1793503468.195700631] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.013  1.21  -0.532  0.058 -0.607  0.776], Gripper: 0.030
+[INFO] [1793503468.355797988] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503469.945599672] [vla_gazebo_bridge]: Model recovered, handing control back
+[INFO] [1793503469.946361094] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174 -0.    -0.     0.75 ], gt_ptr=24, stall=0, nopro=1
+[INFO] [1793503469.946957800] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503469.947311778] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.213 -0.55   0.066 -0.621  0.403] -> [ 0.019  1.212 -0.552  0.088 -0.615  0.558]
+[INFO] [1793503469.947968115] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.019  1.212 -0.552  0.088 -0.615  0.558], Gripper: 0.030
+[INFO] [1793503470.124981301] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503471.579167267] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.122 -0.    -0.     0.75 ], gt_ptr=24, stall=0, nopro=2
+[INFO] [1793503471.579851123] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503471.580219327] [vla_gazebo_bridge]: Joint angles: [ 0.013  1.21  -0.532  0.058 -0.607  0.776] -> [ 0.014  1.209 -0.533  0.065 -0.604  0.892]
+[INFO] [1793503471.581311203] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.014  1.209 -0.533  0.065 -0.604  0.892], Gripper: 0.030
+[INFO] [1793503471.772520774] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503473.505015408] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.078 -0.    -0.     0.75 ], gt_ptr=24, stall=0, nopro=3
+[INFO] [1793503473.505713177] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503473.506074601] [vla_gazebo_bridge]: Joint angles: [ 0.019  1.212 -0.552  0.088 -0.615  0.558] -> [ 0.021  1.211 -0.552  0.098 -0.611  0.628]
+[INFO] [1793503473.506699897] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.021  1.211 -0.552  0.098 -0.611  0.628], Gripper: 0.030
+[INFO] [1793503473.661272130] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503475.185357152] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=24, stall=0, nopro=4
+[INFO] [1793503475.186182959] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503475.186608567] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.209 -0.533  0.065 -0.604  0.892] -> [ 0.012  1.21  -0.532  0.055 -0.609  0.727]
+[INFO] [1793503475.187299101] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.012  1.21  -0.532  0.055 -0.609  0.727], Gripper: 0.030
+[INFO] [1793503475.361597116] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503476.931380847] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=24, stall=0, nopro=5
+[INFO] [1793503476.932153445] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503476.932559645] [vla_gazebo_bridge]: Joint angles: [ 0.021  1.211 -0.552  0.098 -0.611  0.628] -> [ 0.017  1.213 -0.551  0.076 -0.618  0.472]
+[INFO] [1793503476.933276635] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.017  1.213 -0.551  0.076 -0.618  0.472], Gripper: 0.030
+[INFO] [1793503477.115908774] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503478.542767227] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=24, stall=0, nopro=6
+[INFO] [1793503478.543472917] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503478.543865078] [vla_gazebo_bridge]: Joint angles: [ 0.012  1.21  -0.532  0.055 -0.609  0.727] -> [ 0.01   1.21  -0.531  0.044 -0.613  0.562]
+[INFO] [1793503478.544557536] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.01   1.21  -0.531  0.044 -0.613  0.562], Gripper: 0.030
+[INFO] [1793503478.704782252] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503480.274913124] [vla_gazebo_bridge]: [ESCAPE-PROGRESS] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174 -0.    -0.     0.75 ], gt_ptr=25, stall=0, nopro=0
+[INFO] [1793503480.275703381] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503480.276098702] [vla_gazebo_bridge]: Joint angles: [ 0.017  1.213 -0.551  0.076 -0.618  0.472] -> [ 0.021  1.212 -0.552  0.098 -0.611  0.628]
+[INFO] [1793503480.276762230] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.021  1.212 -0.552  0.098 -0.611  0.628], Gripper: 0.030
+[INFO] [1793503480.451264574] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503482.023311625] [vla_gazebo_bridge]: Model recovered, handing control back
+[INFO] [1793503482.024031726] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174 -0.    -0.     0.75 ], gt_ptr=25, stall=0, nopro=1
+[INFO] [1793503482.024648658] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503482.025024214] [vla_gazebo_bridge]: Joint angles: [ 0.01   1.21  -0.531  0.044 -0.613  0.562] -> [ 0.012  1.21  -0.532  0.055 -0.609  0.727]
+[INFO] [1793503482.025679737] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.012  1.21  -0.532  0.055 -0.609  0.727], Gripper: 0.030
+[INFO] [1793503482.216534293] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503483.261050359] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.122 -0.    -0.     0.75 ], gt_ptr=25, stall=0, nopro=2
+[INFO] [1793503483.262099930] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503483.262676132] [vla_gazebo_bridge]: Joint angles: [ 0.021  1.212 -0.552  0.098 -0.611  0.628] -> [ 0.024  1.211 -0.553  0.111 -0.605  0.739]
+[INFO] [1793503483.263353889] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.024  1.211 -0.553  0.111 -0.605  0.739], Gripper: 0.030
+[INFO] [1793503483.413339682] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503484.852498469] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.078 -0.    -0.     0.75 ], gt_ptr=25, stall=0, nopro=3
+[INFO] [1793503484.853232579] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503484.853593320] [vla_gazebo_bridge]: Joint angles: [ 0.012  1.21  -0.532  0.055 -0.609  0.727] -> [ 0.013  1.209 -0.532  0.06  -0.606  0.801]
+[INFO] [1793503484.854270289] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.013  1.209 -0.532  0.06  -0.606  0.801], Gripper: 0.030
+[INFO] [1793503485.018180154] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503486.657968943] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=25, stall=0, nopro=4
+[INFO] [1793503486.658818643] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503486.659262250] [vla_gazebo_bridge]: Joint angles: [ 0.024  1.211 -0.553  0.111 -0.605  0.739] -> [ 0.02   1.212 -0.552  0.091 -0.613  0.582]
+[INFO] [1793503486.659971129] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.02   1.212 -0.552  0.091 -0.613  0.582], Gripper: 0.030
+[INFO] [1793503486.843247826] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503488.329430480] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=25, stall=0, nopro=5
+[INFO] [1793503488.330093081] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503488.330520837] [vla_gazebo_bridge]: Joint angles: [ 0.013  1.209 -0.532  0.06  -0.606  0.801] -> [ 0.011  1.21  -0.531  0.049 -0.611  0.636]
+[INFO] [1793503488.331210625] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.011  1.21  -0.531  0.049 -0.611  0.636], Gripper: 0.030
+[INFO] [1793503488.515686272] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503490.050538684] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=25, stall=0, nopro=6
+[INFO] [1793503490.051226797] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503490.051593754] [vla_gazebo_bridge]: Joint angles: [ 0.02   1.212 -0.552  0.091 -0.613  0.582] -> [ 0.015  1.213 -0.55   0.069 -0.62   0.427]
+[INFO] [1793503490.052298399] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.015  1.213 -0.55   0.069 -0.62   0.427], Gripper: 0.030
+[INFO] [1793503490.210358872] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503491.579811671] [vla_gazebo_bridge]: [ESCAPE-PROGRESS] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.174 -0.    -0.     0.75 ], gt_ptr=26, stall=0, nopro=0
+[INFO] [1793503491.580924492] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503491.581474564] [vla_gazebo_bridge]: Joint angles: [ 0.011  1.21  -0.531  0.049 -0.611  0.636] -> [ 0.013  1.21  -0.532  0.06  -0.606  0.802]
+[INFO] [1793503491.582178355] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.013  1.21  -0.532  0.06  -0.606  0.802], Gripper: 0.030
+[INFO] [1793503491.750688913] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503493.466338401] [vla_gazebo_bridge]: Model recovered, handing control back
+[INFO] [1793503493.467474886] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174 -0.    -0.     0.75 ], gt_ptr=26, stall=0, nopro=1
+[INFO] [1793503493.468543804] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503493.469171441] [vla_gazebo_bridge]: Joint angles: [ 0.015  1.213 -0.55   0.069 -0.62   0.427] -> [ 0.02   1.212 -0.552  0.091 -0.613  0.583]
+[INFO] [1793503493.470312368] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.02   1.212 -0.552  0.091 -0.613  0.583], Gripper: 0.030
+[INFO] [1793503493.653600277] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503495.206756574] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.122 -0.    -0.     0.75 ], gt_ptr=26, stall=0, nopro=2
+[INFO] [1793503495.207546707] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503495.208003747] [vla_gazebo_bridge]: Joint angles: [ 0.013  1.21  -0.532  0.06  -0.606  0.802] -> [ 0.015  1.209 -0.533  0.066 -0.603  0.919]
+[INFO] [1793503495.208874958] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.015  1.209 -0.533  0.066 -0.603  0.919], Gripper: 0.030
+[INFO] [1793503495.402117871] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503496.941061793] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.078 -0.    -0.     0.75 ], gt_ptr=26, stall=0, nopro=3
+[INFO] [1793503496.941944920] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503496.942400985] [vla_gazebo_bridge]: Joint angles: [ 0.02   1.212 -0.552  0.091 -0.613  0.583] -> [ 0.022  1.211 -0.552  0.101 -0.61   0.652]
+[INFO] [1793503496.943179574] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.022  1.211 -0.552  0.101 -0.61   0.652], Gripper: 0.030
+[INFO] [1793503497.138193338] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503498.637069633] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=26, stall=0, nopro=4
+[INFO] [1793503498.637949322] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503498.638417644] [vla_gazebo_bridge]: Joint angles: [ 0.015  1.209 -0.533  0.066 -0.603  0.919] -> [ 0.013  1.21  -0.532  0.057 -0.608  0.753]
+[INFO] [1793503498.639340652] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.013  1.21  -0.532  0.057 -0.608  0.753], Gripper: 0.030
+[INFO] [1793503498.808039111] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503500.440979833] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=26, stall=0, nopro=5
+[INFO] [1793503500.442156780] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503500.442830050] [vla_gazebo_bridge]: Joint angles: [ 0.022  1.211 -0.552  0.101 -0.61   0.652] -> [ 0.017  1.212 -0.551  0.08  -0.617  0.497]
+[INFO] [1793503500.443698887] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.017  1.212 -0.551  0.08  -0.617  0.497], Gripper: 0.030
+[INFO] [1793503500.631670688] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503502.194955632] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=26, stall=0, nopro=6
+[INFO] [1793503502.195847593] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503502.196301732] [vla_gazebo_bridge]: Joint angles: [ 0.013  1.21  -0.532  0.057 -0.608  0.753] -> [ 0.011  1.21  -0.531  0.046 -0.612  0.588]
+[INFO] [1793503502.197113026] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.011  1.21  -0.531  0.046 -0.612  0.588], Gripper: 0.030
+[INFO] [1793503502.359275859] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503503.866677259] [vla_gazebo_bridge]: [ESCAPE-PROGRESS] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174 -0.    -0.     0.75 ], gt_ptr=27, stall=0, nopro=0
+[INFO] [1793503503.867520170] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503503.868041718] [vla_gazebo_bridge]: Joint angles: [ 0.017  1.212 -0.551  0.08  -0.617  0.497] -> [ 0.022  1.211 -0.552  0.101 -0.61   0.653]
+[INFO] [1793503503.868789205] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.022  1.211 -0.552  0.101 -0.61   0.653], Gripper: 0.030
+[INFO] [1793503504.052788501] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503505.461685583] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.    -0.009  0.     0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=28, stall=0, nopro=0
+[INFO] [1793503505.462429997] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503505.462899051] [vla_gazebo_bridge]: Joint angles: [ 0.011  1.21  -0.531  0.046 -0.612  0.588] -> [ 0.008  1.211 -0.531  0.034 -0.615  0.423]
+[INFO] [1793503505.463603055] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.008  1.211 -0.531  0.034 -0.615  0.423], Gripper: 0.030
+[INFO] [1793503505.654067865] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503507.286363052] [vla_gazebo_bridge]: Model recovered, handing control back
+[INFO] [1793503507.287262374] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=28, stall=0, nopro=1
+[INFO] [1793503507.288023049] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503507.288502037] [vla_gazebo_bridge]: Joint angles: [ 0.022  1.211 -0.552  0.101 -0.61   0.653] -> [ 0.017  1.213 -0.551  0.08  -0.617  0.497]
+[INFO] [1793503507.289238430] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.017  1.213 -0.551  0.08  -0.617  0.497], Gripper: 0.030
+[INFO] [1793503507.454892471] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503508.957401028] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=29, stall=0, nopro=0
+[INFO] [1793503508.958285681] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503508.958932968] [vla_gazebo_bridge]: Joint angles: [ 0.008  1.211 -0.531  0.034 -0.615  0.423] -> [ 0.005  1.211 -0.53   0.022 -0.618  0.259]
+[INFO] [1793503508.959666292] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.005  1.211 -0.53   0.022 -0.618  0.259], Gripper: 0.030
+[INFO] [1793503509.143062899] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503510.731410263] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=30, stall=0, nopro=0
+[INFO] [1793503510.732327152] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503510.732797393] [vla_gazebo_bridge]: Joint angles: [ 0.017  1.213 -0.551  0.08  -0.617  0.497] -> [ 0.012  1.213 -0.55   0.057 -0.623  0.341]
+[INFO] [1793503510.733621084] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.012  1.213 -0.55   0.057 -0.623  0.341], Gripper: 0.030
+[INFO] [1793503510.939206868] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503512.367791058] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=31, stall=0, nopro=0
+[INFO] [1793503512.368541230] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503512.368973085] [vla_gazebo_bridge]: Joint angles: [ 0.005  1.211 -0.53   0.022 -0.618  0.259] -> [ 0.002  1.211 -0.53   0.009 -0.619  0.095]
+[INFO] [1793503512.369905634] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.002  1.211 -0.53   0.009 -0.619  0.095], Gripper: 0.030
+[INFO] [1793503512.528766990] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503514.176361925] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=32, stall=0, nopro=0
+[INFO] [1793503514.177282720] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503514.177763728] [vla_gazebo_bridge]: Joint angles: [ 0.012  1.213 -0.55   0.057 -0.623  0.341] -> [ 0.007  1.214 -0.549  0.033 -0.626  0.187]
+[INFO] [1793503514.178640552] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.007  1.214 -0.549  0.033 -0.626  0.187], Gripper: 0.030
+[INFO] [1793503514.365026580] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503515.849340609] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=33, stall=0, nopro=0
+[INFO] [1793503515.850111886] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503515.850646379] [vla_gazebo_bridge]: Joint angles: [ 0.002  1.211 -0.53   0.009 -0.619  0.095] -> [-1.000e-03  1.211e+00 -5.300e-01 -5.000e-03 -6.190e-01 -6.800e-02]
+[INFO] [1793503515.851424719] [vla_gazebo_bridge]: IK action sent! Angles: [-1.000e-03  1.211e+00 -5.300e-01 -5.000e-03 -6.190e-01 -6.800e-02], Gripper: 0.030
+[INFO] [1793503516.038556865] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503517.526915951] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=34, stall=0, nopro=0
+[INFO] [1793503517.527830173] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503517.528279533] [vla_gazebo_bridge]: Joint angles: [ 0.007  1.214 -0.549  0.033 -0.626  0.187] -> [ 0.002  1.214 -0.549  0.008 -0.628  0.033]
+[INFO] [1793503517.528956914] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.002  1.214 -0.549  0.008 -0.628  0.033], Gripper: 0.030
+[INFO] [1793503517.685384090] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503519.073844198] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=35, stall=0, nopro=0
+[INFO] [1793503519.074683829] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.238 0.002 0.279], Delta pos: [0. 0. 0.]
+[INFO] [1793503519.075259798] [vla_gazebo_bridge]: Joint angles: [-1.000e-03  1.211e+00 -5.300e-01 -5.000e-03 -6.190e-01 -6.800e-02] -> [-0.003  1.211 -0.53  -0.018 -0.617 -0.232]
+[INFO] [1793503519.076029031] [vla_gazebo_bridge]: IK action sent! Angles: [-0.003  1.211 -0.53  -0.018 -0.617 -0.232], Gripper: 0.030
+[INFO] [1793503519.258072109] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503520.869443528] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=36, stall=0, nopro=0
+[INFO] [1793503520.870571725] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.241 0.001 0.285], Delta pos: [0. 0. 0.]
+[INFO] [1793503520.871078135] [vla_gazebo_bridge]: Joint angles: [ 0.002  1.214 -0.549  0.008 -0.628  0.033] -> [-0.004  1.214 -0.549 -0.017 -0.627 -0.121]
+[INFO] [1793503520.872145770] [vla_gazebo_bridge]: IK action sent! Angles: [-0.004  1.214 -0.549 -0.017 -0.627 -0.121], Gripper: 0.030
+[INFO] [1793503521.057675521] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503522.586891533] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.001 -0.    -0.009  0.    -0.     0.     0.75 ], gt_ptr=37, stall=0, nopro=0
+[INFO] [1793503522.587769799] [vla_gazebo_bridge]: Current pos: [0.238 0.002 0.279], Target pos: [0.24  0.002 0.27 ], Delta pos: [ 0.001 -0.    -0.009]
+[INFO] [1793503522.588240837] [vla_gazebo_bridge]: Joint angles: [-0.003  1.211 -0.53  -0.018 -0.617 -0.232] -> [-0.003  1.24  -0.508 -0.016 -0.668 -0.233]
+[INFO] [1793503522.589112222] [vla_gazebo_bridge]: IK action sent! Angles: [-0.003  1.24  -0.508 -0.016 -0.668 -0.233], Gripper: 0.030
+[INFO] [1793503522.749892946] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503524.273812067] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.001 -0.    -0.009  0.     0.    -0.     0.75 ], gt_ptr=38, stall=0, nopro=0
+[INFO] [1793503524.274590547] [vla_gazebo_bridge]: Current pos: [0.241 0.001 0.285], Target pos: [0.242 0.001 0.276], Delta pos: [ 0.001 -0.    -0.009]
+[INFO] [1793503524.275053279] [vla_gazebo_bridge]: Joint angles: [-0.004  1.214 -0.549 -0.017 -0.627 -0.121] -> [-0.004  1.24  -0.526 -0.016 -0.676 -0.122]
+[INFO] [1793503524.275756990] [vla_gazebo_bridge]: IK action sent! Angles: [-0.004  1.24  -0.526 -0.016 -0.676 -0.122], Gripper: 0.030
+[INFO] [1793503524.458716527] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503525.914829680] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.001 -0.    -0.009 -0.     0.    -0.     0.75 ], gt_ptr=39, stall=0, nopro=0
+[INFO] [1793503525.915681344] [vla_gazebo_bridge]: Current pos: [0.24  0.002 0.27 ], Target pos: [0.24  0.002 0.261], Delta pos: [ 0.001 -0.    -0.009]
+[INFO] [1793503525.916379338] [vla_gazebo_bridge]: Joint angles: [-0.003  1.24  -0.508 -0.016 -0.668 -0.233] -> [-0.003  1.267 -0.485 -0.015 -0.718 -0.235]
+[INFO] [1793503525.917204463] [vla_gazebo_bridge]: IK action sent! Angles: [-0.003  1.267 -0.485 -0.015 -0.718 -0.235], Gripper: 0.030
+[INFO] [1793503526.106171390] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503527.759952101] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.    -0.    -0.009  0.     0.    -0.     0.75 ], gt_ptr=40, stall=0, nopro=0
+[INFO] [1793503527.760707212] [vla_gazebo_bridge]: Current pos: [0.242 0.001 0.276], Target pos: [0.242 0.001 0.267], Delta pos: [ 0.    -0.    -0.009]
+[INFO] [1793503527.761149534] [vla_gazebo_bridge]: Joint angles: [-0.004  1.24  -0.526 -0.016 -0.676 -0.122] -> [-0.004  1.263 -0.502 -0.015 -0.724 -0.123]
+[INFO] [1793503527.761855952] [vla_gazebo_bridge]: IK action sent! Angles: [-0.004  1.263 -0.502 -0.015 -0.724 -0.123], Gripper: 0.030
+[INFO] [1793503527.919954164] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503529.524680412] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.031  0.     0.005 -0.    -0.01   0.     1.   ], gt_ptr=49, stall=0, nopro=0
+[INFO] [1793503529.525456148] [vla_gazebo_bridge]: Current pos: [0.24  0.002 0.261], Target pos: [0.209 0.002 0.266], Delta pos: [-0.031  0.     0.005]
+[INFO] [1793503529.525907601] [vla_gazebo_bridge]: Joint angles: [-0.003  1.267 -0.485 -0.015 -0.718 -0.235] -> [-0.004  1.114 -0.41  -0.018 -0.65  -0.232]
+[INFO] [1793503529.526529399] [vla_gazebo_bridge]: IK action sent! Angles: [-0.004  1.114 -0.41  -0.018 -0.65  -0.232], Gripper: 0.040
+[INFO] [1793503529.698687760] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503531.304372041] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.03   0.    -0.001 -0.    -0.01   0.     1.   ], gt_ptr=50, stall=0, nopro=0
+[INFO] [1793503531.305460803] [vla_gazebo_bridge]: Current pos: [0.242 0.001 0.267], Target pos: [0.212 0.001 0.266], Delta pos: [-0.03   0.    -0.001]
+[INFO] [1793503531.305927456] [vla_gazebo_bridge]: Joint angles: [-0.004  1.263 -0.502 -0.015 -0.724 -0.123] -> [-0.005  1.137 -0.411 -0.017 -0.698 -0.121]
+[INFO] [1793503531.306625444] [vla_gazebo_bridge]: IK action sent! Angles: [-0.005  1.137 -0.411 -0.017 -0.698 -0.121], Gripper: 0.040
+[INFO] [1793503531.485271957] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503532.927369211] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.027  0.    -0.007 -0.    -0.01   0.     1.   ], gt_ptr=51, stall=0, nopro=0
+[INFO] [1793503532.928138087] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.266], Target pos: [0.182 0.002 0.259], Delta pos: [-0.027  0.    -0.007]
+[INFO] [1793503532.928558287] [vla_gazebo_bridge]: Joint angles: [-0.004  1.114 -0.41  -0.018 -0.65  -0.232] -> [-0.006  0.998 -0.319 -0.021 -0.635 -0.229]
+[INFO] [1793503532.929252381] [vla_gazebo_bridge]: IK action sent! Angles: [-0.006  0.998 -0.319 -0.021 -0.635 -0.229], Gripper: 0.040
+[INFO] [1793503533.115124066] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503534.804223699] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.024  0.    -0.012 -0.    -0.01   0.     1.   ], gt_ptr=52, stall=0, nopro=0
+[INFO] [1793503534.804992150] [vla_gazebo_bridge]: Current pos: [0.212 0.001 0.266], Target pos: [0.189 0.001 0.254], Delta pos: [-0.024  0.    -0.012]
+[INFO] [1793503534.805418160] [vla_gazebo_bridge]: Joint angles: [-0.005  1.137 -0.411 -0.017 -0.698 -0.121] -> [-0.006  1.06  -0.311 -0.018 -0.731 -0.121]
+[INFO] [1793503534.806126182] [vla_gazebo_bridge]: IK action sent! Angles: [-0.006  1.06  -0.311 -0.018 -0.731 -0.121], Gripper: 0.040
+[INFO] [1793503534.968689124] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503536.570326716] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.019  0.    -0.016 -0.    -0.01   0.     1.   ], gt_ptr=53, stall=0, nopro=0
+[INFO] [1793503536.571346022] [vla_gazebo_bridge]: Current pos: [0.182 0.002 0.259], Target pos: [0.163 0.002 0.243], Delta pos: [-0.019  0.    -0.016]
+[INFO] [1793503536.571932198] [vla_gazebo_bridge]: Joint angles: [-0.006  0.998 -0.319 -0.021 -0.635 -0.229] -> [-0.007  0.945 -0.221 -0.022 -0.69  -0.229]
+[INFO] [1793503536.572729380] [vla_gazebo_bridge]: IK action sent! Angles: [-0.007  0.945 -0.221 -0.022 -0.69  -0.229], Gripper: 0.040
+[INFO] [1793503536.749363344] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503538.377874460] [vla_gazebo_bridge]: [ESCAPE-PHASE] VLA action raw=[0.001 0.    0.008 0.    0.    0.    0.75 ], chosen=[-0.014  0.    -0.019 -0.    -0.01   0.     1.   ], gt_ptr=54, stall=0, nopro=0
+[INFO] [1793503538.378639048] [vla_gazebo_bridge]: Current pos: [0.189 0.001 0.254], Target pos: [0.175 0.001 0.235], Delta pos: [-0.014  0.    -0.019]
+[INFO] [1793503538.379063932] [vla_gazebo_bridge]: Joint angles: [-0.006  1.06  -0.311 -0.018 -0.731 -0.121] -> [-0.007  1.064 -0.216 -0.018 -0.84  -0.122]
+[INFO] [1793503538.379747445] [vla_gazebo_bridge]: IK action sent! Angles: [-0.007  1.064 -0.216 -0.018 -0.84  -0.122], Gripper: 0.040
+[INFO] [1793503538.554269205] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503540.050900796] [vla_gazebo_bridge]: Model recovered, handing control back
+[INFO] [1793503540.051769867] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.012  0.    -0.016  0.026 -0.008 -0.     0.963], gt_ptr=54, stall=0, nopro=1
+[INFO] [1793503540.052521580] [vla_gazebo_bridge]: Current pos: [0.163 0.002 0.243], Target pos: [0.151 0.002 0.227], Delta pos: [-0.012  0.    -0.016]
+[INFO] [1793503540.052967585] [vla_gazebo_bridge]: Joint angles: [-0.007  0.945 -0.221 -0.022 -0.69  -0.229] -> [-0.006  0.943 -0.14  -0.016 -0.777 -0.209]
+[INFO] [1793503540.053709972] [vla_gazebo_bridge]: IK action sent! Angles: [-0.006  0.943 -0.14  -0.016 -0.777 -0.209], Gripper: 0.039
+[INFO] [1793503540.238281458] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503541.895893145] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[-0.01   0.    -0.014  0.048 -0.007 -0.     0.931], gt_ptr=54, stall=0, nopro=2
+[INFO] [1793503541.896732263] [vla_gazebo_bridge]: Current pos: [0.175 0.001 0.235], Target pos: [0.165 0.001 0.221], Delta pos: [-0.01   0.    -0.014]
+[INFO] [1793503541.897151147] [vla_gazebo_bridge]: Joint angles: [-0.007  1.064 -0.216 -0.018 -0.84  -0.122] -> [-0.003  1.08  -0.147 -0.006 -0.933 -0.083]
+[INFO] [1793503541.898185051] [vla_gazebo_bridge]: IK action sent! Angles: [-0.003  1.08  -0.147 -0.006 -0.933 -0.083], Gripper: 0.037
+[INFO] [1793503542.093124427] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503543.687366999] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=3
+[INFO] [1793503543.688105733] [vla_gazebo_bridge]: Current pos: [0.151 0.002 0.227], Target pos: [0.151 0.002 0.227], Delta pos: [0. 0. 0.]
+[INFO] [1793503543.688524694] [vla_gazebo_bridge]: Joint angles: [-0.006  0.943 -0.14  -0.016 -0.777 -0.209] -> [ 0.011  0.943 -0.14   0.024 -0.778 -0.065]
+[INFO] [1793503543.689209099] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.011  0.943 -0.14   0.024 -0.778 -0.065], Gripper: 0.030
+[INFO] [1793503543.854623451] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503545.454287913] [vla_gazebo_bridge]: [VLA] VLA action raw=[0.001 0.    0.008 0.    0.    0.    0.75 ], chosen=[0.001 0.    0.008 0.    0.    0.    0.75 ], gt_ptr=54, stall=0, nopro=4
+[INFO] [1793503545.455280402] [vla_gazebo_bridge]: Current pos: [0.165 0.001 0.221], Target pos: [0.166 0.001 0.229], Delta pos: [0.001 0.    0.008]
+[INFO] [1793503545.455788598] [vla_gazebo_bridge]: Joint angles: [-0.003  1.08  -0.147 -0.006 -0.933 -0.083] -> [-0.003  1.043 -0.175 -0.006 -0.867 -0.082]
+[INFO] [1793503545.456506066] [vla_gazebo_bridge]: IK action sent! Angles: [-0.003  1.043 -0.175 -0.006 -0.867 -0.082], Gripper: 0.030
+[INFO] [1793503545.650457662] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503547.250217813] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.03   0.    -0.019  0.     0.01   0.     1.   ], chosen=[ 0.03   0.    -0.019  0.     0.01   0.     1.   ], gt_ptr=54, stall=0, nopro=5
+[INFO] [1793503547.251225409] [vla_gazebo_bridge]: Current pos: [0.151 0.002 0.227], Target pos: [0.181 0.002 0.208], Delta pos: [ 0.03   0.    -0.019]
+[INFO] [1793503547.251686723] [vla_gazebo_bridge]: Joint angles: [ 0.011  0.943 -0.14   0.024 -0.778 -0.065] -> [ 0.007  1.235 -0.161  0.016 -1.039 -0.055]
+[INFO] [1793503547.252416725] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.007  1.235 -0.161  0.016 -1.039 -0.055], Gripper: 0.040
+[INFO] [1793503547.413696797] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503549.176155858] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.03   0.    -0.019  0.     0.01   0.     1.   ], chosen=[ 0.03   0.    -0.019  0.     0.01   0.     1.   ], gt_ptr=54, stall=0, nopro=6
+[INFO] [1793503549.177001990] [vla_gazebo_bridge]: Current pos: [0.166 0.001 0.229], Target pos: [0.196 0.001 0.21 ], Delta pos: [ 0.03   0.    -0.019]
+[INFO] [1793503549.177462311] [vla_gazebo_bridge]: Joint angles: [-0.003  1.043 -0.175 -0.006 -0.867 -0.082] -> [-0.002  1.308 -0.208 -0.005 -1.089 -0.084]
+[INFO] [1793503549.178329441] [vla_gazebo_bridge]: IK action sent! Angles: [-0.002  1.308 -0.208 -0.005 -1.089 -0.084], Gripper: 0.040
+[INFO] [1793503549.364368168] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503550.945235099] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.03   0.    -0.019  0.     0.01   0.     1.   ], chosen=[ 0.03   0.    -0.019  0.     0.01   0.     1.   ], gt_ptr=54, stall=0, nopro=7
+[WARN] [1793503550.945684597] [vla_gazebo_bridge]: z-floor clamp: target z 0.189 -> 0.190
+[INFO] [1793503550.946305859] [vla_gazebo_bridge]: Current pos: [0.181 0.002 0.208], Target pos: [0.211 0.002 0.19 ], Delta pos: [ 0.03   0.    -0.019]
+[INFO] [1793503550.946901853] [vla_gazebo_bridge]: Joint angles: [ 0.007  1.235 -0.161  0.016 -1.039 -0.055] -> [ 0.006  1.474 -0.221  0.012 -1.208 -0.052]
+[INFO] [1793503550.947744724] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.006  1.474 -0.221  0.012 -1.208 -0.052], Gripper: 0.040
+[INFO] [1793503551.140167350] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503552.863741708] [vla_gazebo_bridge]: [VLA] VLA action raw=[0.001 0.    0.008 0.    0.    0.    0.75 ], chosen=[0.001 0.    0.008 0.    0.    0.    0.75 ], gt_ptr=54, stall=0, nopro=8
+[INFO] [1793503552.864553090] [vla_gazebo_bridge]: Current pos: [0.196 0.001 0.21 ], Target pos: [0.198 0.001 0.218], Delta pos: [0.001 0.    0.008]
+[INFO] [1793503552.865246701] [vla_gazebo_bridge]: Joint angles: [-0.002  1.308 -0.208 -0.005 -1.089 -0.084] -> [-0.002  1.27  -0.232 -0.005 -1.027 -0.084]
+[INFO] [1793503552.866145549] [vla_gazebo_bridge]: IK action sent! Angles: [-0.002  1.27  -0.232 -0.005 -1.027 -0.084], Gripper: 0.030
+[INFO] [1793503553.037228901] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503554.516870586] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=9
+[WARN] [1793503554.517333182] [vla_gazebo_bridge]: z-floor clamp: target z 0.190 -> 0.190
+[INFO] [1793503554.517952787] [vla_gazebo_bridge]: Current pos: [0.211 0.002 0.19 ], Target pos: [0.211 0.002 0.19 ], Delta pos: [0. 0. 0.]
+[INFO] [1793503554.518378788] [vla_gazebo_bridge]: Joint angles: [ 0.006  1.474 -0.221  0.012 -1.208 -0.052] -> [ 0.011  1.473 -0.221  0.027 -1.205  0.117]
+[INFO] [1793503554.519181527] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.011  1.473 -0.221  0.027 -1.205  0.117], Gripper: 0.030
+[INFO] [1793503554.713574387] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503556.473830720] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=10
+[INFO] [1793503556.474625705] [vla_gazebo_bridge]: Current pos: [0.198 0.001 0.218], Target pos: [0.198 0.001 0.218], Delta pos: [0. 0. 0.]
+[INFO] [1793503556.475103409] [vla_gazebo_bridge]: Joint angles: [-0.002  1.27  -0.232 -0.005 -1.027 -0.084] -> [ 0.01   1.269 -0.232  0.025 -1.025  0.073]
+[INFO] [1793503556.475817923] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.01   1.269 -0.232  0.025 -1.025  0.073], Gripper: 0.030
+[INFO] [1793503556.674304467] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503558.330881437] [vla_gazebo_bridge]: [VLA] VLA action raw=[0.    0.    0.008 0.    0.    0.    0.75 ], chosen=[0.    0.    0.008 0.    0.    0.    0.75 ], gt_ptr=54, stall=0, nopro=11
+[INFO] [1793503558.331882898] [vla_gazebo_bridge]: Current pos: [0.211 0.002 0.19 ], Target pos: [0.212 0.002 0.199], Delta pos: [0.    0.    0.008]
+[INFO] [1793503558.332532593] [vla_gazebo_bridge]: Joint angles: [ 0.011  1.473 -0.221  0.027 -1.206  0.116] -> [ 0.011  1.422 -0.239  0.028 -1.136  0.114]
+[INFO] [1793503558.333324783] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.011  1.422 -0.239  0.028 -1.136  0.114], Gripper: 0.030
+[INFO] [1793503558.507655587] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503560.140399528] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=12
+[INFO] [1793503560.141385674] [vla_gazebo_bridge]: Current pos: [0.198 0.001 0.218], Target pos: [0.198 0.001 0.218], Delta pos: [0. 0. 0.]
+[INFO] [1793503560.141871757] [vla_gazebo_bridge]: Joint angles: [ 0.01   1.269 -0.232  0.025 -1.025  0.073] -> [ 0.021  1.268 -0.233  0.054 -1.021  0.23 ]
+[INFO] [1793503560.142686392] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.021  1.268 -0.233  0.054 -1.021  0.23 ], Gripper: 0.030
+[INFO] [1793503560.358023893] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503561.901247932] [vla_gazebo_bridge]: [VLA] VLA action raw=[0.001 0.    0.008 0.    0.    0.    0.75 ], chosen=[0.001 0.    0.008 0.    0.    0.    0.75 ], gt_ptr=54, stall=0, nopro=13
+[INFO] [1793503561.902188634] [vla_gazebo_bridge]: Current pos: [0.212 0.002 0.199], Target pos: [0.213 0.002 0.206], Delta pos: [0.001 0.    0.008]
+[INFO] [1793503561.902926979] [vla_gazebo_bridge]: Joint angles: [ 0.011  1.422 -0.239  0.028 -1.136  0.114] -> [ 0.011  1.382 -0.261  0.028 -1.074  0.113]
+[INFO] [1793503561.903841520] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.011  1.382 -0.261  0.028 -1.074  0.113], Gripper: 0.030
+[INFO] [1793503562.134700953] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503563.491248300] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=14
+[INFO] [1793503563.492063467] [vla_gazebo_bridge]: Current pos: [0.198 0.001 0.218], Target pos: [0.198 0.001 0.218], Delta pos: [0. 0. 0.]
+[INFO] [1793503563.492597388] [vla_gazebo_bridge]: Joint angles: [ 0.021  1.268 -0.233  0.054 -1.021  0.23 ] -> [ 0.032  1.265 -0.234  0.082 -1.012  0.388]
+[INFO] [1793503563.493360508] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.032  1.265 -0.234  0.082 -1.012  0.388], Gripper: 0.030
+[INFO] [1793503563.679827133] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503565.180629486] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=15
+[INFO] [1793503565.181454844] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503565.181868196] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.354 -0.254  0.035 -1.059  0.143] -> [ 0.02   1.352 -0.255  0.052 -1.053  0.308]
+[INFO] [1793503565.182561127] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.02   1.352 -0.255  0.052 -1.053  0.308], Gripper: 0.030
+[INFO] [1793503565.358900469] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503566.910412114] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=16
+[INFO] [1793503566.911540116] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503566.912224040] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.354 -0.254  0.035 -1.059  0.143] -> [ 0.02   1.352 -0.255  0.052 -1.053  0.307]
+[INFO] [1793503566.913137260] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.02   1.352 -0.255  0.052 -1.053  0.307], Gripper: 0.030
+[INFO] [1793503567.116381361] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503568.651114283] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=17
+[INFO] [1793503568.652807501] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503568.653599459] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.354 -0.254  0.035 -1.059  0.142] -> [ 0.02   1.352 -0.255  0.052 -1.053  0.307]
+[INFO] [1793503568.654574332] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.02   1.352 -0.255  0.052 -1.053  0.307], Gripper: 0.030
+[INFO] [1793503568.813293578] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503570.508295326] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=18
+[INFO] [1793503570.509239603] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503570.509691235] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.354 -0.254  0.035 -1.059  0.142] -> [ 0.02   1.352 -0.255  0.052 -1.054  0.307]
+[INFO] [1793503570.510468104] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.02   1.352 -0.255  0.052 -1.054  0.307], Gripper: 0.030
+[INFO] [1793503570.693412839] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503572.456463421] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=19
+[INFO] [1793503572.457374754] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503572.457880038] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.354 -0.254  0.035 -1.059  0.142] -> [ 0.02   1.352 -0.255  0.052 -1.054  0.307]
+[INFO] [1793503572.458684867] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.02   1.352 -0.255  0.052 -1.054  0.307], Gripper: 0.030
+[INFO] [1793503572.665730775] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503574.415632138] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=20
+[INFO] [1793503574.416512308] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503574.416991055] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.354 -0.254  0.035 -1.059  0.142] -> [ 0.02   1.353 -0.255  0.052 -1.054  0.307]
+[INFO] [1793503574.417802787] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.02   1.353 -0.255  0.052 -1.054  0.307], Gripper: 0.030
+[INFO] [1793503574.590772586] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503576.200718390] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=21
+[INFO] [1793503576.201591013] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503576.202061927] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.354 -0.254  0.035 -1.06   0.142] -> [ 0.02   1.353 -0.255  0.052 -1.054  0.307]
+[INFO] [1793503576.202812991] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.02   1.353 -0.255  0.052 -1.054  0.307], Gripper: 0.030
+[INFO] [1793503576.393283432] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503578.128982111] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=22
+[INFO] [1793503578.129816948] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503578.130320160] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.355 -0.254  0.035 -1.06   0.142] -> [ 0.02   1.353 -0.255  0.052 -1.054  0.307]
+[INFO] [1793503578.131094910] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.02   1.353 -0.255  0.052 -1.054  0.307], Gripper: 0.030
+[INFO] [1793503578.320040241] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503579.994740021] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=23
+[INFO] [1793503579.995562881] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503579.996012188] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.355 -0.254  0.035 -1.06   0.142] -> [ 0.02   1.353 -0.255  0.052 -1.054  0.306]
+[INFO] [1793503579.997012065] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.02   1.353 -0.255  0.052 -1.054  0.306], Gripper: 0.030
+[INFO] [1793503580.201582282] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503581.954022579] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=24
+[INFO] [1793503581.956066533] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503581.957060720] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.355 -0.254  0.035 -1.06   0.141] -> [ 0.02   1.353 -0.255  0.051 -1.054  0.306]
+[INFO] [1793503581.957983085] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.02   1.353 -0.255  0.051 -1.054  0.306], Gripper: 0.030
+[INFO] [1793503582.131734722] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503583.593500936] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=25
+[INFO] [1793503583.594334706] [vla_gazebo_bridge]: Current pos: [0.213 0.002 0.206], Target pos: [0.213 0.002 0.206], Delta pos: [0. 0. 0.]
+[INFO] [1793503583.594773829] [vla_gazebo_bridge]: Joint angles: [ 0.011  1.382 -0.261  0.028 -1.074  0.113] -> [ 0.016  1.381 -0.261  0.043 -1.069  0.279]
+[INFO] [1793503583.595716905] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.016  1.381 -0.261  0.043 -1.069  0.279], Gripper: 0.030
+[INFO] [1793503583.778637374] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503585.474664446] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=26
+[INFO] [1793503585.475402706] [vla_gazebo_bridge]: Current pos: [0.198 0.001 0.218], Target pos: [0.198 0.001 0.218], Delta pos: [0. 0. 0.]
+[INFO] [1793503585.475862249] [vla_gazebo_bridge]: Joint angles: [ 0.032  1.265 -0.234  0.082 -1.012  0.388] -> [ 0.042  1.262 -0.236  0.108 -1.001  0.546]
+[INFO] [1793503585.476755954] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.042  1.262 -0.236  0.108 -1.001  0.546], Gripper: 0.030
+[INFO] [1793503585.704740873] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503587.227541961] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=27
+[INFO] [1793503587.228428216] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503587.229065762] [vla_gazebo_bridge]: Joint angles: [ 0.02   1.352 -0.255  0.052 -1.053  0.308] -> [ 0.026  1.35  -0.256  0.067 -1.045  0.473]
+[INFO] [1793503587.229934277] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.026  1.35  -0.256  0.067 -1.045  0.473], Gripper: 0.030
+[INFO] [1793503587.422155939] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503588.993748166] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.122  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=28
+[INFO] [1793503588.994651622] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503588.995174427] [vla_gazebo_bridge]: Joint angles: [ 0.02   1.352 -0.255  0.052 -1.053  0.307] -> [ 0.024  1.35  -0.255  0.063 -1.048  0.423]
+[INFO] [1793503588.995928268] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.024  1.35  -0.255  0.063 -1.048  0.423], Gripper: 0.030
+[INFO] [1793503589.186233632] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503590.614195578] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.077  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=29
+[INFO] [1793503590.615033795] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503590.615473720] [vla_gazebo_bridge]: Joint angles: [ 0.02   1.352 -0.255  0.052 -1.053  0.307] -> [ 0.023  1.351 -0.255  0.059 -1.05   0.381]
+[INFO] [1793503590.616237954] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.023  1.351 -0.255  0.059 -1.05   0.381], Gripper: 0.030
+[INFO] [1793503590.780407678] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503592.412976773] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=30
+[INFO] [1793503592.413761125] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503592.414192579] [vla_gazebo_bridge]: Joint angles: [ 0.02   1.352 -0.255  0.052 -1.053  0.307] -> [ 0.014  1.354 -0.254  0.035 -1.059  0.142]
+[INFO] [1793503592.414996470] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.014  1.354 -0.254  0.035 -1.059  0.142], Gripper: 0.030
+[INFO] [1793503592.607010149] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503594.156057478] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.122  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=31
+[INFO] [1793503594.156891228] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503594.157317243] [vla_gazebo_bridge]: Joint angles: [ 0.02   1.353 -0.255  0.052 -1.053  0.307] -> [ 0.016  1.354 -0.254  0.04  -1.058  0.192]
+[INFO] [1793503594.158021648] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.016  1.354 -0.254  0.04  -1.058  0.192], Gripper: 0.030
+[INFO] [1793503594.317335673] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503595.789808723] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.077  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=32
+[INFO] [1793503595.790572073] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503595.790959894] [vla_gazebo_bridge]: Joint angles: [ 0.02   1.353 -0.255  0.052 -1.054  0.307] -> [ 0.017  1.354 -0.255  0.044 -1.056  0.233]
+[INFO] [1793503595.791652783] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.017  1.354 -0.255  0.044 -1.056  0.233], Gripper: 0.030
+[INFO] [1793503595.987060483] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503597.305894011] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=33
+[INFO] [1793503597.306686604] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503597.307085370] [vla_gazebo_bridge]: Joint angles: [ 0.02   1.353 -0.255  0.052 -1.054  0.307] -> [ 0.026  1.35  -0.256  0.067 -1.046  0.472]
+[INFO] [1793503597.307771164] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.026  1.35  -0.256  0.067 -1.046  0.472], Gripper: 0.030
+[INFO] [1793503597.492895124] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503599.053735390] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=34
+[INFO] [1793503599.054531417] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503599.054952067] [vla_gazebo_bridge]: Joint angles: [ 0.02   1.353 -0.255  0.052 -1.054  0.307] -> [ 0.026  1.351 -0.256  0.067 -1.046  0.472]
+[INFO] [1793503599.055859512] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.026  1.351 -0.256  0.067 -1.046  0.472], Gripper: 0.030
+[INFO] [1793503599.213305787] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503600.740872096] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.122  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=35
+[INFO] [1793503600.741729809] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503600.742187849] [vla_gazebo_bridge]: Joint angles: [ 0.02   1.353 -0.255  0.052 -1.054  0.306] -> [ 0.024  1.352 -0.256  0.062 -1.048  0.422]
+[INFO] [1793503600.743005761] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.024  1.352 -0.256  0.062 -1.048  0.422], Gripper: 0.030
+[INFO] [1793503600.922577807] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503602.425561704] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.077  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=36
+[INFO] [1793503602.426452496] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503602.426995597] [vla_gazebo_bridge]: Joint angles: [ 0.02   1.353 -0.255  0.051 -1.054  0.306] -> [ 0.022  1.352 -0.255  0.059 -1.051  0.38 ]
+[INFO] [1793503602.427841945] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.022  1.352 -0.255  0.059 -1.051  0.38 ], Gripper: 0.030
+[INFO] [1793503602.619201221] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503604.013566682] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=37
+[INFO] [1793503604.014549779] [vla_gazebo_bridge]: Current pos: [0.213 0.002 0.206], Target pos: [0.213 0.002 0.206], Delta pos: [0. 0. 0.]
+[INFO] [1793503604.015075345] [vla_gazebo_bridge]: Joint angles: [ 0.016  1.381 -0.261  0.043 -1.069  0.279] -> [ 0.011  1.382 -0.261  0.029 -1.074  0.113]
+[INFO] [1793503604.015802734] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.011  1.382 -0.261  0.029 -1.074  0.113], Gripper: 0.030
+[INFO] [1793503604.177755233] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503605.799498136] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.122  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=38
+[INFO] [1793503605.800285878] [vla_gazebo_bridge]: Current pos: [0.198 0.001 0.218], Target pos: [0.198 0.001 0.218], Delta pos: [0. 0. 0.]
+[INFO] [1793503605.800800394] [vla_gazebo_bridge]: Joint angles: [ 0.042  1.262 -0.236  0.107 -1.     0.546] -> [ 0.035  1.265 -0.235  0.09  -1.009  0.435]
+[INFO] [1793503605.801527671] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.035  1.265 -0.235  0.09  -1.009  0.435], Gripper: 0.030
+[INFO] [1793503605.999328531] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503607.829500891] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.077  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=39
+[INFO] [1793503607.830824988] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503607.831490719] [vla_gazebo_bridge]: Joint angles: [ 0.026  1.35  -0.255  0.067 -1.045  0.473] -> [ 0.023  1.351 -0.255  0.061 -1.049  0.399]
+[INFO] [1793503607.832499820] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.023  1.351 -0.255  0.061 -1.049  0.399], Gripper: 0.030
+[INFO] [1793503608.097407958] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503609.957442025] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.092  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=40
+[INFO] [1793503609.958195912] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503609.958692585] [vla_gazebo_bridge]: Joint angles: [ 0.024  1.351 -0.255  0.063 -1.048  0.423] -> [ 0.021  1.352 -0.255  0.055 -1.052  0.336]
+[INFO] [1793503609.959415630] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.021  1.352 -0.255  0.055 -1.052  0.336], Gripper: 0.030
+[INFO] [1793503610.125836913] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503611.692610561] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.104  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=41
+[INFO] [1793503611.693483081] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503611.694044639] [vla_gazebo_bridge]: Joint angles: [ 0.023  1.351 -0.255  0.059 -1.05   0.381] -> [ 0.019  1.353 -0.255  0.049 -1.054  0.282]
+[INFO] [1793503611.694930178] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.019  1.353 -0.255  0.049 -1.054  0.282], Gripper: 0.030
+[INFO] [1793503611.921229653] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503613.769054912] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.062  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=42
+[INFO] [1793503613.769915071] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503613.770454642] [vla_gazebo_bridge]: Joint angles: [ 0.014  1.354 -0.254  0.035 -1.059  0.142] -> [ 0.011  1.355 -0.254  0.029 -1.06   0.083]
+[INFO] [1793503613.771248986] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.011  1.355 -0.254  0.029 -1.06   0.083], Gripper: 0.030
+[INFO] [1793503613.962864087] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503615.492291635] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.027  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=43
+[INFO] [1793503615.493162602] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503615.493642121] [vla_gazebo_bridge]: Joint angles: [ 0.016  1.354 -0.254  0.04  -1.058  0.192] -> [ 0.015  1.354 -0.254  0.037 -1.058  0.166]
+[INFO] [1793503615.494413020] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.015  1.354 -0.254  0.037 -1.058  0.166], Gripper: 0.030
+[INFO] [1793503615.655746059] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503617.176184382] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=44
+[INFO] [1793503617.177048108] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503617.177521490] [vla_gazebo_bridge]: Joint angles: [ 0.017  1.354 -0.255  0.044 -1.056  0.233] -> [ 0.023  1.352 -0.255  0.06  -1.049  0.399]
+[INFO] [1793503617.178293403] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.023  1.352 -0.255  0.06  -1.049  0.399], Gripper: 0.030
+[INFO] [1793503617.365718207] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503618.762428425] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=45
+[INFO] [1793503618.763170021] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503618.763596200] [vla_gazebo_bridge]: Joint angles: [ 0.026  1.351 -0.256  0.067 -1.045  0.472] -> [ 0.031  1.348 -0.257  0.081 -1.035  0.638]
+[INFO] [1793503618.764317486] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.031  1.348 -0.257  0.081 -1.035  0.638], Gripper: 0.030
+[INFO] [1793503618.950798936] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503620.550022273] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=46
+[INFO] [1793503620.550835908] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503620.551289313] [vla_gazebo_bridge]: Joint angles: [ 0.026  1.351 -0.256  0.067 -1.046  0.472] -> [ 0.031  1.348 -0.257  0.081 -1.035  0.638]
+[INFO] [1793503620.552092822] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.031  1.348 -0.257  0.081 -1.035  0.638], Gripper: 0.030
+[INFO] [1793503620.712381390] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503622.238296307] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.122  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=47
+[INFO] [1793503622.239080561] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503622.239612947] [vla_gazebo_bridge]: Joint angles: [ 0.024  1.352 -0.256  0.062 -1.048  0.422] -> [ 0.028  1.35  -0.257  0.073 -1.042  0.538]
+[INFO] [1793503622.240629702] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.028  1.35  -0.257  0.073 -1.042  0.538], Gripper: 0.030
+[INFO] [1793503622.422543082] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503624.343196287] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.077  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=48
+[INFO] [1793503624.344210832] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503624.344866510] [vla_gazebo_bridge]: Joint angles: [ 0.022  1.352 -0.255  0.059 -1.05   0.38 ] -> [ 0.025  1.351 -0.256  0.065 -1.047  0.453]
+[INFO] [1793503624.346227834] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.025  1.351 -0.256  0.065 -1.047  0.453], Gripper: 0.030
+[INFO] [1793503624.570161911] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503626.078516319] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=49
+[INFO] [1793503626.079558015] [vla_gazebo_bridge]: Current pos: [0.213 0.002 0.206], Target pos: [0.213 0.002 0.206], Delta pos: [0. 0. 0.]
+[INFO] [1793503626.080028575] [vla_gazebo_bridge]: Joint angles: [ 0.011  1.382 -0.261  0.029 -1.074  0.113] -> [ 0.006  1.383 -0.261  0.014 -1.077 -0.054]
+[INFO] [1793503626.081013691] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.006  1.383 -0.261  0.014 -1.077 -0.054], Gripper: 0.030
+[INFO] [1793503626.278022306] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503627.915143896] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=50
+[INFO] [1793503627.915927879] [vla_gazebo_bridge]: Current pos: [0.198 0.001 0.218], Target pos: [0.198 0.001 0.218], Delta pos: [0. 0. 0.]
+[INFO] [1793503627.916362113] [vla_gazebo_bridge]: Joint angles: [ 0.035  1.265 -0.235  0.09  -1.009  0.435] -> [ 0.025  1.268 -0.233  0.063 -1.018  0.277]
+[INFO] [1793503627.917205526] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.025  1.268 -0.233  0.063 -1.018  0.277], Gripper: 0.030
+[INFO] [1793503628.074036388] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503629.584841722] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.122  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=51
+[INFO] [1793503629.585657181] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503629.586096560] [vla_gazebo_bridge]: Joint angles: [ 0.023  1.351 -0.255  0.061 -1.048  0.399] -> [ 0.019  1.352 -0.254  0.05  -1.054  0.283]
+[INFO] [1793503629.586887201] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.019  1.352 -0.254  0.05  -1.054  0.283], Gripper: 0.030
+[INFO] [1793503629.763844256] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503631.270729502] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.077  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=52
+[INFO] [1793503631.271602961] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503631.272069196] [vla_gazebo_bridge]: Joint angles: [ 0.021  1.352 -0.255  0.055 -1.052  0.336] -> [ 0.018  1.353 -0.255  0.048 -1.055  0.262]
+[INFO] [1793503631.272899356] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.018  1.353 -0.255  0.048 -1.055  0.262], Gripper: 0.030
+[INFO] [1793503631.455091448] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503632.860090663] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=53
+[INFO] [1793503632.860955012] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503632.861437969] [vla_gazebo_bridge]: Joint angles: [ 0.019  1.353 -0.255  0.049 -1.054  0.282] -> [ 0.025  1.35  -0.256  0.065 -1.046  0.447]
+[INFO] [1793503632.862129807] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.025  1.35  -0.256  0.065 -1.046  0.447], Gripper: 0.030
+[INFO] [1793503633.050713539] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503634.641088633] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=54
+[INFO] [1793503634.641876451] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503634.642316841] [vla_gazebo_bridge]: Joint angles: [ 0.011  1.355 -0.254  0.029 -1.06   0.083] -> [ 0.018  1.353 -0.255  0.046 -1.055  0.248]
+[INFO] [1793503634.643091843] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.018  1.353 -0.255  0.046 -1.055  0.248], Gripper: 0.030
+[INFO] [1793503634.835630723] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503636.332802918] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.122  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=55
+[INFO] [1793503636.333643770] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503636.334098062] [vla_gazebo_bridge]: Joint angles: [ 0.015  1.354 -0.254  0.037 -1.058  0.166] -> [ 0.019  1.353 -0.255  0.049 -1.054  0.281]
+[INFO] [1793503636.334867037] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.019  1.353 -0.255  0.049 -1.054  0.281], Gripper: 0.030
+[INFO] [1793503636.498408095] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503637.974778214] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.129  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=56
+[INFO] [1793503637.975625141] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503637.976086506] [vla_gazebo_bridge]: Joint angles: [ 0.023  1.352 -0.255  0.06  -1.049  0.399] -> [ 0.027  1.35  -0.256  0.071 -1.042  0.522]
+[INFO] [1793503637.976951417] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.027  1.35  -0.256  0.071 -1.042  0.522], Gripper: 0.030
+[INFO] [1793503638.167963824] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503639.537013176] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.136  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=57
+[INFO] [1793503639.537782317] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503639.538264043] [vla_gazebo_bridge]: Joint angles: [ 0.031  1.348 -0.257  0.081 -1.035  0.638] -> [ 0.034  1.345 -0.258  0.09  -1.026  0.769]
+[INFO] [1793503639.538977092] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.034  1.345 -0.258  0.09  -1.026  0.769], Gripper: 0.030
+[INFO] [1793503639.694869971] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503641.287065111] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=58
+[INFO] [1793503641.287937837] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503641.288393060] [vla_gazebo_bridge]: Joint angles: [ 0.031  1.348 -0.257  0.081 -1.035  0.638] -> [ 0.034  1.344 -0.259  0.092 -1.024  0.805]
+[INFO] [1793503641.289276081] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.034  1.344 -0.259  0.092 -1.024  0.805], Gripper: 0.030
+[INFO] [1793503641.481763674] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503643.030528086] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.122  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=59
+[INFO] [1793503643.031301498] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503643.031813963] [vla_gazebo_bridge]: Joint angles: [ 0.028  1.35  -0.257  0.073 -1.042  0.538] -> [ 0.031  1.348 -0.258  0.082 -1.034  0.655]
+[INFO] [1793503643.032673487] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.031  1.348 -0.258  0.082 -1.034  0.655], Gripper: 0.030
+[INFO] [1793503643.224015079] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503644.705070506] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.077  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=60
+[INFO] [1793503644.705829141] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503644.706288609] [vla_gazebo_bridge]: Joint angles: [ 0.025  1.351 -0.256  0.065 -1.046  0.453] -> [ 0.027  1.35  -0.256  0.071 -1.042  0.527]
+[INFO] [1793503644.706978669] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.027  1.35  -0.256  0.071 -1.042  0.527], Gripper: 0.030
+[INFO] [1793503644.863205407] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503646.304064941] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=61
+[INFO] [1793503646.304921582] [vla_gazebo_bridge]: Current pos: [0.213 0.002 0.206], Target pos: [0.213 0.002 0.206], Delta pos: [0. 0. 0.]
+[INFO] [1793503646.305549110] [vla_gazebo_bridge]: Joint angles: [ 0.006  1.383 -0.261  0.014 -1.076 -0.054] -> [-0.     1.384 -0.261 -0.002 -1.077 -0.22 ]
+[INFO] [1793503646.306237912] [vla_gazebo_bridge]: IK action sent! Angles: [-0.     1.384 -0.261 -0.002 -1.077 -0.22 ], Gripper: 0.030
+[INFO] [1793503646.476184248] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503648.104271256] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=62
+[INFO] [1793503648.105274375] [vla_gazebo_bridge]: Current pos: [0.198 0.001 0.218], Target pos: [0.198 0.001 0.218], Delta pos: [0. 0. 0.]
+[INFO] [1793503648.105805555] [vla_gazebo_bridge]: Joint angles: [ 0.025  1.268 -0.234  0.063 -1.018  0.277] -> [ 0.013  1.27  -0.233  0.034 -1.024  0.119]
+[INFO] [1793503648.106725788] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.013  1.27  -0.233  0.034 -1.024  0.119], Gripper: 0.030
+[INFO] [1793503648.298119624] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503649.830236818] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.122  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=63
+[INFO] [1793503649.830947038] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503649.831362647] [vla_gazebo_bridge]: Joint angles: [ 0.019  1.353 -0.254  0.05  -1.054  0.283] -> [ 0.015  1.354 -0.254  0.038 -1.058  0.168]
+[INFO] [1793503649.832047971] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.015  1.354 -0.254  0.038 -1.058  0.168], Gripper: 0.030
+[INFO] [1793503649.998268993] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503651.702988023] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.    -0.077  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=64
+[INFO] [1793503651.703935353] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503651.704526658] [vla_gazebo_bridge]: Joint angles: [ 0.018  1.353 -0.255  0.048 -1.055  0.262] -> [ 0.016  1.354 -0.254  0.04  -1.057  0.189]
+[INFO] [1793503651.705323493] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.016  1.354 -0.254  0.04  -1.057  0.189], Gripper: 0.030
+[INFO] [1793503651.897394763] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503653.292616072] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=65
+[INFO] [1793503653.293412014] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503653.293840544] [vla_gazebo_bridge]: Joint angles: [ 0.025  1.351 -0.256  0.065 -1.046  0.447] -> [ 0.03   1.348 -0.257  0.079 -1.036  0.613]
+[INFO] [1793503653.294595206] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.03   1.348 -0.257  0.079 -1.036  0.613], Gripper: 0.030
+[INFO] [1793503653.488501281] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503655.144157938] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=66
+[INFO] [1793503655.145094987] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503655.145551718] [vla_gazebo_bridge]: Joint angles: [ 0.018  1.354 -0.255  0.046 -1.055  0.248] -> [ 0.024  1.351 -0.255  0.061 -1.048  0.413]
+[INFO] [1793503655.146439493] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.024  1.351 -0.255  0.061 -1.048  0.413], Gripper: 0.030
+[INFO] [1793503655.312261074] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503656.955185068] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.     0.122  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=67
+[INFO] [1793503656.956137801] [vla_gazebo_bridge]: Current pos: [0.209 0.002 0.209], Target pos: [0.209 0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503656.956720180] [vla_gazebo_bridge]: Joint angles: [ 0.019  1.353 -0.255  0.049 -1.054  0.281] -> [ 0.023  1.352 -0.255  0.06  -1.049  0.397]
+[INFO] [1793503656.957590145] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.023  1.352 -0.255  0.06  -1.049  0.397], Gripper: 0.030
+[INFO] [1793503657.169859758] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503658.821156368] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.129  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=68
+[INFO] [1793503658.822416530] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503658.822934492] [vla_gazebo_bridge]: Joint angles: [ 0.027  1.35  -0.256  0.071 -1.042  0.522] -> [ 0.031  1.348 -0.257  0.081 -1.034  0.646]
+[INFO] [1793503658.823886498] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.031  1.348 -0.257  0.081 -1.034  0.646], Gripper: 0.030
+[INFO] [1793503659.060097343] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503660.645006955] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.     0.174  0.    -0.     0.75 ], chosen=[ 0.     0.     0.     0.136  0.    -0.     0.75 ], gt_ptr=54, stall=0, nopro=69
+[INFO] [1793503660.646191004] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503660.646891774] [vla_gazebo_bridge]: Joint angles: [ 0.034  1.345 -0.258  0.09  -1.026  0.769] -> [ 0.036  1.342 -0.26   0.097 -1.016  0.901]
+[INFO] [1793503660.647930869] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.036  1.342 -0.26   0.097 -1.016  0.901], Gripper: 0.030
+[INFO] [1793503660.806384065] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503662.583378551] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.    0.    0.    0.09  0.   -0.    0.75], gt_ptr=54, stall=0, nopro=70
+[INFO] [1793503662.584316424] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503662.585086949] [vla_gazebo_bridge]: Joint angles: [ 0.034  1.345 -0.259  0.092 -1.023  0.805] -> [ 0.036  1.343 -0.26   0.097 -1.017  0.892]
+[INFO] [1793503662.586804967] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.036  1.343 -0.26   0.097 -1.017  0.892], Gripper: 0.030
+[INFO] [1793503662.774393355] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503664.326384364] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.    0.    0.    0.05  0.   -0.    0.75], gt_ptr=54, stall=0, nopro=71
+[INFO] [1793503664.327103327] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503664.327514610] [vla_gazebo_bridge]: Joint angles: [ 0.031  1.348 -0.258  0.082 -1.034  0.655] -> [ 0.032  1.347 -0.258  0.085 -1.031  0.703]
+[INFO] [1793503664.328205636] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.032  1.347 -0.258  0.085 -1.031  0.703], Gripper: 0.030
+[INFO] [1793503664.513767027] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503666.060324443] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=72
+[INFO] [1793503666.061337403] [vla_gazebo_bridge]: Current pos: [0.21  0.002 0.209], Target pos: [0.21  0.002 0.209], Delta pos: [0. 0. 0.]
+[INFO] [1793503666.061997279] [vla_gazebo_bridge]: Joint angles: [ 0.027  1.35  -0.257  0.071 -1.042  0.527] -> [ 0.022  1.353 -0.255  0.057 -1.051  0.361]
+[INFO] [1793503666.062728896] [vla_gazebo_bridge]: IK action sent! Angles: [ 0.022  1.353 -0.255  0.057 -1.051  0.361], Gripper: 0.030
+[INFO] [1793503666.221112754] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503667.660205711] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=73
+[INFO] [1793503667.661011910] [vla_gazebo_bridge]: Current pos: [0.213 0.002 0.206], Target pos: [0.213 0.002 0.206], Delta pos: [0. 0. 0.]
+[INFO] [1793503667.661460932] [vla_gazebo_bridge]: Joint angles: [-0.     1.384 -0.261 -0.002 -1.077 -0.22 ] -> [-0.006  1.383 -0.261 -0.017 -1.075 -0.386]
+[INFO] [1793503667.662399991] [vla_gazebo_bridge]: IK action sent! Angles: [-0.006  1.383 -0.261 -0.017 -1.075 -0.386], Gripper: 0.030
+[INFO] [1793503667.849944994] [vla_gazebo_bridge]: Sending request to VLA server...
+[INFO] [1793503669.691589148] [vla_gazebo_bridge]: [VLA] VLA action raw=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], chosen=[ 0.     0.     0.    -0.174  0.     0.     0.75 ], gt_ptr=54, stall=0, nopro=74
+Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[INFO] [1793503669.692330818] [vla_gazebo_bridge]: Current pos: [0.198 0.001 0.218], Target pos: [0.198 0.001 0.218], Delta pos: [0. 0. 0.]
+Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[INFO] [1793503669.692965937] [vla_gazebo_bridge]: Joint angles: [ 0.013  1.27  -0.233  0.034 -1.024  0.119] -> [ 0.002  1.27  -0.232  0.005 -1.026 -0.038]
+Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+[ERROR] [1793503669.693502206] [vla_gazebo_bridge]: Error in image_callback: Failed to publish: publisher's context is invalid, at ./src/rcl/publisher.c:389
+Failed to publish log message to rosout: publisher's context is invalid, at ./src/rcl/publisher.c:389
+Traceback (most recent call last):
+  File "/home/lhy/Desktop/VLA_ROBOT/base_robot_ws/install/base_robot/lib/base_robot/vla_gazebo_bridge.py", line 469, in image_callback
+    self.publish_ik_action(chosen)
+  File "/home/lhy/Desktop/VLA_ROBOT/base_robot_ws/install/base_robot/lib/base_robot/vla_gazebo_bridge.py", line 602, in publish_ik_action
+    self.arm_pub.publish(arm_traj)
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/publisher.py", line 70, in publish
+    self.__publisher.publish(msg)
+rclpy._rclpy_pybind11.RCLError: Failed to publish: publisher's context is invalid, at ./src/rcl/publisher.c:389
+Traceback (most recent call last):
+  File "/home/lhy/Desktop/VLA_ROBOT/base_robot_ws/install/base_robot/lib/base_robot/vla_gazebo_bridge.py", line 634, in <module>
+    main()
+  File "/home/lhy/Desktop/VLA_ROBOT/base_robot_ws/install/base_robot/lib/base_robot/vla_gazebo_bridge.py", line 630, in main
+    rclpy.shutdown()
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/__init__.py", line 130, in shutdown
+    _shutdown(context=context)
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/utilities.py", line 58, in shutdown
+    return context.shutdown()
+  File "/opt/ros/humble/local/lib/python3.10/dist-packages/rclpy/context.py", line 102, in shutdown
+    self.__context.shutdown()
+rclpy._rclpy_pybind11.RCLError: failed to shutdown: rcl_shutdown already called on the given context, at ./src/rcl/init.c:241

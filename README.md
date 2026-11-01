@@ -45,7 +45,8 @@ VLA_ROBOT/
 │       ├── base_robot/                # 主 ROS2 包（机械臂 + 底盘 + 仿真）
 │       ├── kdl_parser_ros2/           # KDL 正逆运动学解析
 │       └── gazebo_grasp_plugin/       # 夹爪抓取修复插件（新增）
-└── openvla/                           # OpenVLA 模型部署
+├── openvla/                           # OpenVLA 模型部署（现用 gazebo_4room_v4 帧堆叠权重）
+└── test_records/                      # 真机/Gazebo 各轮测试留档（日志+README，V1.9.0 起）
 ```
 
 ---
@@ -136,6 +137,36 @@ ros2 run base_robot collect_grasp_demos.py --dry-run     # 只打印 FK/规划�
 | `--no-record` | — | 不落盘，只演示动作 |
 
 > 动作序列：home（张开）→ 水平前伸套杯 → 闭合夹住 → 抬起 → 倾倒 ~2s → 复原竖直 → 下降放回桌面 → 松开（张到最大 0.04）→ 机械臂退回 home。需配合 `gazebo_grasp_fix` 插件（`release_tolerance` 已调为 0.005）。
+
+---
+
+## 🚀 V1.9.0 | v4 帧堆叠权重闭环验证与桥接门控硬化
+
+**发布日期**：2026-11-01
+**版本状态**：✅ 正式发布（v4 权重链路 + 桥接三级门控 + 冷启动标准流程，10q 全流程验证通过）
+
+### ✨ 新增功能
+
+- **gazebo_4room_v4 帧堆叠权重链路**：`convert_demos.py` 新增 `drop_stall_runs`（删除连续零位移帧段，段末夹爪值并入前一运动帧，消灭闭环"卡死吸引子"）与 `stack_prev_frames`（每帧变 [上一帧|当前帧] 横拼压回 224，让倾倒上/下行相位在画面上可判别）；单帧零位移样本 6.9%→0，训练复读从"来回摇摆"变"单向坚持"
+- **桥接闭环三件套**（`vla_gazebo_bridge.py`，均代码内置）：
+  ① `-p stack_frames:=true` + 相机 ~8Hz 环形缓冲，prev 取时间戳最接近 t−0.2s 的帧（推理配对间隔=训练间隔，防 OOD 复读）；
+  ② 指令 topic 门控：`instruction` 默认改 `''`，收到 `/vla_instruction` 才起手并**全量重置回合状态**——消灭"幽灵步"（就绪到 topic 到达间的隐形动作，10k 空抓根因）；
+  ③ 夹爪三级门控：帧门 `grip_open_until_ptr=8`（ptr<8 强制张满，复刻 GT f8 闭合时序）+ 深度门 `grip_close_z_margin=0.02`（EE z ≤ GT f8 高度+2cm 才放行闭爪，防指尖悬杯沿上方捏空推杯）+ **到位即捏**（深度达标当步主动压到 0.75，不等模型后知后觉，防 z=0.19 限位后闭爪犁杯）
+- **Launch.md §2.7 手动闭环试验标准流程**：冷启动 6 步手册（拦截自启桥接→静置 75s 取 robot_description→归位双测→f1 预热位→门控起桥接→ready idle=0 后 topic 起手），命令逐条实测可复制
+- **test_records/ 留档机制**：每轮试验一个目录，全量桥接/杯位/Gazebo/服务器日志 + 根因复盘 README（首批 `2026-11-01_v4_round10`：10→10q 共 15 轮链路与证据）
+
+### 📌 验证结果（10q，完整冷重启全流程）
+
+提升 **+5.39cm** → 倾倒俯仰 46.2° → 落回站立（z +0.4mm、y 差 2.7mm、倾角 0.8°）；57 步零 ESCAPE-GT/stall/Traceback，幽灵步 0，底盘反冲 7mm。正确流程六轮（10l~10q）3/6，每轮失败均定位到具体环节并修复；最终代码形态 1/1。详见 `openvla/vla-scripts/GAZEBO_FINETUNE.md` §4/§6。
+
+### ⚠️ 注意事项
+
+- 手动起桥接**绝不要传 `-p instruction:=…`**（默认 '' 等 topic）；launch 自启桥接照常带参数（演示流程不变）
+- 改过 `scripts/` 下桥接/节点脚本必须 `colcon build --packages-select base_robot` 重建（install 是拷贝非软链）
+- `ros2 topic pub --once` 在无订阅者时会永久阻塞，必须包 `timeout`
+- 世界新载后**先静置 ≥75s 再 teleport**，否则物理弹跳甩底盘（yaw 漂移）；teleport 归位需双测确认，之后回合内不再动底盘
+- 推理端与转换端帧堆叠必须逐像素一致（先 resize 224 → 拼 448 → INTER_AREA 压回 224），改一处需重训+重部署
+- 遗留打磨点（模型侧）：倾倒偏深（46–50° vs GT ≈37°）、放杯相偶有残留倾角
 
 ---
 

@@ -95,6 +95,15 @@ def generate_launch_description():
             {'robot_description': robot_description},
             # test.world 里腕部摄像头的 sensor 名是 camera_sensor，故话题是 /camera_sensor/image_raw
             {'camera_topic': '/camera_sensor/image_raw'},
+            # 微调模型（gazebo_4room_v2）部署参数，勿用脚本默认的 'stay still'：
+            # 训练里从未出现该指令，OOD 语言条件会让模型把臂乱动/冻住。
+            # 反归一化已是原始单位，position/rotation_scale 保持 1.0；
+            # max_angular_step 放宽到 0.2 否则倾倒段被削顶（详见 GAZEBO_FINETUNE.md §4）。
+            {'instruction': 'pick up the cup and pour'},
+            {'position_scale': 1.0},
+            {'rotation_scale': 1.0},
+            {'max_linear_step': 0.04},
+            {'max_angular_step': 0.2},
         ],
         output='screen'
     )

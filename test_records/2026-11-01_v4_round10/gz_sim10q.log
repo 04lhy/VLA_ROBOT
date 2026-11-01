@@ -1,0 +1,228 @@
+[INFO] [launch]: All log files can be found below /home/lhy/.ros/log/2026-11-01-18-32-02-389769-LAPTOP-OB19G0M7-38141
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [robot_state_publisher-1]: process started with pid [38150]
+[INFO] [gzserver-2]: process started with pid [38152]
+[INFO] [gzclient-3]: process started with pid [38154]
+[INFO] [tts_node.py-4]: process started with pid [38156]
+[gzclient-3] Gazebo multi-robot simulator, version 11.10.2
+[gzclient-3] Copyright (C) 2012 Open Source Robotics Foundation.
+[gzclient-3] Released under the Apache 2 License.
+[gzclient-3] http://gazebosim.org
+[gzclient-3] 
+[gzserver-2] Gazebo multi-robot simulator, version 11.10.2
+[gzserver-2] Copyright (C) 2012 Open Source Robotics Foundation.
+[gzserver-2] Released under the Apache 2 License.
+[gzserver-2] http://gazebosim.org
+[gzserver-2] 
+[robot_state_publisher-1] Link base_link had 9 children
+[robot_state_publisher-1] Link back_caster_link had 0 children
+[robot_state_publisher-1] Link front_camera_link had 1 children
+[robot_state_publisher-1] Link front_camera_optical_link had 0 children
+[robot_state_publisher-1] Link front_caster_link had 0 children
+[robot_state_publisher-1] Link imu_link had 0 children
+[robot_state_publisher-1] Link laser_cylinder_link had 1 children
+[robot_state_publisher-1] Link laser_link had 0 children
+[robot_state_publisher-1] Link left_wheel_link had 0 children
+[robot_state_publisher-1] Link microphone_link had 0 children
+[robot_state_publisher-1] Link right_wheel_link had 0 children
+[robot_state_publisher-1] Link zhicheng_ban had 5 children
+[robot_state_publisher-1] Link arm_base_link had 1 children
+[robot_state_publisher-1] Link link1 had 1 children
+[robot_state_publisher-1] Link link2 had 1 children
+[robot_state_publisher-1] Link link3 had 1 children
+[robot_state_publisher-1] Link link4 had 1 children
+[robot_state_publisher-1] Link link5 had 1 children
+[robot_state_publisher-1] Link link6 had 3 children
+[robot_state_publisher-1] Link camera_link had 1 children
+[robot_state_publisher-1] Link camera_optical_link had 0 children
+[robot_state_publisher-1] Link link7 had 0 children
+[robot_state_publisher-1] Link link8 had 0 children
+[robot_state_publisher-1] Link zhicheng_link1 had 0 children
+[robot_state_publisher-1] Link zhicheng_link2 had 0 children
+[robot_state_publisher-1] Link zhicheng_link3 had 0 children
+[robot_state_publisher-1] Link zhicheng_link4 had 0 children
+[robot_state_publisher-1] [INFO] [1793529123.844990140] [robot_state_publisher]: got segment arm_base_link
+[robot_state_publisher-1] [INFO] [1793529123.845100666] [robot_state_publisher]: got segment back_caster_link
+[robot_state_publisher-1] [INFO] [1793529123.845107862] [robot_state_publisher]: got segment base_footprint
+[robot_state_publisher-1] [INFO] [1793529123.845110462] [robot_state_publisher]: got segment base_link
+[robot_state_publisher-1] [INFO] [1793529123.845112689] [robot_state_publisher]: got segment camera_link
+[robot_state_publisher-1] [INFO] [1793529123.845114934] [robot_state_publisher]: got segment camera_optical_link
+[robot_state_publisher-1] [INFO] [1793529123.845117215] [robot_state_publisher]: got segment front_camera_link
+[robot_state_publisher-1] [INFO] [1793529123.845119433] [robot_state_publisher]: got segment front_camera_optical_link
+[robot_state_publisher-1] [INFO] [1793529123.845121904] [robot_state_publisher]: got segment front_caster_link
+[robot_state_publisher-1] [INFO] [1793529123.845124094] [robot_state_publisher]: got segment imu_link
+[robot_state_publisher-1] [INFO] [1793529123.845126220] [robot_state_publisher]: got segment laser_cylinder_link
+[robot_state_publisher-1] [INFO] [1793529123.845128347] [robot_state_publisher]: got segment laser_link
+[robot_state_publisher-1] [INFO] [1793529123.845130661] [robot_state_publisher]: got segment left_wheel_link
+[robot_state_publisher-1] [INFO] [1793529123.845132805] [robot_state_publisher]: got segment link1
+[robot_state_publisher-1] [INFO] [1793529123.845134932] [robot_state_publisher]: got segment link2
+[robot_state_publisher-1] [INFO] [1793529123.845137029] [robot_state_publisher]: got segment link3
+[robot_state_publisher-1] [INFO] [1793529123.845139172] [robot_state_publisher]: got segment link4
+[robot_state_publisher-1] [INFO] [1793529123.845141259] [robot_state_publisher]: got segment link5
+[robot_state_publisher-1] [INFO] [1793529123.845143461] [robot_state_publisher]: got segment link6
+[robot_state_publisher-1] [INFO] [1793529123.845145608] [robot_state_publisher]: got segment link7
+[robot_state_publisher-1] [INFO] [1793529123.845147643] [robot_state_publisher]: got segment link8
+[robot_state_publisher-1] [INFO] [1793529123.845149824] [robot_state_publisher]: got segment microphone_link
+[robot_state_publisher-1] [INFO] [1793529123.845151937] [robot_state_publisher]: got segment right_wheel_link
+[robot_state_publisher-1] [INFO] [1793529123.845154124] [robot_state_publisher]: got segment zhicheng_ban
+[robot_state_publisher-1] [INFO] [1793529123.845156259] [robot_state_publisher]: got segment zhicheng_link1
+[robot_state_publisher-1] [INFO] [1793529123.845158449] [robot_state_publisher]: got segment zhicheng_link2
+[robot_state_publisher-1] [INFO] [1793529123.845160604] [robot_state_publisher]: got segment zhicheng_link3
+[robot_state_publisher-1] [INFO] [1793529123.845162661] [robot_state_publisher]: got segment zhicheng_link4
+[tts_node.py-4] [ERROR] [1793529124.572199170] [tts_node]: Failed to initialize pyttsx3: No module named 'pyttsx3'. Install pyttsx3 or espeak-ng.
+[tts_node.py-4] [INFO] [1793529124.573902790] [tts_node]: TTS node started, listening on /robot/tts_text
+[gzserver-2] [1;33m[Wrn] [gazebo_ros_init.cpp:178] [0m[1;33m
+[gzserver-2] #     # ####### ####### ###  #####  #######
+[gzserver-2] ##    # #     #    #     #  #     # #
+[gzserver-2] # #   # #     #    #     #  #       #
+[gzserver-2] #  #  # #     #    #     #  #       #####
+[gzserver-2] #   # # #     #    #     #  #       #
+[gzserver-2] #    ## #     #    #     #  #     # #
+[gzserver-2] #     # #######    #    ###  #####  #######
+[gzserver-2] 
+[gzserver-2] This version of Gazebo, now called Gazebo classic, reaches end-of-life
+[gzserver-2] in January 2025. Users are highly encouraged to migrate to the new Gazebo
+[gzserver-2] using our migration guides (https://gazebosim.org/docs/latest/gazebo_classic_migration?utm_source=gazebo_ros_pkgs&utm_medium=cli)
+[gzserver-2] 
+[gzserver-2] [0m[1;33m
+[gzclient-3] [1;32m[Msg] [0m[1;32mWaiting for master.[0m[1;32m
+[gzclient-3] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mConnected to gazebo master @ [0m[1;32mhttp://127.0.0.1:11345[0m[1;32m
+[gzclient-3] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mPublicized address: [0m[1;32m10.255.255.254[0m[1;32m
+[gzclient-3] [1;33m[Wrn] [Event.cc:61] [0m[1;33mWarning: Deleting a connection right after creation. [0m[1;33mMake sure to save the ConnectionPtr from a Connect call
+[gzserver-2] [0m[1;33m[0m[1;33m[0m[INFO] [1793529127.328180780] [front_depth_camera]: Publishing camera info to [/front_camera_sensor/camera_info]
+[gzserver-2] [INFO] [1793529127.329124455] [front_depth_camera]: Publishing depth camera info to [/front_camera_sensor/depth/camera_info]
+[gzserver-2] [INFO] [1793529127.329617439] [front_depth_camera]: Publishing pointcloud to [/front_camera_sensor/points]
+[gzserver-2] [INFO] [1793529127.362423449] [depth_camera]: Publishing camera info to [/camera_sensor/camera_info]
+[gzserver-2] [INFO] [1793529127.363284504] [depth_camera]: Publishing depth camera info to [/camera_sensor/depth/camera_info]
+[gzserver-2] [INFO] [1793529127.363662979] [depth_camera]: Publishing pointcloud to [/camera_sensor/points]
+[gzserver-2] [INFO] [1793529127.392744251] [gazebo_ros2_control]: Loading gazebo_ros2_control plugin
+[gzserver-2] [INFO] [1793529127.399889178] [gazebo_ros2_control]: Starting gazebo_ros2_control plugin in namespace: /
+[gzserver-2] [INFO] [1793529127.399957026] [gazebo_ros2_control]: Starting gazebo_ros2_control plugin in ros 2 node: gazebo_ros2_control
+[gzserver-2] [INFO] [1793529127.404605091] [gazebo_ros2_control]: connected to service!! robot_state_publisher
+[gzserver-2] [INFO] [1793529127.406024328] [gazebo_ros2_control]: Received urdf from param server, parsing...
+[gzserver-2] [INFO] [1793529127.407509594] [gazebo_ros2_control]: Loading parameter files /home/lhy/Desktop/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/config/controller_position.yaml
+[gzserver-2] [INFO] [1793529127.421113178] [gazebo_ros2_control]: Loading joint: joint1
+[gzserver-2] [INFO] [1793529127.421167549] [gazebo_ros2_control]: 	State:
+[gzserver-2] [INFO] [1793529127.421174256] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.421180303] [gazebo_ros2_control]: 			 found initial value: 0.000000
+[gzserver-2] [INFO] [1793529127.421186692] [gazebo_ros2_control]: 		 velocity
+[gzserver-2] [INFO] [1793529127.421190186] [gazebo_ros2_control]: 	Command:
+[gzserver-2] [INFO] [1793529127.421193373] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.421755385] [gazebo_ros2_control]: Loading joint: joint2
+[gzserver-2] [INFO] [1793529127.421788215] [gazebo_ros2_control]: 	State:
+[gzserver-2] [INFO] [1793529127.421792867] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.421797297] [gazebo_ros2_control]: 			 found initial value: 0.000000
+[gzserver-2] [INFO] [1793529127.421802299] [gazebo_ros2_control]: 		 velocity
+[gzserver-2] [INFO] [1793529127.421805311] [gazebo_ros2_control]: 	Command:
+[gzserver-2] [INFO] [1793529127.421808063] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.421897080] [gazebo_ros2_control]: Loading joint: joint3
+[gzserver-2] [INFO] [1793529127.421905539] [gazebo_ros2_control]: 	State:
+[gzserver-2] [INFO] [1793529127.421910113] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.421914577] [gazebo_ros2_control]: 			 found initial value: 0.000000
+[gzserver-2] [INFO] [1793529127.421920307] [gazebo_ros2_control]: 		 velocity
+[gzserver-2] [INFO] [1793529127.421924873] [gazebo_ros2_control]: 	Command:
+[gzserver-2] [INFO] [1793529127.421929494] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.421980658] [gazebo_ros2_control]: Loading joint: joint4
+[gzserver-2] [INFO] [1793529127.421986842] [gazebo_ros2_control]: 	State:
+[gzserver-2] [INFO] [1793529127.421990141] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.421993288] [gazebo_ros2_control]: 			 found initial value: 0.000000
+[gzserver-2] [INFO] [1793529127.421997224] [gazebo_ros2_control]: 		 velocity
+[gzserver-2] [INFO] [1793529127.422000086] [gazebo_ros2_control]: 	Command:
+[gzserver-2] [INFO] [1793529127.422002856] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.422237314] [gazebo_ros2_control]: Loading joint: joint5
+[gzserver-2] [INFO] [1793529127.422271100] [gazebo_ros2_control]: 	State:
+[gzserver-2] [INFO] [1793529127.422283821] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.422303903] [gazebo_ros2_control]: 			 found initial value: 0.000000
+[gzserver-2] [INFO] [1793529127.422316934] [gazebo_ros2_control]: 		 velocity
+[gzserver-2] [INFO] [1793529127.422327288] [gazebo_ros2_control]: 	Command:
+[gzserver-2] [INFO] [1793529127.422337636] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.422695751] [gazebo_ros2_control]: Loading joint: joint6
+[gzserver-2] [INFO] [1793529127.422711048] [gazebo_ros2_control]: 	State:
+[gzserver-2] [INFO] [1793529127.422714696] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.422718363] [gazebo_ros2_control]: 			 found initial value: 0.000000
+[gzserver-2] [INFO] [1793529127.422722739] [gazebo_ros2_control]: 		 velocity
+[gzserver-2] [INFO] [1793529127.422744889] [gazebo_ros2_control]: 	Command:
+[gzserver-2] [INFO] [1793529127.422749009] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.422859558] [gazebo_ros2_control]: Loading joint: joint7
+[gzserver-2] [INFO] [1793529127.422869916] [gazebo_ros2_control]: 	State:
+[gzserver-2] [INFO] [1793529127.422875375] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.422880194] [gazebo_ros2_control]: 			 found initial value: 0.000000
+[gzserver-2] [INFO] [1793529127.422886297] [gazebo_ros2_control]: 		 velocity
+[gzserver-2] [INFO] [1793529127.422890795] [gazebo_ros2_control]: 	Command:
+[gzserver-2] [INFO] [1793529127.422895290] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.423016947] [gazebo_ros2_control]: Loading joint: joint8
+[gzserver-2] [INFO] [1793529127.423025953] [gazebo_ros2_control]: 	State:
+[gzserver-2] [INFO] [1793529127.423029190] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.423032239] [gazebo_ros2_control]: 			 found initial value: 0.000000
+[gzserver-2] [INFO] [1793529127.423036087] [gazebo_ros2_control]: 		 velocity
+[gzserver-2] [INFO] [1793529127.423038917] [gazebo_ros2_control]: 	Command:
+[gzserver-2] [INFO] [1793529127.423041886] [gazebo_ros2_control]: 		 position
+[gzserver-2] [INFO] [1793529127.423223806] [resource_manager]: Initialize hardware 'GazeboSimSystem' 
+[gzserver-2] [INFO] [1793529127.423354017] [resource_manager]: Successful initialization of hardware 'GazeboSimSystem'
+[gzserver-2] [INFO] [1793529127.423423449] [resource_manager]: 'configure' hardware 'GazeboSimSystem' 
+[gzserver-2] [INFO] [1793529127.423430870] [resource_manager]: Successful 'configure' of hardware 'GazeboSimSystem'
+[gzserver-2] [INFO] [1793529127.423436798] [resource_manager]: 'activate' hardware 'GazeboSimSystem' 
+[gzserver-2] [INFO] [1793529127.423440317] [resource_manager]: Successful 'activate' of hardware 'GazeboSimSystem'
+[gzserver-2] [INFO] [1793529127.423514117] [gazebo_ros2_control]: Loading controller_manager
+[gzserver-2] [INFO] [1793529127.452630753] [gazebo_ros2_control]: Loaded gazebo_ros2_control.
+[gzserver-2] [INFO] [1793529127.473031808] [diff_drive]: Wheel pair 1 separation set to [0.200000m]
+[gzserver-2] [INFO] [1793529127.473098726] [diff_drive]: Wheel pair 1 diameter set to [0.064000m]
+[gzserver-2] [INFO] [1793529127.474020342] [diff_drive]: Subscribed to [/cmd_vel]
+[gzserver-2] [INFO] [1793529127.477234185] [diff_drive]: Advertise odometry on [/odom]
+[gzserver-2] [INFO] [1793529127.479557751] [diff_drive]: Publishing odom transforms between [odom] and [base_footprint]
+[gzserver-2] [INFO] [1793529127.479602749] [diff_drive]: Publishing wheel transforms between [base_footprint], [left_wheel_joint] and [right_wheel_joint]
+[gzserver-2] [1;32m[Msg] [0m[1;32mWaiting for master.[0m[1;32m
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mConnected to gazebo master @ [0m[1;32mhttp://127.0.0.1:11345[0m[1;32m
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mPublicized address: [0m[1;32m10.255.255.254[0m[1;32m
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mLoading world file [[0m[1;32m/home/lhy/Desktop/VLA_ROBOT/base_robot_ws/install/base_robot/share/base_robot/world/demo_scene.world[0m[1;32m][0m[1;32m
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mLoading grasp-fix plugin[0m[1;32m
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mGazeboGraspFix: Using disable_collisions_on_attach [0m[1;32m1[0m[1;32m
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mGazeboGraspFix: Using update rate [0m[1;32m50[0m[1;32m
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mGazeboGraspFix: Using max_grip_count [0m[1;32m10[0m[1;32m
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mGazeboGraspFix: Using grip_count_threshold [0m[1;32m1[0m[1;32m
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mGazeboGraspFix: Using release_tolerance [0m[1;32m0.005[0m[1;32m
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mGazeboGraspFix: Adding collision scoped name [0m[1;32mbase_robot::link7::link7_collision[0m[1;32m
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mGazeboGraspFix: Adding collision scoped name [0m[1;32mbase_robot::link8::link8_collision[0m[1;32m
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mSubscribing contact manager to topic [0m[1;32m~/base_robot/contacts[0m[1;32m
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mAdvertising grasping events on topic grasp_events[0m[1;32m
+[INFO] [spawner-5]: process started with pid [38407]
+[gzserver-2] [INFO] [1793529132.041110548] [controller_manager]: Loading controller 'joint_state_broadcaster'
+[spawner-5] [INFO] [1793529132.074096870] [spawner_joint_state_broadcaster]: [94mLoaded [1mjoint_state_broadcaster[0m
+[gzserver-2] [INFO] [1793529132.075415863] [controller_manager]: Configuring controller 'joint_state_broadcaster'
+[gzserver-2] [INFO] [1793529132.075660648] [joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[spawner-5] [INFO] [1793529132.169312612] [spawner_joint_state_broadcaster]: [92mConfigured and activated [1mjoint_state_broadcaster[0m
+[INFO] [spawner-5]: process has finished cleanly [pid 38407]
+[INFO] [spawner-6]: process started with pid [38428]
+[gzserver-2] [INFO] [1793529134.929173360] [controller_manager]: Loading controller 'arm_controller'
+[gzserver-2] [WARN] [1793529134.962501500] [arm_controller]: [Deprecated]: "allow_nonzero_velocity_at_trajectory_end" is set to true. The default behavior will change to false.
+[spawner-6] [INFO] [1793529134.973827679] [spawner_arm_controller]: [94mLoaded [1marm_controller[0m
+[gzserver-2] [INFO] [1793529134.975246522] [controller_manager]: Configuring controller 'arm_controller'
+[gzserver-2] [INFO] [1793529134.975448917] [arm_controller]: No specific joint names are used for command interfaces. Using 'joints' parameter.
+[gzserver-2] [INFO] [1793529134.975480323] [arm_controller]: Command interfaces are [position] and state interfaces are [position velocity].
+[gzserver-2] [INFO] [1793529134.975607680] [arm_controller]: Using 'splines' interpolation method.
+[gzserver-2] [INFO] [1793529134.976953619] [arm_controller]: Controller state will be published at 50.00 Hz.
+[gzserver-2] [INFO] [1793529134.978726291] [arm_controller]: Action status changes will be monitored at 20.00 Hz.
+[spawner-6] [INFO] [1793529134.992263806] [spawner_arm_controller]: [92mConfigured and activated [1marm_controller[0m
+[INFO] [spawner-6]: process has finished cleanly [pid 38428]
+[INFO] [spawner-7]: process started with pid [38472]
+[spawner-7] [INFO] [1793529135.597120109] [spawner_gripper_controller]: waiting for service /controller_manager/list_controllers to become available...
+[gzserver-2] [INFO] [1793529135.974185911] [controller_manager]: Loading controller 'gripper_controller'
+[gzserver-2] [WARN] [1793529135.994022355] [gripper_controller]: [Deprecated]: "allow_nonzero_velocity_at_trajectory_end" is set to true. The default behavior will change to false.
+[spawner-7] [INFO] [1793529135.995622463] [spawner_gripper_controller]: [94mLoaded [1mgripper_controller[0m
+[gzserver-2] [INFO] [1793529136.078134496] [controller_manager]: Configuring controller 'gripper_controller'
+[gzserver-2] [INFO] [1793529136.078253961] [gripper_controller]: No specific joint names are used for command interfaces. Using 'joints' parameter.
+[gzserver-2] [INFO] [1793529136.078266906] [gripper_controller]: Command interfaces are [position] and state interfaces are [position velocity].
+[gzserver-2] [INFO] [1793529136.078274168] [gripper_controller]: Using 'splines' interpolation method.
+[gzserver-2] [INFO] [1793529136.078757346] [gripper_controller]: Controller state will be published at 50.00 Hz.
+[gzserver-2] [INFO] [1793529136.080371278] [gripper_controller]: Action status changes will be monitored at 20.00 Hz.
+[spawner-7] [INFO] [1793529136.089825655] [spawner_gripper_controller]: [92mConfigured and activated [1mgripper_controller[0m
+[INFO] [spawner-7]: process has finished cleanly [pid 38472]
+[INFO] [vla_preset_pose.py-8]: process started with pid [38503]
+[vla_preset_pose.py-8] [INFO] [1793529136.546615068] [vla_preset_pose]: 等待 arm_controller 就绪...
+[vla_preset_pose.py-8] [INFO] [1793529136.547025278] [vla_preset_pose]: arm_controller 就绪，发送预置位姿
+[vla_preset_pose.py-8] [INFO] [1793529137.448340490] [vla_preset_pose]: 预置位姿已发送: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+[INFO] [vla_preset_pose.py-8]: process has finished cleanly [pid 38503]
+[INFO] [vla_gazebo_bridge.py-9]: process started with pid [38542]
+[ERROR] [vla_gazebo_bridge.py-9]: process has died [pid 38542, exit code -15, cmd '/home/lhy/Desktop/VLA_ROBOT/base_robot_ws/install/base_robot/lib/base_robot/vla_gazebo_bridge.py --ros-args -r __node:=vla_gazebo_bridge --params-file /tmp/launch_params_ju1xftdu --params-file /tmp/launch_params_6voz_5x_ --params-file /tmp/launch_params__0ht7072 --params-file /tmp/launch_params_q2g5boww --params-file /tmp/launch_params_4z0rp51l --params-file /tmp/launch_params_3ndxly_t --params-file /tmp/launch_params_tv3hf9a_ --params-file /tmp/launch_params_i2pknt2l'].
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mGazeboGraspFix: Attaching [0m[1;32mplastic_cup_0_clone::link::collision[0m[1;32m to gripper [0m[1;32mdefault_arm[0m[1;32m.[0m[1;32m
+[gzserver-2] [0m[1;32m[0m[1;32m[0m[1;32m[Msg] [0m[1;32mGazeboGraspFix: Detaching [0m[1;32mplastic_cup_0_clone::link::collision[0m[1;32m from gripper [0m[1;32mdefault_arm[0m[1;32m.[0m[1;32m
