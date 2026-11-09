@@ -11,21 +11,26 @@ from __future__ import annotations
 from collections import deque
 
 from agent_types import AgentState, PlanStep, StepRecord, ToolResult
-from tools import ToolRegistry
+from tools import DOCK_POSES, VLA_GRASP_INSTRUCTION, ToolRegistry
 
 
 def _red_grasp_subplan(step: PlanStep, room: str) -> list[PlanStep]:
+    """红牌子计划：去桌前 → 一次 VLA 回合（抓杯→倾倒补药→放回松爪，整段）。
+
+    旧版拆「抓取杯子/放回杯子」两条中文指令——模型训练里没见过，全部 OOD；
+    v4 一条演示 episode 本身就走完 接近→夹取→倾倒→放回→松开，故只发一步。
+    dock=房间名时 vla_manipulate 先 gz teleport 精对齐工位再起手。"""
     table = f"{room}_table"
+    vla_args: dict = {"instruction": VLA_GRASP_INSTRUCTION}
+    if room in DOCK_POSES:
+        vla_args["dock"] = room
     return [
         PlanStep(f"{step.step_id}.1", "navigate_to", {"location": table},
                  {"tool": "verify_navigation", "args": {"location": table}},
                  f"{room} 识别到红色：去桌前"),
-        PlanStep(f"{step.step_id}.2", "vla_manipulate", {"instruction": "抓取杯子"},
+        PlanStep(f"{step.step_id}.2", "vla_manipulate", vla_args,
                  {"tool": "verify_grasp", "args": {"object_name": "cup"}},
-                 f"{room}：抓取杯子"),
-        PlanStep(f"{step.step_id}.3", "vla_manipulate", {"instruction": "放回杯子"},
-                 {"tool": "verify_condition", "args": {"condition": "cup placed back"}},
-                 f"{room}：放回杯子"),
+                 f"{room}：VLA 整段回合 抓杯→倾倒补药→放回"),
     ]
 
 

@@ -254,6 +254,41 @@ void GazeboGraspFix::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf)
       this->collisions[collName] = armName;
       collisionNames.push_back(collName);
     }
+
+    // [2026-11-07b] Cache this gripper's finger joints for the open-finger
+    // veto (IsGripperFullyOpen): every non-fixed joint of the model whose
+    // child link is one of the <gripper_link>s. Our arm's joint7/joint8 are
+    // prismatic with travel 0..0.04 / -0.04..0, so "fully open" is readable
+    // straight from |position| vs |limit|.
+    {
+      std::vector<physics::JointPtr> &jf = this->fingerJoints[armName];
+      const std::vector<physics::JointPtr> allJoints = _parent->GetJoints();
+      // 2026-11-07 实锤坑：这个 fork 的 GazeboGraspGripper 从不填 linkNames
+      // （Init 只存 collisionElems），hasLink() 恒 false，上一版用 hasLink
+      // 匹配导致缓存恒 0、否决成死代码。改为按 <gripper_link> 名字取
+      // LinkPtr，用指针同一性对关节 child 匹配（与 Init 同一套解析路径，
+      // palm/finger 既然能加载成功这里就必然能取到）。
+      for (std::vector<std::string>::const_iterator fIt =
+             fingerLinkNames.begin(); fIt != fingerLinkNames.end(); ++fIt)
+      {
+        physics::LinkPtr flink = _parent->GetLink(*fIt);
+        if (!flink)
+          continue;
+        for (std::vector<physics::JointPtr>::const_iterator jIt =
+               allJoints.begin(); jIt != allJoints.end(); ++jIt)
+        {
+          const physics::JointPtr &j = *jIt;
+          if (!j)
+            continue;
+          physics::LinkPtr child = j->GetChild();
+          if (child && child.get() == flink.get())
+            jf.push_back(j);
+        }
+      }
+      gzmsg << "GazeboGraspFix: Cached " << jf.size()
+            << " finger joint(s) for gripper '" << armName
+            << "' (open-finger veto)" << std::endl;
+    }
   }
 
   if (grippers.empty())
@@ -579,6 +614,16 @@ void GazeboGraspFix::OnUpdate()
 #endif
     // ------------------- 
 
+    // [2026-11-07b] Open-finger veto (attach side): fingers fully open
+    // cannot pinch — during PLACE-TAIL / warm-open a tilted cup rubbing the
+    // palm produces grip-like contact forces, which otherwise kept
+    // gripCounts topped up so the detach path was never even considered
+    // (observed 2026-11-07 11:05 run: Detach->re-Attach x2, final attach
+    // never released, cup rode the gripper off the table).
+    if (!objContInfo.maxContactGripper.empty() &&
+        IsGripperFullyOpen(objContInfo.maxContactGripper))
+      continue;
+
     float minAngleDiff = this->forcesAngleTolerance; //120 * M_PI/180;
     if (!CheckGrip(objContInfo.appliedForces, minAngleDiff, 0.3))
       continue;
@@ -700,9 +745,34 @@ void GazeboGraspFix::OnUpdate()
 
     // gzmsg<<"is attached: "<<isAttached<<std::endl;
 
-    if (!isAttached || (gripCntIt->second > this->gripCountThreshold)) continue;
+    // [2026-11-07b] Open-finger veto (detach side): the grip-count gate and
+    // the relative-displacement test below both fail for a cup that is not
+    // pinched but merely wedged tilted against the palm (grip forces keep
+    // the count topped up; displacement is ~0 because the cup moves with the
+    // hand). With the fingers driven fully open nothing can be held ->
+    // detach unconditionally instead of riding away.
+    bool openReject = isAttached && IsGripperFullyOpen(attIt->second);
+    if (!isAttached ||
+        (!openReject && gripCntIt->second > this->gripCountThreshold))
+      continue;
 
     const std::string &graspingGripperName = attIt->second;
+
+    if (openReject)
+    {
+      std::map<std::string, GazeboGraspGripper>::iterator oggIt =
+        grippers.find(graspingGripperName);
+      if (oggIt == grippers.end())
+        continue;
+      gzmsg << "GazeboGraspFix: Detaching " << objName << " from gripper " <<
+            graspingGripperName << " (fingers fully open, forced release)." <<
+            std::endl;
+      oggIt->second.HandleDetach(objName);
+      this->OnDetach(objName, graspingGripperName);
+      gripCntIt->second = 0;
+      this->attachGripContacts.erase(objName);
+      continue;
+    }
 
     // gzmsg<<"Considering "<<objName<<" for detachment."<<std::endl;
 
@@ -763,20 +833,34 @@ void GazeboGraspFix::OnUpdate()
       // The initial contact point location on the link should still correspond
       // to the initial contact point location on the object.
 
-      // Initial vector from object center to contact point (relative to link,
-      // because relObjPos and relContactPos are from center of link)
-      GzVector3 oldObjDist = relContactPos - relObjPos;
-      // The same vector as \e oldObjDist, but calculated by the current world pose
-      // of object and the current location of the initial contact location on the link.
-      // This is the new distance from contact to object.
-      GzVector3 newObjDist = currContactWorldPose - gazebo::GetPos(currObjWorldPose);
-
-      //gzmsg<<"Obj Trans "<<cpInfo.collLink->GetName()<<": "<<relObjPos.x<<", "<<relObjPos.y<<", "<<relObjPos.z<<std::endl;
-      //gzmsg<<"Cont Trans "<<cpInfo.collLink->GetName()<<": "<<relContactPos.x<<", "<<relContactPos.y<<", "<<relContactPos.z<<std::endl;
-
-      // the difference between these vectors should not be too large...
-      float diff =
-        fabs(gazebo::GetLength(oldObjDist) - gazebo::GetLength(newObjDist));
+      // [fix 2026-11-07] Upstream compared only |oldObjDist| - |newObjDist|
+      // (difference of vector NORMS). That is frame-invariant for a cheap
+      // reason: oldObjDist lives in the contact-link frame while newObjDist
+      // was computed in world coordinates, so the vectors themselves could
+      // not be subtracted. But our gripper fingers (joint7/joint8) are
+      // PRISMATIC along the contact normal: opening by 10mm moves the
+      // object center 10mm in DIRECTION while the contact->center vector
+      // length changes by only ~1-2mm (perpendicular motion, second order).
+      // With release_tolerance = 5mm the norm-difference never exceeds the
+      // threshold, the fake fixed joint NEVER detached, and the demo left
+      // with the cup rigidly attached while driving away (observed
+      // 2026-11-07 full-patrol run: cup z stayed 0.493 riding the gripper;
+      // no 'Detaching' line in the whole log).
+      //
+      // Correct test: bring the object center into the SAME local frame the
+      // attach-time snapshot used (identical transform math as in
+      // OnContact: worldToLink.Inverse() * objWorldMatrix) and compare full
+      // vectors. Static carry / arm motion: object is rigid-fixed to the
+      // palm and fingers are position-held -> vector delta ~0 (sub-mm
+      // controller jitter << 5mm, no false release mid-pour). Finger
+      // opening: delta = joint travel (10mm commanded open) > tolerance
+      // -> deterministic detach, exactly what the bridge's "_open_gripper"
+      // comment always claimed.
+      (void)relContactPos; (void)currContactWorldPose;
+      GzMatrix4 objWorldMatrix = gazebo::GetMatrix(currObjWorldPose);
+      GzMatrix4 objInLinkNow = worldToLink.Inverse() * objWorldMatrix;
+      GzVector3 objPosInLinkNow = gazebo::GetPos(objInLinkNow);
+      float diff = gazebo::GetLength(objPosInLinkNow - relObjPos);
       //gzmsg<<"Diff for link "<<cpInfo.collLink->GetName()<<": "<<diff<<std::endl;
 
       if (diff > releaseTolerance)
@@ -809,6 +893,31 @@ void GazeboGraspFix::OnUpdate()
   }
 
   this->prevUpdateTime = common::Time::GetWallTime();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+bool GazeboGraspFix::IsGripperFullyOpen(const std::string &armName) const
+{
+  std::map<std::string, std::vector<physics::JointPtr> >::const_iterator it =
+    this->fingerJoints.find(armName);
+  if (it == this->fingerJoints.end() || it->second.empty())
+    return false;
+  for (std::vector<physics::JointPtr>::const_iterator jIt = it->second.begin();
+       jIt != it->second.end(); ++jIt)
+  {
+    const physics::JointPtr &j = *jIt;
+    // gz11 API：位置 Joint::Position(i)；限位走引擎参数 hi_stop/lo_stop
+    // （URDF <limit lower upper> 被 gz 写进引擎 stop）。引擎没设 stop 时
+    // GetParam 可能返回哨兵值——span 判掉：判不了就当"没全开"，宁漏不误拆。
+    const double hi = j->GetParam("hi_stop", 0);
+    const double lo = j->GetParam("lo_stop", 0);
+    const double span = (fabs(hi) > fabs(lo)) ? fabs(hi) : fabs(lo);
+    if (!(span > 1e-6) || span > 1e6)
+      return false;                  // 没限位/哨兵值，判不了：宁不误拆
+    if (fabs(j->Position(0)) < 0.9 * span)
+      return false;                  // 这个手指还没全开
+  }
+  return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

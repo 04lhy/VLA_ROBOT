@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import re
 from typing import Any
 
 from agent_types import AgentState, PlanStep
@@ -35,6 +36,11 @@ Available tools:
 - verify_condition(condition: string): generic verification placeholder.
 
 Rules:
+- NEVER emit vla_manipulate or "<room>_table" navigation steps in a patrol plan: one
+  detect_color step is all that is needed — the executor inserts the whole
+  "go to table + one VLA grasp-pour-place episode" sub-plan automatically after a
+  "red" result. Emitting a duplicate manipulation step is a planning error (it is
+  auto-skipped unless the robot has navigated somewhere new first).
 - Return JSON only. No markdown, no extra prose.
 - Use only known locations provided in context. If a location is unknown, ask for clarification by returning needs_clarification=true.
 - Keep each step atomic.
@@ -113,7 +119,12 @@ class Planner:
                     f"Context:\n{known_context(state.known_locations)}\n\n"
                     f"Execution history:\n{json.dumps(history_payload, ensure_ascii=False, indent=2)}\n\n"
                     f"Failure summary:\n{failure_summary}\n\n"
-                    "Return a recovery plan with only the remaining steps."
+                    "Return a recovery plan with only the remaining steps. "
+                    "HARD RULE: if any vla_manipulate step in the execution "
+                    "history has status=failed and none has status=success, "
+                    "the red-card station is NOT resolved — you MUST keep a "
+                    "vla_manipulate step (same args) as the first step of the "
+                    "recovery plan. Never drop it to 'move on'."
                 ),
             },
         ]
@@ -149,10 +160,13 @@ class Planner:
         text = instruction.lower()
         if "巡检" in instruction or "patrol" in text:
             # 每间房：停靠(2.4m 位) -> 颜色识别。红色触发的
-            # 「去桌前→抓取→放回」子计划由 executor 自动插入（见 executor.py），
+            # 「去桌前→VLA 整段回合」子计划由 executor 自动插入（见 executor.py），
             # 绿色/无目标则直接巡检下一间房。
+            # 指令里点名房间（如"巡检 room2"）则只巡这些房间 + 回家。
+            focus = list(dict.fromkeys(re.findall(r"room[1-4]", text)))
+            route = (focus + ["home"]) if focus else PATROL_ROUTE
             steps: list[PlanStep] = []
-            for i, loc in enumerate(PATROL_ROUTE, start=1):
+            for i, loc in enumerate(route, start=1):
                 steps.append(PlanStep(
                     f"{i}.nav", "navigate_to", {"location": loc},
                     {"tool": "verify_navigation", "args": {"location": loc}},

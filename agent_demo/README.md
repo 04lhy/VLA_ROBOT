@@ -5,11 +5,12 @@
 当前范围：
 
 - 仅支持文本输入。
-- 通过 OpenAI 兼容的 DeepSeek API 调用 LLM planner。
+- 通过 OpenAI 兼容的 DeepSeek API 调用 LLM planner（或 `--mock-planner` 离线规划）。
 - 使用受限 JSON plan schema。
 - Executor 只执行白名单工具。
-- 导航、感知、验证工具当前均为 mock 实现。
-- `vla_manipulate` 可选真实发布到 `/vla_instruction`。
+- `navigate_to`（Nav2 rclpy ActionClient）、`detect_color`（前置相机 + YOLO ONNX）已接真实实现；验证工具仍为 mock 占位。
+- `vla_manipulate` 真实模式 = 发布 `/vla_instruction` 起**整段 VLA 回合**并阻塞等待 `/vla_episode_status=COMPLETE`（V2.0.0 起）。
+- 四子系统整合巡检 demo 见下方「四子系统整合 demo」一节（一键脚本 `run_room2_demo.sh`）。
 
 ## 使用 DeepSeek 兼容 API 运行
 
@@ -19,11 +20,22 @@ export DEEPSEEK_API_KEY="your key"
 python3 main.py "去厨房拿一杯水回来" --print-plan
 ```
 
+也可以把 key 放在 `agent_demo/.env`（已 gitignore，不进仓库），`llm_client`
+导入时自动加载，环境变量优先于 `.env`：
+
+```bash
+echo 'DEEPSEEK_API_KEY=sk-xxxx' > agent_demo/.env   # 一次性写入，之后直接跑
+python3 main.py "去厨房拿一杯水回来" --print-plan
+```
+
 默认 API 模板参考 `ds_demo.py`：
 
 - `OpenAI(...)`
-- `base_url="https://api.deepseek.com"`
-- 默认模型：`deepseek-v4-pro`
+- `base_url="https://api.deepseek.com"`（可用 `AGENT_LLM_BASE_URL` / `--base-url` 覆盖）
+- 代码默认模型 `deepseek-v4-pro`（思考型，单次规划 1~3 分钟）。**demo 推荐在 `.env`
+  里加 `AGENT_LLM_MODEL=deepseek-flash`**（轻量快，实测一次规划 ~15s）
+- 依赖：系统 python3 `pip install openai`（若报 `process() takes no keyword
+  arguments`，是发行版老 brotli 与 httpx2 不兼容，`pip install -U Brotli` 即解）
 
 ## 巡检 demo（输入"开始巡检"，小车依次到各房间）
 
@@ -41,7 +53,7 @@ cd agent_demo
 python3 main.py "开始巡检" --mock-planner --real-navigation
 ```
 
-`--real-navigation` 会通过 `ros2 action send_goal /navigate_to_pose` 逐点真实导航小车。默认 `ros_setup` 路径在 `tools.py` 里按项目根目录自动解析，通常无需 `--ros-setup`；若工作空间不在默认位置，可显式传入 `--ros-setup`。
+`--real-navigation` 通过 rclpy `ActionClient`（子进程，V1.5.0 `nav_waypoints.py` 同款路径）逐点真实导航 `NavigateToPose`。**不要用 `ros2 action send_goal` CLI**——本环境 FastDDS 下 goal response 发不回客户端，机器人不动但 CLI 干等（V2.0.0 联调实录）。默认 `ros_setup` 路径在 `tools.py` 里按项目根目录自动解析，通常无需 `--ros-setup`；若工作空间不在默认位置，可显式传入 `--ros-setup`。
 
 ## 颜色识别巡检（2026-10-28 已接入）
 
@@ -55,10 +67,15 @@ for room in PATROL_ROUTE:
         continue                            # 巡检下一个房间
     elif color == "red":
         navigate_to(f"{room}_table")        # 来到该房间的桌子面前
-        vla_manipulate("抓取杯子")
-        vla_manipulate("放回杯子")
+        vla_manipulate("pick up the cup and pour",   # 一整个 episode 走完
+                       dock=room if 已标定工位)       # 抓杯→倾倒补药→放回→松爪
         continue                            # 巡检下一个房间
 ```
+
+> 旧版"抓取杯子/放回杯子"两条中文指令是 OOD（v4 训练里没见过），V2.0.0 起红分支
+> 只发**一条整段回合**；`dock` 给定时 `vla_manipulate` 先 gz teleport 精对齐底盘+杯
+> 到验证工位（模型只在固定机位采过数据，Nav2 停靠 ±20cm 不够），当前仅 room2 已标定
+> （`tools.DOCK_POSES`）。
 
 实现方式：
 
@@ -77,6 +94,35 @@ for room in PATROL_ROUTE:
 cd agent_demo
 python3 main.py "开始巡检" --mock-planner --real-navigation --real-detection
 ```
+
+## 四子系统整合 demo（V2.0.0：agent × Nav2 × color_yolo × OpenVLA）
+
+一条命令跑通「来巡检点 → 认牌子 → 红色去桌前抓杯倾倒补药 → 继续巡检」：
+
+```bash
+cd agent_demo
+bash run_room2_demo.sh          # room2（东南）单房巡检；日志 /tmp/demo_room2/
+```
+
+阶段：v4 推理服务器 → 仿真（launch 自启桥接，`vla_instruction` 默认 ''=topic 门控不抢跑）
+→ 静置 75s 摆底盘/摆杯 → Nav2 栈 → agent（真 LLM 规划 + 真导航 + 真检测 + 真 VLA）。
+
+**桥接集成协议**（V2.0.0 起，`vla_gazebo_bridge.py`）：
+
+- `/vla_instruction` 任意非空消息 = 起新回合（同文案也重触发；全量重置回合状态）
+- 回合起手 `auto_warm` 自动发 GT f1 预热位+张爪+静置（~15s，第十轮手工协议内置化）
+- `/vla_episode_status`（String，1Hz）：`IDLE→WARMING→RUNNING→COMPLETE`
+
+**VLA 生命周期（工位许可制）**——多房间巡检不为 7B 反复冷加载（重载 1~3 分钟/次）：
+
+- 推理服务器开机加载后**全程常驻**（空闲零算力，只占显存）
+- 每次 `navigate_to` 发放一次许可；`vla_manipulate` 消耗许可——同一停留点的重复
+  操作步（如 LLM 多写的抓取）返回 success 并标注 `duplicate_skipped`，计划继续
+- 回合超时/未成 COMPLETE → 许可回退，允许重试
+- **整个计划收尾时 `main.py` 统一关停推理服务器**（打印 `[Cleanup]`）
+- 单任务场景想 COMPLETE 即关服务器：`ToolRegistry(vla_shutdown_after_success=True)`
+
+联调实录、验证结果与已知风险见 `test_records/2026-11-02_agent_patrol_room2_demo/`。
 
 ## 当前可用工具
 
@@ -99,7 +145,7 @@ ToolResult(
 | `navigate_to` | `location: str` | 默认 Mock 成功。`--real-navigation` 时通过 Nav2 `NavigateToPose` action 真实导航到 `tools.LOCATION_COORDS` 里配置的坐标。 | 已接 Nav2；后续可换 VLN service 或语义导航模块。 |
 | `detect_object` | `object_name: str` | Mock 成功，置信度为 `0.9`。 | 替换为目标检测器 / VLM grounding，例如 YOLO、GroundingDINO、RGB-D 检测或场景图查询。 |
 | `detect_color` | `location: str`（可选） | 默认 Mock 返回 `"green"`；`--real-detection` 时抓 1 帧相机图 → YOLO ONNX（CPU）识别，返回 `"red"` / `"green"` / `"none"` + 检测框。 | 已接摄像头 + YOLO11n；单次调用 ≈1.1s（进程启动为主），可换常驻节点降延迟。 |
-| `vla_manipulate` | `instruction: str` | 默认 Mock 成功。使用 `--real-vla-publish` 时，会将 `instruction` 作为 `std_msgs/msg/String` 发布到 `/vla_instruction`。 | 保持为 OpenVLA bridge 入口，或后续替换为能报告完成状态的 ROS action/service。 |
+| `vla_manipulate` | `instruction: str`，`dock: str?`，`wait_timeout: float?` | 默认 Mock 成功。`--real-vla-publish` 时：可选 gz teleport 精对齐 `DOCK_POSES[dock]` 工位 → 发布 `/vla_instruction` 起整段回合 → **阻塞轮询 `/vla_episode_status` 到 COMPLETE**（上限 `vla_wait_timeout`，默认 420s；防陈旧 COMPLETE：须先见 WARMING/RUNNING）。工位许可制去重，见下方整合 demo 一节。 | 桥接已上报回合状态；下一步可把 ROS 轮询换成 action/service 形态。 |
 | `verify_navigation` | `location: str` | Mock 成功，`distance_to_goal=0.0`。 | 替换为 Nav2 action result 加 TF/AMCL 位姿阈值检查。 |
 | `verify_grasp` | `object_name: str | None` | Mock 成功，`attached=True`。 | 替换为 Gazebo grasp plugin 事件、夹爪/接触传感器、力反馈或视觉确认。 |
 | `verify_object_visible` | `object_name: str` | Mock 成功，`visible=True`。 | 替换为检测器/VLM 结果和置信度阈值判断。 |
@@ -154,7 +200,7 @@ python3 main.py "拿起前面的杯子" --mock-planner --real-vla-publish \
 /vla_instruction  std_msgs/msg/String
 ```
 
-该 topic 由 `vla_gazebo_bridge.py` 消费。这只能确认指令已经发送到 VLA bridge，不能证明操作已经成功。要证明操作成功，需要实现真实的 `verify_grasp` / `verify_condition`。
+该 topic 由 `vla_gazebo_bridge.py` 消费。V2.0.0 起桥接会回报 `/vla_episode_status` 状态机，`vla_manipulate` 阻塞到 `COMPLETE` 才返回——能确认"整段回合执行完且臂已冻结"，但**杯是否真的倒净/放稳仍需真实 `verify_grasp` / `verify_condition`**（当前仍为 mock）。
 
 ## Verify 失败时的行为
 
@@ -316,11 +362,12 @@ Planner 会被要求只使用这些地点。后续该列表应来自地图配置
 
 ## 真实 VLA 发布
 
-默认情况下所有工具都是 mock。若要将操作指令发布到 `/vla_instruction`：
+默认情况下所有工具都是 mock。若要将操作指令发布到 `/vla_instruction`（需仿真+桥接+推理服务器在跑）：
 
 ```bash
 python3 main.py "拿起前面的杯子" --mock-planner --real-vla-publish \
   --ros-setup $PROJECT_ROOT/base_robot_ws/install/setup.bash
 ```
 
-导航、感知和验证当前仍是 mock 占位。后续需要将 `tools.py` 中的方法替换为 Nav2/VLN/感知/verifier 集成。
+导航（`--real-navigation`）与颜色识别（`--real-detection`）已接真实实现；验证工具仍是 mock 占位。
+全链路整合演示直接用 `run_room2_demo.sh`（见上文整合 demo 一节）。

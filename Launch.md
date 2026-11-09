@@ -167,7 +167,19 @@ VLA_UNNORM_KEY= ~/miniforge3/envs/openvla_env/bin/python deploy_4bit.py \
 > launch 会自动起 `vla_gazebo_bridge`，手动试验前注意先杀掉自启桥接（FINETUNE §4 警告）。
 > v3 回滚 = 服务器换 `~/models/gazebo_ft/gazebo_4room_v3` + 桥接去掉 `stack_frames`。
 
-**手动闭环试验标准流程（第十q轮冷启动验证通过，逐步另开终端；`$WS` 见文首）**：
+**整合模式（V2.0.0 起 agent 巡检 demo 的标准用法）**：launch 自启桥接已升级为
+"topic 门控 + 自动预热 + 状态机"——`vla_instruction` 参数留默认 `''` 不抢跑，收到
+`/vla_instruction` 非空消息自动先预热到 GT f1 臂位+张爪（第十轮手工协议内置化，
+`auto_warm`），`/vla_episode_status` 按 1Hz 报 `IDLE→WARMING→RUNNING→COMPLETE`，
+agent 的 `vla_manipulate` 阻塞等 COMPLETE。**这条链路无需拦截自启桥接、无需手工预热**，
+一条命令全流程（服务器/仿真/摆位/导航栈/agent 全自动，日志在 `/tmp/demo_room2/`）：
+
+```bash
+cd $WS/agent_demo && bash run_room2_demo.sh
+```
+
+桥接/launch/world 改过记得 `colcon build --packages-select base_robot`。以下 6 步
+手册仅在**手动发单段回合 / 权重调试**时使用（第十q轮冷启动验证通过，逐步另开终端）：
 
 1. 起仿真并拦截自启桥接（launch 后立刻 0.3s 轮询 pkill）：
 ```bash
@@ -306,12 +318,22 @@ ros2 run base_robot nav_waypoints.py
 
 ```bash
 cd $WS/agent_demo
-python3 main.py "开始巡检" --mock-planner --print-plan        # mock 计划
-python3 main.py "开始巡检" --mock-planner --real-navigation  # 真实导航巡检
+
+# 离线（无 API、无仿真）：确定性 mock 计划
+python3 main.py "开始巡检" --mock-planner --print-plan
+python3 main.py "开始巡检" --mock-planner --real-navigation   # 真实导航巡检
+
+# 真实 LLM 规划（DeepSeek）：key 与轻量模型放 agent_demo/.env（git 忽略，一次性）
+echo 'DEEPSEEK_API_KEY=sk-xxxx' > .env && echo 'AGENT_LLM_MODEL=deepseek-flash' >> .env
+python3 main.py "开始巡检" --print-plan                       # 不带 --mock-planner 即走 API
+
+# 四子系统整合演示（agent × Nav2 × color_yolo × OpenVLA，见 §2.7 整合模式）
+bash run_room2_demo.sh
 ```
 
-> 语言输入 → LLM 生成计划 → 执行白名单工具（导航 / 检测 / 操作 / 验证）→ 失败重规划。
-> 详细用法、工具说明、巡检 / 颜色识别接口见 `agent_demo/README.md`。
+> 语言输入 → LLM 生成计划（或 mock）→ 执行白名单工具（导航 / 检测 / 操作 / 验证）→ 失败重规划。
+> 红/绿分支由 executor 拿**实时 YOLO 结果**决定（非 LLM 预设）；VLA 工位许可制去重、
+> 计划收尾自动关推理服务器。详细用法、工具说明、巡检 / 颜色识别接口见 `agent_demo/README.md`。
 
 ---
 

@@ -180,6 +180,20 @@ class GazeboGraspFix : public ModelPlugin
     bool ObjectAttachedToGripper(const std::string &gripperName,
                                  std::string &attachedToGripper) const;
 
+    /**
+     * [2026-11-07b] True if every cached finger joint of the gripper is at
+     * >=90% of its |travel|. A prismatic-finger gripper that has been driven
+     * fully open physically cannot pinch anything; used to (a) veto grip
+     * counting/attachment while open and (b) force-detach stuck objects
+     * (tilted cup wedged against the palm defeats both grip-force counting
+     * and the relative-displacement test -> rode the gripper away).
+     */
+    bool IsGripperFullyOpen(const std::string &armName) const;
+
+    // [2026-11-07b] finger joints per gripper (armName -> non-fixed joints
+    // whose child link is one of the gripper's <gripper_link>s)
+    std::map<std::string, std::vector<physics::JointPtr> > fingerJoints;
+
 
     // physics::ModelPtr model;
     // physics::PhysicsEnginePtr physics;

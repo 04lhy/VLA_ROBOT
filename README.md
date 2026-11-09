@@ -37,7 +37,7 @@ VLA_ROBOT/
 ├── 服务器OpenVLA微调部署指南.md         # 方案A 服务器迁移/训练/部署手册
 ├── vla_demos/                         # 采集原始数据（ep_XXXX npy，git 忽略，rsync 传输）
 ├── .gitignore
-├── agent_demo/                        # 决策 agent demo（plan-execute 框架）
+├── agent_demo/                        # 决策 agent demo（plan-execute；V2.0.0 四子系统整合演示入口 run_room2_demo.sh）
 ├── asr_test/                          # ASR 语音转文本测试
 ├── color_yolo/                        # 前置相机红/绿指示牌检测链路（采集/标注/CPU 推理，V1.8.0 新增）
 ├── base_robot_ws/                     # ROS2 工作空间
@@ -137,6 +137,64 @@ ros2 run base_robot collect_grasp_demos.py --dry-run     # 只打印 FK/规划�
 | `--no-record` | — | 不落盘，只演示动作 |
 
 > 动作序列：home（张开）→ 水平前伸套杯 → 闭合夹住 → 抬起 → 倾倒 ~2s → 复原竖直 → 下降放回桌面 → 松开（张到最大 0.04）→ 机械臂退回 home。需配合 `gazebo_grasp_fix` 插件（`release_tolerance` 已调为 0.005）。
+
+---
+
+## 🚀 V2.0.0 | 四子系统整合：agent × Nav2 × color_yolo × OpenVLA 巡检演示
+
+**发布日期**：2026-11-02
+**版本状态**：✅ 正式发布（三段链路整合环境实测通过；完整单命令流程实测至 VLA 回合后策略修订为工位许可制，许可制下的全流程单跑待下轮）
+
+### ✨ 新增功能
+
+- **桥接集成 API**（`vla_gazebo_bridge.py`）：`/vla_instruction` 任意非空消息=起整段回合（同文案可重触发，全量重置，消灭抢跑/幽灵步）；`auto_warm` 回合起手自动预热 GT f1 臂位+张爪（第十轮手工协议内置化）；`/vla_episode_status` 状态机 1Hz 上报 `IDLE→WARMING→RUNNING→COMPLETE`；`base_robot.launch.py` 新增 `vla_instruction` 参数（默认 `''`=topic 门控）并内置 10q 验证配方（`stack_frames`、GT 脱困 ep_0004 share 目录机器无关定位、深度门等）
+- **agent 整合工具链**：`vla_manipulate` 真实模式 = `dock` gz teleport 精对齐（`DOCK_POSES`）→发布→阻塞等 COMPLETE（防陈旧状态：须先见 WARMING/RUNNING）；executor 红分支改**一条整段回合**（旧"抓取/放回"两步中文指令 OOD）；mock 规划器支持点名房间；导航改 rclpy `ActionClient` 子进程（`ros2 action send_goal` CLI 在本环境 goal response 回不来，机器人不动）
+- **VLA 工位许可制生命周期**：推理服务器整轮巡检常驻（7B 重载 1~3 分钟/间房，逐站开关纯浪费时间；空闲零算力只占显存）；每次 `navigate_to` 发放许可、`vla_manipulate` 消耗——同一停留点重复操作步（LLM 多写的抓取）无操作跳过；回合超时许可回退可重试；**计划收尾 `main.py` 统一关停服务器**（`[Cleanup]`），单任务场景可 `vla_shutdown_after_success=True` 即时关
+- **真实 LLM 规划接通 DeepSeek**：`agent_demo/.env` 自动加载（key 不进仓库，环境变量优先）；推荐 `AGENT_LLM_MODEL=deepseek-flash`（实测一次规划 ~15s；默认 v4-pro 思考型 1~3 分钟）；修复系统 python openai 依赖与发行版老 Brotli 的 httpx2 兼容问题
+- **world 演示改造**：room2（东南）指示牌绿→红翻色（红→抓取分支可演示，西北保持绿；恢复方法见 world 内注释）
+- **一键演示脚本** `agent_demo/run_room2_demo.sh`：清场→v4 服务器→仿真→静置摆位→Nav2→agent；Launch.md §2.7 新增"整合模式"（agent 链路无需拦截/手工预热）、§2.11 重写
+
+### 📌 验证情况（2026-11-02 联调实录）
+
+整合环境三段实测：① Nav2 (0,0)→room2 停靠位成功（停于 ±22cm/13°，由 dock snap 兜底）；② 真实牌子识别 `detect_color(room2)→red conf=0.945`（world 翻红全链路出真值）；③ VLA 整段回合 **COMPLETE：67s / 62 步 / 0 ESCAPE-GT / 0 Traceback，杯站立放回（z 名义+0.25mm、位移 3.3cm）**。真实 LLM 全流程跑到第二段回合时暴露"flash 多写抓取步→同工位重复起回合"，据此落地工位许可制并单测（`['C','C','T','C']`：去重/续许可/超时重试全过）。详见 `test_records/2026-11-02_agent_patrol_room2_demo/`。
+
+### ⚠️ 注意事项
+
+- 桥接/launch/world 改动必须 `colcon build --packages-select base_robot` 重建（install 为拷贝+world 路径烘焙）
+- `DEEPSEEK_API_KEY` 只放 `agent_demo/.env` 或环境变量，**绝不进任何被追踪文件**
+- `DOCK_POSES` 仅标定 room2 东南桌（VLA 唯一验证工位）；其他房间判红仍可起回合但无精对齐，成功率取决于导航停靠精度——四房全可用需各工位补采演示数据
+- `vla_manipulate` 阻塞期间 agent 单线程等待（轮询包 `timeout 8`，桥接死挂不连坐）
+
+---
+
+## 🚀 V2.1.0 | GT-LATCH 真值复放接管与硬物理验收闭环
+
+**发布日期**：2026-11-09
+**版本状态**：✅ 正式发布（第 8~30 趟共 24 验收：20 绿；2 真 FAIL 已修各有实战判例；余 3 为环境性。四房全流程 × 红牌 VLA 处置 × 杯立桌终审在 headless 与 GUI 两种形态下均实测通关，含"杯落桌下→托举救回"完整闭环样本）
+
+### ✨ 新增功能
+
+- **GT-LATCH 接管**（`vla_gazebo_bridge.py`）：模型增量动作不可靠 → 从锁存帧起**绝对关节位整段复放**演示（f3→f44：接近→闭爪→倾倒→放回→张爪），逐帧伺服一次阻塞放完；`_sleep_beat()` 每秒手动补发状态防单线程执行器心跳饿死（旧版长 sleep 饿死 1Hz 上报 → "读不通=未送达"误判重发毒）；回合级标志全量清零；INSTRUCTION-IGNORE / ECHO-DROP 双护栏消灭幽灵回合
+- **LIFT-PROBE 试抬验真**：闭爪后借 GT 抬升帧 f12 试抬、读 gz 杯真值——过线= **z ≥ 名义+0.035 且姿态 max(|R|,|P|) < 0.2 rad** 双严线（只查高度放行斜吊杯、只查姿态放行抬假象）；不过线张爪重对位重闭（补抓 ≤3 + force_snap 终审），耗尽**照常复放**交 agent 物理复核终审（放杯尾段几何比试抬帧更能代表结局：盲复放迟附着收口 13/14）
+- **agent 侧物理终审硬化**：回合内最大抬升 ≥4cm + 末态名义 ±5cm 高度带 + 姿态否决 + 离站复核（发现被扫倒/未留桌则整个 navigate_to 判失败逼重规划回工位）；厂房/home 段 NAV_GT_MISMATCH 真值复核 + TF 门控双防线（Nav2 假到达 1.4~2.9m 漂移族已成常态，定罪前回灌 initialpose）
+- **逃逸参数代码兜底**：LLM 改写指令丢 `dock` 参数时按底盘 gz 真值 1.2m 内就近推断工位、推不出**拒起回合**（宁失败重规划，不交没验证过的成功）；末态 z 带由固定 0.40~0.60 收至名义 ±5cm（堵"搁指尖 0.515"钻空）
+- **假跳过双修**：NO_CONFIRM 未送达早退**回灌工位许可**（`tools.py`）；重规划插回守卫只认**非跳过式成功**（`main.py`，消息含"跳过重复操作步"不算处置完成）——通则：跳过/去重型护栏的成功是二等公民，硬约束只认带物理证据的回合
+- **抓取插件修复**（`gazebo_grasp_plugin`）：张爪帧否决与指关节缓存（`linkNames` 死代码致 `hasLink` 恒 false 的坑）；改完必须 grep `"Cached .* finger joint"` ≥2 条才算生效
+- **演示脚本硬化**（`agent_demo/run_room2_demo.sh`）：`teardown()`+`trap EXIT/TERM` 全模式点名清栈（含 tts/rsp，消灭跨趟残留毒源）；`DEMO_GUI=true` 观演模式（**绝不能中途 pkill 已连接 gzclient**，会毒死 gzserver 传输泵）；VLA 成功后 teleport 直退 0.7m（杯距底盘 0.354m < 旋转半径，离站转身必扫杯）
+
+### 📌 验收战绩（第 8~30 趟，24 判）
+
+- **20 PASS**；真 FAIL 2：第 11 趟（LLM 丢 dock 参数蒸发复核链——已修，推断兜底此后 10+ 次实战全命中）、第 22 趟（许可泄漏→dedup 假跳过逃逸——已修，27~30 批零复发）
+- 环境性 3：第 15 趟 Step4 双轮 TF 饿死崩架（第 17 趟复测绿）、第 19 趟 swap 风暴→Nav2 SHM init 失败+gzserver transport SIGABRT 猝死（无 gzclient 也引爆，嫌疑=超时硬杀的短命 gz CLI 半连接）、第 26 趟跑中内存退化（avail 滑至 2.6G 地板，Nav2 status=6 连击烧光额度，VLA 满分局仍环境性 FAIL）
+- 第 27~30 趟四连全绿（起跑三道门：load/avail/残留栈清零）；第 30 趟"**失败→否决→Replan→重试局首发探针验真 0.498/0.07→躺杯救回 R=0.02**"为失败恢复闭环首个实战通关
+- GUI 演示（11-09）：第二趟杯在倾倒弧中段意外离桌（z=0.189）→四次"捏空"合爪把杯逐寸托回桌面（0.462→0.482）→复放迟附着收口立杯 R=0.01→home 段破内存围城（avail 2072M）rc=0——"无效动作累积有效功"的完整现场样本
+
+### ⚠️ 已知欠账（下阶段优先级，按性价比排序）
+
+1. **首发验真率 ≈1/14 的标定欠账**：闭爪帧几何与杯真值位存在系统性错位；正解=离线扫参（对位偏移×闭爪深度双轴）+ `plastic_cup_0_clone` 加握持环 collision 加宽容错窗（视觉 mesh 与质心 z 不动，判定链零搬家）
+2. **"杯离桌"无恢复语义**：演示几何够不着地上杯，只烧 5 轮额度后红牌——需提前弃权或落地救援数据
+3. **跑中内存哨兵 + GUI 趟瘦身**（摘 rviz2）：起跑门只保起跑水位，26 趟/GUI 二趟实锤跑中单调下滑
+4. home 段 AMCL 漂移虽被双防线兜住，根治在重标定/加 AMCL 调参
 
 ---
 

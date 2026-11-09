@@ -1030,8 +1030,8 @@
             </box>
           </geometry>
           <material>
-            <ambient>1 0 0 1</ambient>
-            <diffuse>1 0 0 1</diffuse>
+            <ambient>0 1 0 1</ambient>
+            <diffuse>0 1 0 1</diffuse>
           </material>
         </visual>
         <self_collide>0</self_collide>
@@ -1046,9 +1046,12 @@
               <size>0.8 0.015 0.6</size>
             </box>
           </geometry>
+          <!-- 2026-11-02 巡检整合演示：SE 由绿翻红，触发「红色→桌前 VLA 抓杯」
+               分支（VLA 抓取工位只部署验证过东南桌）。YOLO 按外观分类不受影响；
+               演示结束想恢复"东南=绿"把下面两组改回 0 1 0 1 并重新 colcon build -->
           <material>
-            <ambient>0 1 0 1</ambient>
-            <diffuse>0 1 0 1</diffuse>
+            <ambient>1 0 0 1</ambient>
+            <diffuse>1 0 0 1</diffuse>
           </material>
         </visual>
         <self_collide>0</self_collide>
@@ -1081,8 +1084,8 @@
             </box>
           </geometry>
           <material>
-            <ambient>1 0 0 1</ambient>
-            <diffuse>1 0 0 1</diffuse>
+            <ambient>0 1 0 1</ambient>
+            <diffuse>0 1 0 1</diffuse>
           </material>
         </visual>
         <self_collide>0</self_collide>
@@ -2189,7 +2192,10 @@
         <sensor name='laserscan' type='ray'>
           <plugin name='laserscan' filename='libgazebo_ros_ray_sensor.so'>
             <ros>
-              <remapping>out:=scan</remapping>
+              <!-- 必须 ~/out:=/scan：插件发布相对名 ~/out，旧写法 out:=scan
+                   匹配不上，激光一直发在 /laserscan/out，/scan 空转 0 发布者，
+                   AMCL 纯里程推算漂移数米（2026-11-04 实录） -->
+              <remapping>~/out:=/scan</remapping>
             </ros>
             <output_type>sensor_msgs/LaserScan</output_type>
             <frame_name>laser_link</frame_name>
