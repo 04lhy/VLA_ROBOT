@@ -1,0 +1,7 @@
+# Text planner and file-based speech input; microphone capture is optional.
+openai>=1.52.0,<4
+dashscope>=2.0.4,<3
+# OpenAI SDK 3.x/httpx2 requires this API when decoding Brotli responses.
+# Ubuntu 22.04's Brotli 1.0.9 lacks Decompressor.process(output_buffer_limit=...).
+Brotli>=1.2.0,<2
+jsonschema>=3.2,<5

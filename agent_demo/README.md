@@ -4,8 +4,8 @@
 
 当前范围：
 
-- 仅支持文本输入。
-- 通过 OpenAI 兼容的 DeepSeek API 调用 LLM planner（或 `--mock-planner` 离线规划）。
+- 支持文本、音频文件、定时麦克风录音和流式麦克风输入。
+- 默认通过 DeepSeek 文本 planner 规划（或 `--mock-planner` 离线规划）；语音还支持原生 Omni 文件输入和 Omni Realtime 流式输入。
 - 使用受限 JSON plan schema。
 - Executor 只执行白名单工具。
 - `navigate_to`（Nav2 rclpy ActionClient）、`detect_color`（前置相机 + YOLO ONNX）已接真实实现；验证工具仍为 mock 占位。
@@ -36,6 +36,126 @@ python3 main.py "去厨房拿一杯水回来" --print-plan
   里加 `AGENT_LLM_MODEL=deepseek-flash`**（轻量快，实测一次规划 ~15s）
 - 依赖：系统 python3 `pip install openai`（若报 `process() takes no keyword
   arguments`，是发行版老 brotli 与 httpx2 不兼容，`pip install -U Brotli` 即解）
+
+## 语音输入
+
+以下命令均在 `agent_demo` 目录执行，相对音频路径以当前工作目录为准。
+
+### 环境与凭据
+
+```bash
+cd ~/VLA_ROBOT/agent_demo
+python3 -m pip install -r requirements.txt
+# 使用麦克风时额外安装；缺少 portaudio.h 时先安装系统包 portaudio19-dev
+python3 -m pip install -r requirements-mic.txt
+```
+
+首次使用，将 `.env.example` 复制为 `.env` 并填写；已有配置直接加载。程序不会自动读取 `.env`。
+
+| 环境变量 | 用途 |
+|---|---|
+| `DASHSCOPE_API_KEY` | Fun-ASR / Omni 共用的百炼 API Key |
+| `DASHSCOPE_WORKSPACE` | 对应业务空间的 Workspace ID |
+| `DASHSCOPE_REGION` | 默认 `cn-beijing`，新加坡使用 `ap-southeast-1` |
+| `DEEPSEEK_API_KEY` | ASR 后端调用真实 DeepSeek planner 时需要 |
+
+```bash
+set -a
+source .env
+set +a
+```
+
+### 调用方式
+
+| 后端 | 处理链路 | 默认模型 |
+|---|---|---|
+| `asr`（默认） | 音频 → Fun-ASR → 文本 → 文本 planner | `fun-asr-realtime` / `deepseek-v4-pro` |
+| `omni` | 音频文件 → Omni → 转写 + 计划 | `qwen3.8-omni-flash` |
+| `omni-realtime` | 流式音频 → Omni Realtime → 转写 + 计划 | `qwen3.8-omni-flash-realtime` |
+
+```bash
+# Fun-ASR 文件输入，转写后交给文本 planner
+python3 main.py --audio-file ../asr_test/Chinese.mp3 --plan-only
+# Fun-ASR 定时麦克风：录制 5 秒后上传
+python3 main.py --microphone --record-seconds 5 --plan-only
+# Fun-ASR 流式麦克风：实时显示 partial/final，回车提交
+python3 main.py --microphone --stream --plan-only
+# 原生 Omni 文件输入
+python3 main.py --audio-backend omni --audio-file 夹起瓶子.mp3 --plan-only
+# 原生 Omni Realtime 麦克风
+python3 main.py --audio-backend omni-realtime --microphone --stream --plan-only
+```
+
+流式模式等待 `streaming now` 提示后说话，**回车提交，Ctrl+C 取消**，每次运行处理一条完整指令。Omni Realtime 持续上传音频，回车后才生成转写和计划，不显示 Fun-ASR 式逐字 partial；该后端的 `--stream` 可省略。
+
+```bash
+# 只转写：将上面音频调用中的 --plan-only 换成 --transcribe-only
+python3 main.py --audio-backend omni-realtime --microphone --transcribe-only
+# 查看设备后，用实际编号设置 --input-device-index
+python3 main.py --list-input-devices
+# 打印计划并进行 mock 工具执行
+python3 main.py --audio-backend omni-realtime --microphone --print-plan
+# 独立 Fun-ASR 转写模块
+python3 audio_input.py --audio-file ../asr_test/Chinese.mp3
+```
+
+Omni 两种后端直接生成计划，省略 `--mock-planner`，无需 DeepSeek Key。`--transcribe-only` 不生成计划，标准输出只有最终文本。默认工具均为 mock，原有 `--real-*` 开关仍控制真实功能。
+
+### 语音输入参数
+
+| 参数 | 用途 / 默认值 |
+|---|---|
+| `--audio-backend` | `asr`、`omni`、`omni-realtime`，默认 `asr` |
+| `--audio-file PATH` | 本地音频文件，与 `--microphone` 和位置参数文本指令互斥 |
+| `--microphone` | 使用麦克风，与位置参数文本指令互斥 |
+| `--stream` | ASR 边采集边识别，仅搭配麦克风；Omni Realtime 本身就是流式输入 |
+| `--record-seconds N` | ASR 定时录音秒数，默认 5；不能与 `--stream` 或 Omni Realtime 同用 |
+| `--input-device-index N` | PyAudio 输入设备编号，省略时使用默认设备 |
+| `--list-input-devices` | 枚举输入设备后退出，无需 Key |
+| `--transcribe-only` | 仅转写后退出，与 `--plan-only` 互斥 |
+| `--plan-only` | 生成并打印计划，不执行工具，适用于全部后端 |
+| `--print-plan` | 原有选项：打印计划后继续执行工具 |
+
+### Fun-ASR 参数
+
+| 参数 | 用途 / 默认值 |
+|---|---|
+| `--asr-model` | 默认 `AGENT_ASR_MODEL` 或 `fun-asr-realtime` |
+| `--asr-workspace` | 覆盖 `DASHSCOPE_WORKSPACE` |
+| `--asr-region` | 覆盖 `DASHSCOPE_REGION`，默认 `cn-beijing` |
+| `--asr-sample-rate HZ` | 非 WAV 文件及麦克风的采样率，默认 16000；WAV 自动读取，显式指定时校验是否匹配 |
+| `--asr-timeout SEC` | SDK 连接/读取超时、流式提交后的结果等待上限，默认 30 秒 |
+
+ASR 后端沿用原文本 planner 的 `--model/--base-url/--api-key` 配置，也可加 `--mock-planner` 进行固定规则演示。
+
+### Omni 参数
+
+| 参数 | 用途 / 默认值 |
+|---|---|
+| `--omni-model` | HTTP 模型，默认 `AGENT_OMNI_MODEL` 或 `qwen3.8-omni-flash` |
+| `--omni-base-url` | HTTP 接口，默认 `DASHSCOPE_BASE_URL`；未配置时按 Workspace / 地域构造 |
+| `--omni-realtime-model` | Realtime 模型，默认 `AGENT_OMNI_REALTIME_MODEL` 或 `qwen3.8-omni-flash-realtime` |
+| `--omni-ws-url` | WebSocket 接口，默认 `DASHSCOPE_REALTIME_URL`；未配置时按 Workspace / 地域构造，与 HTTP 地址独立 |
+| `--omni-timeout SEC` | Omni 连接/读取超时及 Realtime 提交后的结果等待上限，默认 60 秒 |
+
+`--model/--base-url/--api-key` 和 `--asr-*` 不配置 Omni。Realtime 执行失败后，复用 HTTP Omni，根据转写与执行历史重规划。
+
+### 文件与输出约定
+
+- ASR 支持 `.wav/.mp3/.pcm/.opus/.speex/.aac/.amr`；WAV 要求单声道 16-bit PCM，Opus/Speex 要求 Ogg 封装，AMR 要求 AMR-NB。采样率参数应与音频一致。
+- HTTP Omni 支持 MP3 / PCM WAV，Base64 编码后小于 10 MB。
+- Realtime 固定为 16 kHz、单声道、16-bit PCM；文件回放也只接受该规格的 WAV，至少 100 ms，不自动解码 MP3。
+- ASR partial 仅用于展示，最终转写才进入 agent；Omni 计划通过本地校验后执行。
+- HTTP Omni 的 `request_seconds` 为请求耗时；Realtime 的 `response_seconds` 从提交开始计时，不含录音和此前的上传时间。
+- `[Done] plan-only; no tools executed` 表示只规划；执行模式下的 `success=True` 应结合工具的 mock / 真实状态判断。
+
+### 语音模块离线测试
+
+```bash
+python3 -B -m unittest discover -s tests -v
+```
+
+测试使用模拟网络和麦克风，不消耗 API 额度，不控制机器人。
 
 ## 巡检 demo（输入"开始巡检"，小车依次到各房间）
 
